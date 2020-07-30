@@ -1,31 +1,40 @@
 package com.weigh.verification.controller;
 
 import com.weigh.verification.entity.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xuyang
  */
+@Slf4j
+@RestController
+@RequestMapping("file")
 public class FileController {
-    Result upload(){
+    @PostMapping("upload")
+    Result upload() {
         Result result = new Result();
-        result->setCode = 0;
+        result.setCode(200);
         return result;
     }
 
-    Result check(){
+    @GetMapping("check")
+    Result check() {
         return new Result();
     }
 
-    Result getList(){
+    @GetMapping("getList")
+    Result getList() {
         return new Result();
     }
 
-    Result del(){
+    @DeleteMapping("delete/{id}")
+    Result delete(@PathVariable Long id) {
         return new Result();
     }
 
-    Result downloads()
-    {
+    @GetMapping("downloads/{id}")
+    Result downloads(@PathVariable Long id) {
         return new Result();
     }
 }

@@ -1,28 +1,38 @@
 package com.weigh.verification.controller;
 
 import com.weigh.verification.entity.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xuyang
  */
+@Slf4j
+@RestController
+@RequestMapping("template")
 public class TemplateController {
-    Result add(){
+    @PostMapping("add")
+    Result add() {
         return new Result();
     }
 
-    Result edit(){
+    @PutMapping("edit/{id}")
+    Result edit(@PathVariable Long id) {
         return new Result();
     }
 
-    Result del(){
+    @DeleteMapping("delete/{id}")
+    Result delete(@PathVariable Long id) {
         return new Result();
     }
 
-    Result getList(){
+    @GetMapping("getList")
+    Result getList() {
         return new Result();
     }
 
-    Result getAll(){
+    @GetMapping("getAll")
+    Result getAll() {
         return new Result();
     }
 }

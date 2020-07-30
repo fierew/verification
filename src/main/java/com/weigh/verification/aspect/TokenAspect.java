@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.VaUserEntity;
+import com.weigh.verification.exception.CustomException;
 import com.weigh.verification.utils.JwtUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -80,11 +81,8 @@ public class TokenAspect {
             afterPoint(joinPoint, result);
 
             return result;
-        } catch (RuntimeException e) {
-            Result errorResult = new Result();
-            errorResult.setCode(Integer.parseInt(e.getMessage()));
-            errorResult.setMsg("系统异常");
-            return errorResult;
+        } catch (CustomException e) {
+            return e;
         }
     }
 
@@ -110,7 +108,7 @@ public class TokenAspect {
 
         // 执行认证
         if (token == null) {
-            throw new RuntimeException("403");
+            throw new CustomException("403","权限异常");
         }
 
         // 解析token并获取token中的用户信息

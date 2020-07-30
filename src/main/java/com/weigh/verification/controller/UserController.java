@@ -1,34 +1,53 @@
 package com.weigh.verification.controller;
 
+import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
+import com.weigh.verification.entity.UserEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xuyang
  */
+@Slf4j
+@RestController
+@RequestMapping("user")
 public class UserController {
-    Result login(){
+    @PassToken
+    @PostMapping("login")
+    Result login() {
+
         return new Result();
     }
 
-    Result getList()
-    {
+    @GetMapping("getInfo/{id}")
+    Result getInfo(@PathVariable Long id) {
         return new Result();
     }
 
-    Result add()
-    {
+    @GetMapping("getList")
+    Result getList() {
         return new Result();
     }
 
-    Result edit(){
+    @PostMapping("add")
+    Result add(@Validated UserEntity userEntity) {
         return new Result();
     }
 
-    Result del(){
+    @PutMapping("edit/{id}")
+    Result edit(@PathVariable Long id, @Validated UserEntity userEntity) {
         return new Result();
     }
 
-    Result modifyState(){
+    @DeleteMapping("delete/{id}")
+    Result delete(@PathVariable Long id) {
+        return new Result();
+    }
+
+    @PutMapping("modifyState/{id}")
+    Result modifyState(@PathVariable Long id) {
         return new Result();
     }
 }
