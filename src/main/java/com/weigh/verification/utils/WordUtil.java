@@ -2,10 +2,11 @@ package com.weigh.verification.utils;
 
 import com.deepoove.poi.XWPFTemplate;
 import com.power.common.util.UUIDUtil;
+import org.apache.poi.ooxml.POIXMLProperties;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -14,8 +15,9 @@ import java.util.Map;
 public class WordUtil {
     /**
      * 填充Word
+     *
      * @param templateFileName 模板文件路径
-     * @param data 填充的数据
+     * @param data             填充的数据
      * @return 临时文件路径
      * @throws IOException 错误
      */
@@ -30,7 +32,7 @@ public class WordUtil {
 
         File dir = new File(destDirName);
         // 检查是否存在路径目录
-        if(!dir.getParentFile().exists()){
+        if (!dir.getParentFile().exists()) {
             // 新建目录
             dir.getParentFile().mkdirs();
         }
@@ -44,5 +46,35 @@ public class WordUtil {
         template.close();
 
         return tempFilePath;
+    }
+
+    public String getText(String templateFileName) throws IOException {
+        InputStream is = new FileInputStream(templateFileName);
+        XWPFDocument doc = new XWPFDocument(is);
+        XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+        String text = extractor.getText();
+        System.out.println(text);
+        POIXMLProperties.CoreProperties coreProps = extractor.getCoreProperties();
+
+        // 分类
+        System.out.println(coreProps.getCategory());
+
+        // 创建者
+        System.out.println(coreProps.getCreator());
+
+        // 创建时间
+        System.out.println(coreProps.getCreated());
+
+        //标题
+        System.out.println(coreProps.getTitle());
+
+        // 关闭输入流
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return text;
     }
 }
