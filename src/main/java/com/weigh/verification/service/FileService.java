@@ -1,7 +1,9 @@
 package com.weigh.verification.service;
 
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import com.weigh.verification.entity.FileEntity;
 import com.weigh.verification.model.FileModel;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,11 +13,11 @@ import java.util.List;
 public interface FileService {
     /**
      * 上传文件
-     *
-     * @param fileEntity 文件数据
+     * @param userId 用户id
+     * @param fileEntity 文件对象
      * @return 文件信息
      */
-    FileModel upload(FileEntity fileEntity);
+    FileModel upload(Integer userId, FileEntity fileEntity);
 
     /**
      * 判断文件是否存在

@@ -11,9 +11,10 @@ public interface UserService {
     /**
      * 登录
      *
+     * @param userModel 用户对象
      * @return UserModel
      */
-    UserModel login();
+    Object login(UserModel userModel);
 
     /**
      * 获取用户信息

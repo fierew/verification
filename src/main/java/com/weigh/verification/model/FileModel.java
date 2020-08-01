@@ -12,7 +12,7 @@ public class FileModel {
     private String name;
     private String type;
     private String path;
-    private Integer size;
+    private Long size;
     private String hash;
     private Byte isDelete;
     private Integer createTime;

@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class UserModel {
     private Integer id;
-    private String username;
     private String password;
     private String email;
     private String nickname;

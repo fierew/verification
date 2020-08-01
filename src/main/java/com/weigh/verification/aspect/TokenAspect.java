@@ -2,8 +2,8 @@ package com.weigh.verification.aspect;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.weigh.verification.annotation.PassToken;
+import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TokenUserEntity;
-import com.weigh.verification.exception.CustomException;
 import com.weigh.verification.utils.JwtUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -80,8 +80,11 @@ public class TokenAspect {
             afterPoint(joinPoint, result);
 
             return result;
-        } catch (CustomException e) {
-            return e;
+        } catch (RuntimeException e) {
+            Result errorResult = new Result();
+            errorResult.setCode(Integer.parseInt(e.getMessage()));
+            errorResult.setMsg("系统异常");
+            return errorResult;
         }
     }
 
@@ -107,12 +110,12 @@ public class TokenAspect {
 
         // 执行认证
         if (token == null) {
-            throw new CustomException("403","权限异常");
+            throw new RuntimeException("403");
         }
 
         // 解析token并获取token中的用户信息
         Map<String, Claim> claims = JwtUtil.verity(token);
-
+        System.out.println(claims);
         //得到这个方法控制器的所有形参
         Object[] args = joinPoint.getArgs();
 
@@ -120,13 +123,14 @@ public class TokenAspect {
             //如果这个控制器方法中有用户这个形参，说明这个控制器需要用户的信息，那么我就把我这里解析出来的userId 赛进这个形参中，那样在控制器那边就能得到我赛的userId了
             if (argItem instanceof TokenUserEntity) {
                 TokenUserEntity paramVO = (TokenUserEntity) argItem;
+                System.out.println(paramVO);
                 Claim userId = claims.get("userId");
-                Claim username = claims.get("username");
-                Claim role = claims.get("role");
+//                Claim email = claims.get("email");
+//                Claim role = claims.get("role");
 
                 paramVO.setUserId(userId.asInt());
-                paramVO.setUsername(username.asString());
-                paramVO.setRole(role.asString());
+//                paramVO.setEmail(email.asString());
+//                paramVO.setRole(role.asString());
             }
         }
     }

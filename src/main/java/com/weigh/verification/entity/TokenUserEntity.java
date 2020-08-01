@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class TokenUserEntity {
     private Integer userId;
-    private String username;
-    private String role;
+//    private String email;
+//    private String role;
 }

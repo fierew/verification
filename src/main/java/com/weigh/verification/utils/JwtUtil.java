@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.weigh.verification.exception.CustomException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -33,11 +32,9 @@ public class JwtUtil {
      * 生成签名,15分钟后过期
      *
      * @param userId   用户ID
-     * @param username 用户名
-     * @param role     角色
      * @return token
      */
-    public static String sign(int userId, String username, String role) {
+    public static String sign(int userId) {
         //过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         //私钥及加密算法
@@ -49,9 +46,9 @@ public class JwtUtil {
         //附带username和userID生成签名
         return JWT.create()
                 .withHeader(header)
-                .withClaim("username", username)
+                // .withClaim("email", username)
                 .withClaim("userId", userId)
-                .withClaim("role", role)
+                // .withClaim("role", role)
                 .withExpiresAt(date).sign(algorithm);
     }
 
@@ -69,7 +66,7 @@ public class JwtUtil {
 
             return jwt.getClaims();
         } catch (IllegalArgumentException | JWTVerificationException e) {
-            throw new CustomException("401", "权限异常");
+            throw new RuntimeException("401");
         }
 
     }
