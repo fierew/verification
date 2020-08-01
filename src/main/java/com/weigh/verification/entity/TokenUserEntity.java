@@ -6,7 +6,7 @@ import lombok.Data;
  * @author xuyang
  */
 @Data
-public class VaUserEntity {
+public class TokenUserEntity {
     private Integer userId;
     private String username;
     private String role;

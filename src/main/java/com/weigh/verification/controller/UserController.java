@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("getInfo/{id}")
-    Result getInfo(@PathVariable Long id) {
+    Result getInfo(@PathVariable Integer id) {
         return new Result();
     }
 
@@ -37,17 +37,17 @@ public class UserController {
     }
 
     @PutMapping("edit/{id}")
-    Result edit(@PathVariable Long id, @Validated UserEntity userEntity) {
+    Result edit(@PathVariable Integer id, @Validated UserEntity userEntity) {
         return new Result();
     }
 
     @DeleteMapping("delete/{id}")
-    Result delete(@PathVariable Long id) {
+    Result delete(@PathVariable Integer id) {
         return new Result();
     }
 
     @PutMapping("modifyState/{id}")
-    Result modifyState(@PathVariable Long id) {
+    Result modifyState(@PathVariable Integer id) {
         return new Result();
     }
 }

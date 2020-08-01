@@ -17,12 +17,12 @@ public class VerificationController {
     }
 
     @PutMapping("edit/{id}")
-    Result edit(@PathVariable Long id) {
+    Result edit(@PathVariable Integer id) {
         return new Result();
     }
 
     @DeleteMapping("delete/{id}")
-    Result delete(@PathVariable Long id) {
+    Result delete(@PathVariable Integer id) {
         return new Result();
     }
 
@@ -31,8 +31,13 @@ public class VerificationController {
         return new Result();
     }
 
+    @GetMapping("getInfo/{id}")
+    Result getInfo(@PathVariable Integer id) {
+        return new Result();
+    }
+
     @GetMapping("downloads/{id}")
-    Result downloads(@PathVariable Long id) {
+    Result downloads(@PathVariable Integer id) {
         return new Result();
     }
 }

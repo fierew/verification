@@ -17,12 +17,12 @@ public class TemplateController {
     }
 
     @PutMapping("edit/{id}")
-    Result edit(@PathVariable Long id) {
+    Result edit(@PathVariable Integer id) {
         return new Result();
     }
 
     @DeleteMapping("delete/{id}")
-    Result delete(@PathVariable Long id) {
+    Result delete(@PathVariable Integer id) {
         return new Result();
     }
 
@@ -33,6 +33,10 @@ public class TemplateController {
 
     @GetMapping("getAll")
     Result getAll() {
+        return new Result();
+    }
+
+    Result analysis(@RequestParam(value = "filePath",required = true,defaultValue = "") String filePath){
         return new Result();
     }
 }

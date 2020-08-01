@@ -29,12 +29,12 @@ public class FileController {
     }
 
     @DeleteMapping("delete/{id}")
-    Result delete(@PathVariable Long id) {
+    Result delete(@PathVariable Integer id) {
         return new Result();
     }
 
     @GetMapping("downloads/{id}")
-    Result downloads(@PathVariable Long id) {
+    Result downloads(@PathVariable Integer id) {
         return new Result();
     }
 }

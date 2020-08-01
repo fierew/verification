@@ -2,8 +2,7 @@ package com.weigh.verification.aspect;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.weigh.verification.annotation.PassToken;
-import com.weigh.verification.entity.Result;
-import com.weigh.verification.entity.VaUserEntity;
+import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.exception.CustomException;
 import com.weigh.verification.utils.JwtUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -119,8 +118,8 @@ public class TokenAspect {
 
         for (Object argItem : args) {
             //如果这个控制器方法中有用户这个形参，说明这个控制器需要用户的信息，那么我就把我这里解析出来的userId 赛进这个形参中，那样在控制器那边就能得到我赛的userId了
-            if (argItem instanceof VaUserEntity) {
-                VaUserEntity paramVO = (VaUserEntity) argItem;
+            if (argItem instanceof TokenUserEntity) {
+                TokenUserEntity paramVO = (TokenUserEntity) argItem;
                 Claim userId = claims.get("userId");
                 Claim username = claims.get("username");
                 Claim role = claims.get("role");

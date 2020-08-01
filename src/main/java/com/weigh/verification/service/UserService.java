@@ -1,7 +1,66 @@
 package com.weigh.verification.service;
 
+import com.weigh.verification.model.UserModel;
+
+import java.util.List;
+
 /**
  * @author xuyang
  */
 public interface UserService {
+    /**
+     * 登录
+     *
+     * @return UserModel
+     */
+    UserModel login();
+
+    /**
+     * 获取用户信息
+     *
+     * @return UserModel
+     */
+    UserModel getInfo();
+
+    /**
+     * 获取用户列表
+     *
+     * @param page     页数
+     * @param pageSize 每页条数
+     * @return 用户列表
+     */
+    List<UserModel> getList(Integer page, Integer pageSize);
+
+    /**
+     * 新增用户
+     *
+     * @param userModel 用户对象
+     * @return Integer
+     */
+    Integer add(UserModel userModel);
+
+    /**
+     * 编辑用户
+     *
+     * @param id        用户id
+     * @param userModel 用户对象
+     * @return 结果
+     */
+    Integer edit(Integer id, UserModel userModel);
+
+    /**
+     * 删除用户
+     *
+     * @param id 用户id
+     * @return 结果
+     */
+    Integer delete(Integer id);
+
+    /**
+     * 修改用户状态
+     *
+     * @param id 用户id
+     * @return 结果
+     */
+    Integer modifyState(Integer id);
 }

@@ -6,13 +6,14 @@ import lombok.Data;
  * @author xuyang
  */
 @Data
-public class UserModel {
+public class FileModel {
     private Integer id;
-    private String username;
-    private String password;
-    private String email;
-    private String nickname;
-    private Byte state;
+    private Integer userId;
+    private String name;
+    private String type;
+    private String path;
+    private Integer size;
+    private String hash;
     private Byte isDelete;
     private Integer createTime;
     private Integer updateTime;
