@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +25,9 @@ import java.util.Map;
 @Aspect
 @Component
 public class TokenAspect {
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * 定义切入点，切入点为com.example.demo.aop.AopController中的所有函数
      * 通过@Pointcut注解声明频繁使用的切点表达式
@@ -114,7 +118,7 @@ public class TokenAspect {
         }
 
         // 解析token并获取token中的用户信息
-        Map<String, Claim> claims = JwtUtil.verity(token);
+        Map<String, Claim> claims = jwtUtil.verity(token);
         System.out.println(claims);
         //得到这个方法控制器的所有形参
         Object[] args = joinPoint.getArgs();

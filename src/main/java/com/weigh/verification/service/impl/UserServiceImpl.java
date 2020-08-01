@@ -24,6 +24,9 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
     private UserDao userDao;
 
     @Override
@@ -38,22 +41,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserModel> getList(Integer page, Integer pageSize) {
-        return null;
+        return userDao.getList(page, pageSize);
     }
 
     @Override
-    public UserModel getInfo() {
-        return null;
+    public UserModel getInfo(Integer id) {
+        return userDao.getInfoById(id);
     }
 
     @Override
     public Integer edit(Integer id, UserModel userModel) {
-        return null;
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+
+        userModel.setId(id);
+        userModel.setUpdateTime(time);
+
+        return userDao.edit(userModel);
     }
 
     @Override
     public Integer delete(Integer id) {
-        return null;
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+
+        return userDao.delete(id, time);
     }
 
     @Override
@@ -64,9 +74,8 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
-        String token = JwtUtil.sign(userInfo.getId());
+        String token = jwtUtil.sign(userInfo.getId());
 
-        //
         Map<String, Object> info = new HashMap<>(5);
 
         info.put("token", token);
@@ -78,6 +87,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer modifyState(Integer id) {
-        return null;
+
+
+        UserModel userInfo = userDao.getInfoById(id);
+        if (userInfo == null) {
+            return null;
+        }
+
+        int state = 0;
+        if (userInfo.getState() == 0) {
+            state = 1;
+        }
+
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+
+        return userDao.modifyState(id, state, time);
     }
 }

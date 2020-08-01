@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.Map;
  *
  * @author xuyang
  */
+@Component
 public class JwtUtil {
     /**
      * 过期时间为一天
@@ -34,7 +36,7 @@ public class JwtUtil {
      * @param userId   用户ID
      * @return token
      */
-    public static String sign(int userId) {
+    public String sign(int userId) {
         //过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         //私钥及加密算法
@@ -58,7 +60,7 @@ public class JwtUtil {
      * @param token jwt token
      * @return user info
      */
-    public static Map<String, Claim> verity(String token) {
+    public Map<String, Claim> verity(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();

@@ -5,6 +5,7 @@ import com.power.common.util.UUIDUtil;
 import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
 /**
  * @author xuyang
  */
+@Component
 public class WordUtil {
     /**
      * 填充Word
@@ -48,33 +50,35 @@ public class WordUtil {
         return tempFilePath;
     }
 
-    public String getText(String templateFileName) throws IOException {
-        InputStream is = new FileInputStream(templateFileName);
-        XWPFDocument doc = new XWPFDocument(is);
-        XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
-        String text = extractor.getText();
-        System.out.println(text);
-        POIXMLProperties.CoreProperties coreProps = extractor.getCoreProperties();
-
-        // 分类
-        System.out.println(coreProps.getCategory());
-
-        // 创建者
-        System.out.println(coreProps.getCreator());
-
-        // 创建时间
-        System.out.println(coreProps.getCreated());
-
-        //标题
-        System.out.println(coreProps.getTitle());
-
-        // 关闭输入流
+    public String getText(String fileName) {
         try {
+            InputStream is = new FileInputStream(fileName);
+            XWPFDocument doc = new XWPFDocument(is);
+
+            XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+            String text = extractor.getText();
+            System.out.println(text);
+            POIXMLProperties.CoreProperties coreProps = extractor.getCoreProperties();
+
+            // 分类
+            System.out.println(coreProps.getCategory());
+
+            // 创建者
+            System.out.println(coreProps.getCreator());
+
+            // 创建时间
+            System.out.println(coreProps.getCreated());
+
+            //标题
+            System.out.println(coreProps.getTitle());
+
+            // 关闭输入流
             is.close();
+
+            return text;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return text;
     }
 }

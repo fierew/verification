@@ -15,7 +15,7 @@
     </select>
 
     <select id="getList" resultType="com.weigh.verification.model.UserModel">
-        select * from `user`
+        select `email`,`nickname`,`state`,`create_time`,`update_time` from `user`
         where is_delete = 0 limit #{page},#{pageSize} order by id;
     </select>
 
@@ -27,13 +27,13 @@
 
     <update id="delete">
         update `user`
-        set `is_delete` = 1
+        set `is_delete` = 1,`update_time`=#{updateTime}
         where id = #{id}
     </update>
 
     <update id="modifyState">
         update `user`
-        set `state` =  #{state}
+        set `state` =  #{state},`update_time`=#{updateTime}
         where id = #{id}
     </update>
 

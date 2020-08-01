@@ -106,17 +106,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileModel check(String hash) {
-        return null;
+        return fileDao.getInfoByHash(hash);
     }
 
     @Override
     public List<FileModel> getList(Integer page, Integer pageSize) {
-        return null;
+        return fileDao.getList(page, pageSize);
     }
 
     @Override
     public Integer delete(Integer id) {
-        return null;
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+
+        return fileDao.delete(id, time);
     }
 
     @Override

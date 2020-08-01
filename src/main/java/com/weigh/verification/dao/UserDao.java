@@ -14,7 +14,7 @@ public interface UserDao {
     /**
      * 根据用户名密码获取用户信息
      *
-     * @param email    邮箱
+     * @param email 邮箱
      * @return 用户信息
      */
     UserModel getInfo(String email);
@@ -55,17 +55,19 @@ public interface UserDao {
     /**
      * 删除用户
      *
-     * @param id 用户id
+     * @param id         用户id
+     * @param updateTime 更新时间
      * @return 结果
      */
-    Integer delete(Integer id);
+    Integer delete(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
 
     /**
      * 修改状态
      *
-     * @param id 用户id
-     *  @param state 用户状态
+     * @param id         用户id
+     * @param state      用户状态
+     * @param updateTime 更新时间
      * @return 结果
      */
-    Integer modifyState(@Param("id") Integer id, @Param("state")  Integer state);
+    Integer modifyState(@Param("id") Integer id, @Param("state") Integer state, @Param("updateTime") Integer updateTime);
 }

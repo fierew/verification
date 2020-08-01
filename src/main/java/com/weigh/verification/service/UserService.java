@@ -18,10 +18,10 @@ public interface UserService {
 
     /**
      * 获取用户信息
-     *
+     * @param id 用户id
      * @return UserModel
      */
-    UserModel getInfo();
+    UserModel getInfo(Integer id);
 
     /**
      * 获取用户列表
