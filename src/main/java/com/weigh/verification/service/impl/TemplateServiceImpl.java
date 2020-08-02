@@ -7,7 +7,6 @@ import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.FileDao;
 import com.weigh.verification.dao.TemplateDao;
 import com.weigh.verification.entity.TemplateParamEntity;
-import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.service.TemplateService;

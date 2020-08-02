@@ -1,5 +1,6 @@
 package com.weigh.verification.service;
 
+import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.VerificationModel;
 
 import java.util.List;
@@ -11,10 +12,11 @@ public interface VerificationService {
     /**
      * 新增鉴定信息
      *
+     * @param userId 用户id
      * @param verificationModel 鉴定信息
      * @return 结果
      */
-    Integer add(VerificationModel verificationModel);
+    Result add(Integer userId, VerificationModel verificationModel);
 
     /**
      * 编辑鉴定信息
@@ -23,7 +25,7 @@ public interface VerificationService {
      * @param verificationModel 鉴定信息
      * @return 结果
      */
-    Integer edit(Integer id, VerificationModel verificationModel);
+    Result edit(Integer id, VerificationModel verificationModel);
 
     /**
      * 删除鉴定信息
@@ -31,7 +33,7 @@ public interface VerificationService {
      * @param id 鉴定id
      * @return 结果
      */
-    Integer delete(Integer id);
+    Result delete(Integer id);
 
     /**
      * 获取鉴定列表
@@ -40,7 +42,7 @@ public interface VerificationService {
      * @param pageSize 每页条数
      * @return 鉴定列表
      */
-    List<VerificationModel> getList(Integer page, Integer pageSize);
+    Result getList(Integer page, Integer pageSize);
 
     /**
      * 获取鉴定信息
@@ -48,5 +50,5 @@ public interface VerificationService {
      * @param id 鉴定id
      * @return 鉴定信息
      */
-    VerificationModel getInfo(Integer id);
+    Result getInfo(Integer id);
 }

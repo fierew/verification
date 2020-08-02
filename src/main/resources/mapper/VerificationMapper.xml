@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weigh.verification.dao.VerificationDao">
+
+    <select id="getInfo" resultType="com.weigh.verification.model.VerificationModel">
+        select * from `verification`
+        where id=#{id} and is_delete = 0 limit 1;
+    </select>
+
+    <select id="getList" resultType="com.weigh.verification.model.VerificationModel">
+        select * from `verification`
+        where is_delete = 0 limit #{page},#{pageSize} order by id;
+    </select>
+
+    <update id="edit">
+        update `verification`
+        set `name` = #{name},`describe` = #{describe},`params` = #{params},`update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update `verification`
+        set `is_delete` = 1,`update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <insert id="add">
+        INSERT INTO `verification` ( `user_id`, `name`, `describe`, `template_id`, `params`, `create_time`, `update_time` )
+        VALUES(#{userId},#{name},#{describe},#{templateId},#{params},#{createTime},#{updateTime})
+    </insert>
+</mapper>

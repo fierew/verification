@@ -12,7 +12,7 @@ public class VerificationModel {
     private String name;
     private String describe;
     private Integer templateId;
-    private String param;
+    private String params;
     private Byte isDelete;
     private Integer createTime;
     private Integer updateTime;
