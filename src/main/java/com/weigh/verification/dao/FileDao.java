@@ -28,6 +28,14 @@ public interface FileDao {
     FileModel getInfoByHash(String hash);
 
     /**
+     * 根据哈id取文件信息
+     *
+     * @param id 文件id
+     * @return 文件信心
+     */
+    FileModel getInfo(Integer id);
+
+    /**
      * 获取文件列表
      *
      * @param page     页数

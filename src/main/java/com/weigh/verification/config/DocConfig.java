@@ -19,8 +19,8 @@ public class DocConfig {
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("JWT",
                         new SecurityScheme().type(SecurityScheme.Type.APIKEY).name("authorization").in(SecurityScheme.In.HEADER)))
-                .info(new Info().title("博客后台 API").version(appVersion).description(
-                        "这是一个博客管理后台API文档")
+                .info(new Info().title("计量鉴定平台 API").version(appVersion).description(
+                        "这是一个计量鉴定平台API文档")
                         .termsOfService("http://swagger.io/terms/")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")));
     }

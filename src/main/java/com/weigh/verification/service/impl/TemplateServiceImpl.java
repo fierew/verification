@@ -1,5 +1,14 @@
 package com.weigh.verification.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.power.common.util.DateTimeUtil;
+import com.weigh.verification.dao.FileDao;
+import com.weigh.verification.dao.TemplateDao;
+import com.weigh.verification.entity.TemplateParamEntity;
+import com.weigh.verification.entity.TokenUserEntity;
+import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.service.TemplateService;
 import com.weigh.verification.utils.WordUtil;
@@ -7,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +28,12 @@ import java.util.regex.Pattern;
 public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private WordUtil wordUtil;
+
+    @Autowired
+    private FileDao fileDao;
+
+    @Autowired
+    private TemplateDao templateDao;
 
     @Override
     public List<String> analysis(String filePath) {
@@ -34,7 +50,7 @@ public class TemplateServiceImpl implements TemplateService {
             String key = m.group(1);
             System.out.println(key);
 
-            if(!list.contains(key)){
+            if (!list.contains(key)) {
                 list.add(m.group(1));
             }
         }
@@ -42,27 +58,108 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public Integer add(TemplateModel templateModel) {
-        return null;
+    public Integer add(Integer userId, TemplateModel templateModel) {
+        List<String> keys = this.verifyTempParam(templateModel);
+        if (keys == null) {
+            return null;
+        }
+
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        templateModel.setCreateTime(time);
+        templateModel.setUpdateTime(time);
+        templateModel.setUserId(userId);
+        templateModel.setKeys(String.join(",", keys));
+        return templateDao.add(templateModel);
     }
 
     @Override
-    public Integer edit(Integer id, TemplateModel templateModel) {
-        return null;
+    public Integer edit(Integer id, Integer userId, TemplateModel templateModel) {
+
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        templateModel.setUpdateTime(time);
+        templateModel.setId(id);
+
+        // 验证数据
+        List<String> keys = this.verifyTempParam(templateModel);
+        if (keys == null) {
+            return null;
+        }
+        templateModel.setKeys(String.join(",", keys));
+
+        return templateDao.edit(templateModel);
     }
 
     @Override
     public Integer delete(Integer id) {
-        return null;
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        return templateDao.delete(id, time);
     }
 
     @Override
     public List<TemplateModel> getList(Integer page, Integer pageSize) {
-        return null;
+        return templateDao.getList(page, pageSize);
     }
 
     @Override
     public List<TemplateModel> getAll() {
-        return null;
+        return templateDao.getAll();
+    }
+
+    private List<String> verifyTempParam(TemplateModel templateModel) {
+        if (templateModel.getFileId() == null) {
+            return null;
+        }
+
+        // 根据模板文件id获取文件路径
+        FileModel fileInfo = fileDao.getInfo(templateModel.getFileId());
+        if (fileInfo == null) {
+            return null;
+        }
+
+        List<String> keys = this.analysis(fileInfo.getPath());
+
+        // 解析模板参数
+        if (templateModel.getParams() == null) {
+            return null;
+        }
+
+        TypeReference<List<TemplateParamEntity>> typeReference = new TypeReference<List<TemplateParamEntity>>() {
+        };
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            List<TemplateParamEntity> results = mapper.readValue(templateModel.getParams(), typeReference);
+            List<String> type = new ArrayList<>(Arrays.asList("number", "text", "string"));
+            List<Byte> isNulls = new ArrayList<Byte>() {{
+                add((byte) 1);
+                add((byte) 0);
+            }};
+            // 判断模板参数是否正确
+            for (String key : keys) {
+                boolean bol = false;
+                for (TemplateParamEntity result : results) {
+                    if (key.equals(result.getKey())) {
+                        bol = true;
+
+                        if (!type.contains(result.getType())) {
+                            return null;
+                        }
+                        if (!isNulls.contains(result.getIsNull())) {
+                            return null;
+                        }
+
+                        break;
+                    }
+                }
+
+                // 如果没有参数  说明参数不正确
+                if (!bol) {
+                    return null;
+                }
+            }
+            return keys;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

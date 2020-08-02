@@ -1,5 +1,7 @@
 package com.weigh.verification.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.model.TemplateModel;
 
 import java.util.List;
@@ -19,19 +21,21 @@ public interface TemplateService {
     /**
      * 新增模板
      *
+     * @param userId        用户ID
      * @param templateModel 模板信息
      * @return 结果
      */
-    Integer add(TemplateModel templateModel);
+    Integer add(Integer userId, TemplateModel templateModel);
 
     /**
      * 编辑模板
      *
      * @param id            模板id
+     * @param userId        用户ID
      * @param templateModel 模板信息
      * @return 结果
      */
-    Integer edit(Integer id, TemplateModel templateModel);
+    Integer edit(Integer id, Integer userId, TemplateModel templateModel);
 
     /**
      * 删除模板

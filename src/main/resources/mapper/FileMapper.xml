@@ -22,4 +22,8 @@
         set `is_delete` = 1,`update_time`=#{updateTime}
         where id = #{id}
     </delete>
+
+    <select id="getInfo" resultType="com.weigh.verification.model.FileModel">
+        select * from `file` where `id` = #{id} and `is_delete` = 0 limit 1;
+    </select>
 </mapper>
