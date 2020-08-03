@@ -5,6 +5,7 @@ import com.weigh.verification.dao.UserDao;
 import com.weigh.verification.model.UserModel;
 import com.weigh.verification.service.UserService;
 import com.weigh.verification.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Map;
 /**
  * @author xuyang
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {

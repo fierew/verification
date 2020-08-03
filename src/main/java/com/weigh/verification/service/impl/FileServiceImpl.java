@@ -4,6 +4,7 @@ import com.power.common.util.DateTimeUtil;
 import com.power.common.util.UUIDUtil;
 import com.weigh.verification.dao.FileDao;
 import com.weigh.verification.entity.FileEntity;
+import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.FileModel;
 import com.weigh.verification.service.FileService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,9 @@ public class FileServiceImpl implements FileService {
     private FileDao fileDao;
 
     @Override
-    public FileModel upload(Integer userId, FileEntity fileEntity) {
+    public Result upload(Integer userId, FileEntity fileEntity) {
+        Result result = new Result();
+
         MultipartFile file = fileEntity.getFile();
         try {
             if (file.isEmpty()) {
@@ -51,11 +54,14 @@ public class FileServiceImpl implements FileService {
 
             // 检查是否存在路径目录
             if (!dest.getParentFile().exists()) {
-
+                log.info("文件目录：" + path + " 不存在，准备创建目录");
                 // 新建目录
                 boolean mkdirRes = dest.getParentFile().mkdirs();
                 if (!mkdirRes) {
-                    return null;
+                    log.info("文件目录：" + path + " 创建失败");
+                    result.setCode(400);
+                    result.setMsg("文件目录创建失败");
+                    return result;
                 }
             }
 
@@ -66,7 +72,10 @@ public class FileServiceImpl implements FileService {
 
             // 判断前端的哈希和文件真实哈希是否匹配
             if (!hex.equals(fileEntity.getHash())) {
-                return null;
+                log.info("前端的哈希和文件真实哈希不匹配");
+                result.setCode(400);
+                result.setMsg("前端的哈希和文件真实哈希不匹配");
+                return result;
             }
 
             // 根据用户哈希获取文件信息
@@ -74,7 +83,11 @@ public class FileServiceImpl implements FileService {
 
             // 如果文件信息存在就不需要插入数据，直接返回文件信息
             if (fileInfo != null) {
-                return fileInfo;
+                log.info("文件已存在，无需重复写入数据");
+                result.setCode(200);
+                result.setMsg("文件已存在，无需重复写入数据");
+                result.setData(fileInfo);
+                return result;
             }
 
             // 写入文件成功，开始插入数据库
@@ -94,13 +107,21 @@ public class FileServiceImpl implements FileService {
             Integer res = fileDao.add(fileModel);
 
             if (res != 1) {
-                return null;
+                log.info("写入文件信息失败");
+                result.setCode(400);
+                result.setMsg("写入文件信息失败");
+                return result;
             }
 
-            return fileModel;
+            result.setCode(200);
+            result.setMsg("上传成功");
+            result.setData(fileModel);
+            return result;
         } catch (IllegalStateException | IOException e) {
             log.error(e.getMessage());
-            return null;
+            result.setCode(400);
+            result.setMsg(e.getMessage());
+            return result;
         }
     }
 

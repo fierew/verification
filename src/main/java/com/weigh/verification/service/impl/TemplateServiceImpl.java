@@ -11,8 +11,10 @@ import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.service.TemplateService;
 import com.weigh.verification.utils.WordUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +25,9 @@ import java.util.regex.Pattern;
 /**
  * @author xuyang
  */
+@Slf4j
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private WordUtil wordUtil;
