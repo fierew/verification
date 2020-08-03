@@ -24,17 +24,13 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("upload")
     Result upload(TokenUserEntity tokenUserEntity, FileEntity file) {
-        fileService.upload(tokenUserEntity.getUserId(), file);
-
-        Result result = new Result();
-        result.setCode(200);
-        return result;
+        return fileService.upload(tokenUserEntity.getUserId(), file);
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("check")
     Result check(FileModel fileModel) {
         FileModel fileInfo = fileService.check(fileModel.getHash());
@@ -42,9 +38,9 @@ public class FileController {
         Result result = new Result();
 
         result.setCode(200);
-        if(fileInfo == null){
+        if (fileInfo == null) {
             result.setData(1);
-        }else{
+        } else {
             result.setData(0);
         }
         result.setMsg("success");
@@ -52,10 +48,10 @@ public class FileController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
-        List<FileModel> fileList= fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
+        List<FileModel> fileList = fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
         Result result = new Result();
 
         result.setCode(200);
@@ -64,16 +60,16 @@ public class FileController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = fileService.delete(id);
 
         Result result = new Result();
-        if(res != 1){
+        if (res != 1) {
             result.setCode(400);
             result.setMsg("删除文件失败");
-        }else{
+        } else {
             result.setCode(200);
             result.setMsg("删除文件成功");
         }
