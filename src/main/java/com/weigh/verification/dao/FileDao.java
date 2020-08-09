@@ -52,4 +52,13 @@ public interface FileDao {
      * @return 结果
      */
     Integer delete(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
+
+    /**
+     * 修改路径
+     *
+     * @param id   文件ID
+     * @param path 路径
+     * @return 结果
+     */
+    Integer editPath(@Param("id") Integer id, @Param("path") String path);
 }

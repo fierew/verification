@@ -21,7 +21,7 @@ import java.util.Date;
 @Slf4j
 @Component
 public class FileUtil {
-    public Result upload(FileEntity fileEntity){
+    public Result upload(FileEntity fileEntity) {
         Result result = new Result();
 
         MultipartFile file = fileEntity.getFile();
@@ -53,7 +53,7 @@ public class FileUtil {
         String day = daySdf.format(date);
 
         String filePath = "/upload/";
-        String fileUuidName =  year + "/" + month + "/" + day + "/" + UUIDUtil.getUuid32() + suffixName;
+        String fileUuidName = year + "/" + month + "/" + day + "/" + UUIDUtil.getUuid32() + suffixName;
         String path = System.getProperty("user.dir") + filePath + fileUuidName;
 
         File dest = new File(path);
@@ -71,7 +71,7 @@ public class FileUtil {
             }
         }
 
-        try{
+        try {
             file.transferTo(dest);
 
             FileInputStream fileInputStream = new FileInputStream(dest);
@@ -79,6 +79,10 @@ public class FileUtil {
             System.out.println(hex);
             // 判断前端的哈希和文件真实哈希是否匹配
             if (!hex.equals(fileEntity.getHash())) {
+                if (!dest.delete()) {
+                    log.error("文件删除失败：" + path);
+                }
+
                 log.info("前端的哈希和文件真实哈希不匹配");
                 result.setCode(400);
                 result.setMsg("前端的哈希和文件真实哈希不匹配");
@@ -102,7 +106,7 @@ public class FileUtil {
             result.setMsg("success");
             result.setData(fileModel);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             result.setCode(400);
             result.setMsg(e.getMessage());

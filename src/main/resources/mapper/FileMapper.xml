@@ -26,4 +26,10 @@
     <select id="getInfo" resultType="com.weigh.verification.model.FileModel">
         select * from `file` where `id` = #{id} and `is_delete` = 0 limit 1;
     </select>
+
+    <update id="editPath">
+        update `file`
+        set `path` =  #{path}
+        where id = #{id}
+    </update>
 </mapper>

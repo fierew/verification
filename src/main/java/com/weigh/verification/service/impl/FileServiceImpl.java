@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,9 +43,30 @@ public class FileServiceImpl implements FileService {
 
         // 如果文件信息存在就不需要插入数据，直接返回文件信息
         if (fileInfo != null) {
-            log.info("文件已存在，无需重复写入数据");
+            // 判断文件是否存在
+            String modelPath = System.getProperty("user.dir") + "/upload/" + fileInfo.getPath();
+            File modelFile = new File(modelPath);
+
+            FileModel fileData = (FileModel) fileResult.getData();
+
+            if (!modelFile.isFile() || !modelFile.exists()) {
+                fileDao.editPath(fileInfo.getId(), fileData.getPath());
+                fileInfo.setPath(fileData.getPath());
+            } else {
+                String path = System.getProperty("user.dir") + "/upload/" + fileData.getPath();
+                File file = new File(path);
+                if (file.isFile() && file.exists()) {
+                    if (!file.delete()) {
+                        log.error("文件删除失败：" + path);
+                    } else {
+                        log.info("文件删除成功：" + path);
+                    }
+                }
+            }
+
+            log.info("文件已存在，无需重复上传数据");
             result.setCode(200);
-            result.setMsg("文件已存在，无需重复写入数据");
+            result.setMsg("文件已存在，无需重复上传数据");
             result.setData(fileInfo);
             return result;
         }
