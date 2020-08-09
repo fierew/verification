@@ -119,7 +119,7 @@ public class TemplateServiceImpl implements TemplateService {
             return null;
         }
 
-        List<String> keys = this.analysis(fileInfo.getPath());
+        List<String> keys = this.analysis(System.getProperty("user.dir") + "/upload/" + fileInfo.getPath());
 
         // 解析模板参数
         if (templateModel.getParams() == null) {

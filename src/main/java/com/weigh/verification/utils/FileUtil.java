@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author xuyang
@@ -39,8 +41,20 @@ public class FileUtil {
         log.info("上传的文件名为：" + fileName + " 后缀名为：" + suffixName);
 
         // 设置文件存储路径
+        Date date = new Date();
+
+        SimpleDateFormat yearSdf = new SimpleDateFormat("yyyy");
+        SimpleDateFormat monthSdf = new SimpleDateFormat("MM");
+        SimpleDateFormat daySdf = new SimpleDateFormat("dd");
+
+
+        String year = yearSdf.format(date);
+        String month = monthSdf.format(date);
+        String day = daySdf.format(date);
+
         String filePath = "/upload/";
-        String path = System.getProperty("user.dir") + filePath + UUIDUtil.getUuid32() + "." + suffixName;
+        String fileUuidName =  year + "/" + month + "/" + day + "/" + UUIDUtil.getUuid32() + suffixName;
+        String path = System.getProperty("user.dir") + filePath + fileUuidName;
 
         File dest = new File(path);
 
@@ -61,8 +75,8 @@ public class FileUtil {
             file.transferTo(dest);
 
             FileInputStream fileInputStream = new FileInputStream(dest);
-            String hex = DigestUtils.sha512Hex(fileInputStream);
-
+            String hex = DigestUtils.sha256Hex(fileInputStream);
+            System.out.println(hex);
             // 判断前端的哈希和文件真实哈希是否匹配
             if (!hex.equals(fileEntity.getHash())) {
                 log.info("前端的哈希和文件真实哈希不匹配");
@@ -78,7 +92,7 @@ public class FileUtil {
 
             fileModel.setName(fileName);
             fileModel.setType(suffixName);
-            fileModel.setPath(path);
+            fileModel.setPath(fileUuidName);
             fileModel.setSize(size);
             fileModel.setHash(hex);
             fileModel.setCreateTime(time);

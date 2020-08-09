@@ -1,12 +1,7 @@
 package com.weigh.verification.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TableEntity;
-import com.weigh.verification.entity.TemplateParamEntity;
 import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.service.TemplateService;
@@ -28,7 +23,7 @@ public class TemplateController {
     @Autowired
     private TemplateService templateService;
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("add")
     Result add(TokenUserEntity tokenUserEntity, TemplateModel templateModel) {
         Integer res = templateService.add(tokenUserEntity.getUserId(), templateModel);
@@ -45,7 +40,7 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
     Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, TemplateModel templateModel) {
         Integer res = templateService.edit(id, tokenUserEntity.getUserId(), templateModel);
@@ -62,7 +57,7 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = templateService.delete(id);
@@ -78,7 +73,7 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
         List<TemplateModel> templateList = templateService.getList(tableEntity.getPage(), tableEntity.getPageSize());
@@ -89,7 +84,7 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getAll")
     Result getAll() {
         List<TemplateModel> template = templateService.getAll();
@@ -100,10 +95,10 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("analysis")
-    Result analysis(@RequestParam(value = "filePath", required = true, defaultValue = "") String filePath) {
-        List<String> res = templateService.analysis(filePath);
+    Result analysis(@RequestParam(value = "filePath", defaultValue = "") String filePath) {
+        List<String> res = templateService.analysis(System.getProperty("user.dir") + "/upload/" + filePath);
         Result result = new Result();
         result.setCode(200);
         result.setData(res);

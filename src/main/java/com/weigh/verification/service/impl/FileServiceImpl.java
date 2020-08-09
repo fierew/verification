@@ -62,6 +62,9 @@ public class FileServiceImpl implements FileService {
             return result;
         }
 
+        FileModel getFileInfo = fileDao.getInfoByHash(fileModel.getHash());
+        fileModel.setId(getFileInfo.getId());
+
         result.setCode(200);
         result.setMsg("上传成功");
         result.setData(fileModel);
