@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserModel> getList(Integer page, Integer pageSize) {
-        return userDao.getList(page, pageSize);
+        Integer limit = (page - 1) * pageSize;
+        return userDao.getList(limit, pageSize);
     }
 
     @Override

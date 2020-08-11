@@ -14,7 +14,7 @@
 
     <select id="getList" resultType="com.weigh.verification.model.FileModel">
         select * from `file`
-        where is_delete = 0 limit #{page},#{pageSize} order by id;
+        where is_delete = 0  order by id desc limit #{limit},#{offset};
     </select>
 
     <delete id="delete">

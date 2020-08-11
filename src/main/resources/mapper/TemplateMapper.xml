@@ -27,7 +27,7 @@
 
     <select id="getList" resultType="com.weigh.verification.model.TemplateModel">
         select * from `template`
-        where is_delete = 0 limit #{page},#{pageSize} order by id;
+        where is_delete = 0 order by id desc limit #{limit},#{offset};
     </select>
 
     <select id="getAll" resultType="com.weigh.verification.model.TemplateModel">

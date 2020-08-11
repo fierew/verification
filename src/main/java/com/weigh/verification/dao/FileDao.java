@@ -38,11 +38,11 @@ public interface FileDao {
     /**
      * 获取文件列表
      *
-     * @param page     页数
-     * @param pageSize 每页条数
+     * @param limit     页数
+     * @param offset 每页条数
      * @return 文件列表
      */
-    List<FileModel> getList(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    List<FileModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     /**
      * 删除文件

@@ -47,14 +47,15 @@ public interface TemplateDao {
     /**
      * 获取模板列表
      *
-     * @param page     页数
-     * @param pageSize 每页条数
+     * @param limit  偏移量
+     * @param offset 条数
      * @return 模板列表
      */
-    List<TemplateModel> getList(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    List<TemplateModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     /**
      * 获取所有模板
+     *
      * @return 模板列表
      */
     List<TemplateModel> getAll();

@@ -30,11 +30,11 @@ public interface UserDao {
     /**
      * 获取用户列表
      *
-     * @param page     页数
-     * @param pageSize 每页条数
+     * @param limit  偏移量
+     * @param offset 条数
      * @return 用户列表
      */
-    List<UserModel> getList(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    List<UserModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     /**
      * 新增用户信息

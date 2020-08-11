@@ -11,7 +11,7 @@
 
     <select id="getList" resultType="com.weigh.verification.model.VerificationModel">
         select * from `verification`
-        where is_delete = 0 limit #{page},#{pageSize} order by id;
+        where is_delete = 0  order by id desc limit #{limit},#{offset};
     </select>
 
     <update id="edit">

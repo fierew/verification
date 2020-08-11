@@ -100,7 +100,8 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public List<TemplateModel> getList(Integer page, Integer pageSize) {
-        return templateDao.getList(page, pageSize);
+        Integer limit = (page - 1) * pageSize;
+        return templateDao.getList(limit, pageSize);
     }
 
     @Override

@@ -100,7 +100,8 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<FileModel> getList(Integer page, Integer pageSize) {
-        return fileDao.getList(page, pageSize);
+        Integer limit = (page - 1) * pageSize;
+        return fileDao.getList(limit, pageSize);
     }
 
     @Override

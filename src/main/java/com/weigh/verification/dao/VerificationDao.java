@@ -22,11 +22,11 @@ public interface VerificationDao {
     /**
      * 获取鉴定列表
      *
-     * @param page     页数
-     * @param pageSize 每页条数
+     * @param limit  偏移量
+     * @param offset 条数
      * @return 用户列表
      */
-    List<VerificationModel> getList(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+    List<VerificationModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
 
     /**
      * 修改鉴定信息
