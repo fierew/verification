@@ -16,6 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -85,6 +86,12 @@ public class TokenAspect {
 
             return result;
         } catch (RuntimeException e) {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            assert attributes != null;
+            HttpServletResponse response = attributes.getResponse();
+            assert response != null;
+            response.setStatus(Integer.parseInt(e.getMessage()));
+
             Result errorResult = new Result();
             errorResult.setCode(Integer.parseInt(e.getMessage()));
             errorResult.setMsg("系统异常");

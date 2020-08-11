@@ -2,6 +2,8 @@ package com.weigh.verification.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.TemplateDao;
 import com.weigh.verification.dao.VerificationDao;
@@ -117,8 +119,9 @@ public class VerificationServiceImpl implements VerificationService {
     public Result getList(Integer page, Integer pageSize) {
         Result result = new Result();
 
-        Integer limit = (page - 1) * pageSize;
-        List<VerificationModel> res = verificationDao.getList(limit, pageSize);
+        PageHelper.startPage(page, pageSize);
+        List<VerificationModel> list = verificationDao.getList();
+        PageInfo<VerificationModel> res = new PageInfo<>(list);
 
         result.setMsg("获取鉴定信息成功");
         result.setCode(200);

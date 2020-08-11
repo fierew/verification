@@ -22,11 +22,9 @@ public interface VerificationDao {
     /**
      * 获取鉴定列表
      *
-     * @param limit  偏移量
-     * @param offset 条数
      * @return 用户列表
      */
-    List<VerificationModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<VerificationModel> getList();
 
     /**
      * 修改鉴定信息

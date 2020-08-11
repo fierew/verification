@@ -1,5 +1,6 @@
 package com.weigh.verification.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.FileEntity;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.FileModel;
@@ -33,7 +34,7 @@ public interface FileService {
      * @param pageSize 每页的条数
      * @return 文件信息数组
      */
-    List<FileModel> getList(Integer page, Integer pageSize);
+    PageInfo<FileModel> getList(Integer page, Integer pageSize);
 
     /**
      * 获取文件信息

@@ -3,35 +3,47 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weigh.verification.dao.TemplateDao">
-
     <insert id="add">
-        INSERT INTO `template` ( `user_id`, `name`, `describe`, `file_id`, `keys`, `params`, `create_time`, `update_time` )
-        VALUES(#{userId},#{name},#{describe},#{fileId},#{keys},#{params},#{createTime},#{updateTime});
+        INSERT INTO `template` (`user_id`, `name`, `describe`, `file_id`, `keys`, `params`, `create_time`,
+                                `update_time`)
+        VALUES (#{userId}, #{name}, #{describe}, #{fileId}, #{keys}, #{params}, #{createTime}, #{updateTime});
     </insert>
 
     <select id="getInfo" resultType="com.weigh.verification.model.TemplateModel">
-        select * from `template` where id=#{id} and is_delete = 0 limit 1;
+        select *
+        from `template`
+        where id = #{id}
+          and is_delete = 0
+        limit 1;
     </select>
 
     <update id="edit">
         update `template`
-        set `name` = #{name},`describe` = #{describe},`keys` = #{keys},`params` = #{params},`update_time`=#{updateTime}
+        set `name`       = #{name},
+            `describe`   = #{describe},
+            `keys`       = #{keys},
+            `params`     = #{params},
+            `update_time`=#{updateTime}
         where id = #{id}
     </update>
 
     <update id="delete">
         update `template`
-        set `is_delete` = 1,`update_time`=#{updateTime}
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
         where id = #{id}
     </update>
 
     <select id="getList" resultType="com.weigh.verification.model.TemplateModel">
-        select * from `template`
-        where is_delete = 0 order by id desc limit #{limit},#{offset};
+        select *
+        from `template`
+        where is_delete = 0
     </select>
 
     <select id="getAll" resultType="com.weigh.verification.model.TemplateModel">
-        select * from `template`
-        where is_delete = 0 order by id;
+        select *
+        from `template`
+        where is_delete = 0
+        order by id;
     </select>
 </mapper>

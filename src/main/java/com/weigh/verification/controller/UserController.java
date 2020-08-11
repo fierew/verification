@@ -1,5 +1,6 @@
 package com.weigh.verification.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TableEntity;
@@ -56,7 +57,7 @@ public class UserController {
     @Operation(security = { @SecurityRequirement(name = "JWT") })
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
-        List<UserModel> userList = userService.getList(tableEntity.getPage(), tableEntity.getPageSize());
+        PageInfo<UserModel> userList = userService.getList(tableEntity.getPage(), tableEntity.getPageSize());
 
         Result result = new Result();
 

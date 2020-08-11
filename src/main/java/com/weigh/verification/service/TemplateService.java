@@ -1,7 +1,6 @@
 package com.weigh.verification.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.weigh.verification.entity.TokenUserEntity;
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.model.TemplateModel;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public interface TemplateService {
      * @param pageSize 每页的条数
      * @return 模板列表
      */
-    List<TemplateModel> getList(Integer page, Integer pageSize);
+    PageInfo<TemplateModel> getList(Integer page, Integer pageSize);
 
     /**
      * 获取全部模板

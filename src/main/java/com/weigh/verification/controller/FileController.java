@@ -1,5 +1,6 @@
 package com.weigh.verification.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.FileEntity;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TableEntity;
@@ -51,7 +52,7 @@ public class FileController {
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
-        List<FileModel> fileList = fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
+        PageInfo<FileModel> fileList = fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
         Result result = new Result();
 
         result.setCode(200);

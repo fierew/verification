@@ -4,32 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weigh.verification.dao.FileDao">
     <insert id="add">
-        INSERT INTO `file` ( `user_id`, `name`, `type`, `path`, `size`, `hash`, `create_time`, `update_time` )
-        VALUES(#{userId},#{name},#{type},#{path},#{size},#{hash},#{createTime},#{updateTime});
+        INSERT INTO `file` (`user_id`, `name`, `type`, `path`, `size`, `hash`, `create_time`, `update_time`)
+        VALUES (#{userId}, #{name}, #{type}, #{path}, #{size}, #{hash}, #{createTime}, #{updateTime});
     </insert>
 
     <select id="getInfoByHash" resultType="com.weigh.verification.model.FileModel">
-        select * from `file` where `hash` = #{hash} and `is_delete` = 0 limit 1;
+        select *
+        from `file`
+        where `hash` = #{hash}
+          and `is_delete` = 0
+        limit 1;
     </select>
 
     <select id="getList" resultType="com.weigh.verification.model.FileModel">
-        select * from `file`
-        where is_delete = 0  order by id desc limit #{limit},#{offset};
+        select *
+        from `file`
+        where is_delete = 0
     </select>
 
     <delete id="delete">
         update `file`
-        set `is_delete` = 1,`update_time`=#{updateTime}
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
         where id = #{id}
     </delete>
 
     <select id="getInfo" resultType="com.weigh.verification.model.FileModel">
-        select * from `file` where `id` = #{id} and `is_delete` = 0 limit 1;
+        select *
+        from `file`
+        where `id` = #{id}
+          and `is_delete` = 0
+        limit 1;
     </select>
 
     <update id="editPath">
         update `file`
-        set `path` =  #{path}
+        set `path` = #{path}
         where id = #{id}
     </update>
 </mapper>

@@ -42,7 +42,7 @@ public interface FileDao {
      * @param offset 每页条数
      * @return 文件列表
      */
-    List<FileModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<FileModel> getList();
 
     /**
      * 删除文件

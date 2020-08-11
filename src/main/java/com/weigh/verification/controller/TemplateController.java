@@ -1,5 +1,6 @@
 package com.weigh.verification.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TableEntity;
 import com.weigh.verification.entity.TokenUserEntity;
@@ -76,7 +77,7 @@ public class TemplateController {
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
-        List<TemplateModel> templateList = templateService.getList(tableEntity.getPage(), tableEntity.getPageSize());
+        PageInfo<TemplateModel> templateList = templateService.getList(tableEntity.getPage(), tableEntity.getPageSize());
         Result result = new Result();
         result.setData(templateList);
         result.setMsg("success");

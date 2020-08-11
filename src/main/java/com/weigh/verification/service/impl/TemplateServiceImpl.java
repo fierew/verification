@@ -3,6 +3,8 @@ package com.weigh.verification.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.FileDao;
 import com.weigh.verification.dao.TemplateDao;
@@ -99,9 +101,10 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public List<TemplateModel> getList(Integer page, Integer pageSize) {
-        Integer limit = (page - 1) * pageSize;
-        return templateDao.getList(limit, pageSize);
+    public PageInfo<TemplateModel> getList(Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<TemplateModel> list = templateDao.getList();
+        return new PageInfo<>(list);
     }
 
     @Override

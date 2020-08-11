@@ -1,5 +1,6 @@
 package com.weigh.verification.service;
 
+import com.github.pagehelper.PageInfo;
 import com.weigh.verification.model.UserModel;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface UserService {
      * @param pageSize 每页条数
      * @return 用户列表
      */
-    List<UserModel> getList(Integer page, Integer pageSize);
+    PageInfo<UserModel> getList(Integer page, Integer pageSize);
 
     /**
      * 新增用户

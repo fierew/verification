@@ -1,5 +1,7 @@
 package com.weigh.verification.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.UserDao;
 import com.weigh.verification.model.UserModel;
@@ -42,9 +44,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModel> getList(Integer page, Integer pageSize) {
-        Integer limit = (page - 1) * pageSize;
-        return userDao.getList(limit, pageSize);
+    public PageInfo<UserModel> getList(Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<UserModel> list = userDao.getList();
+        return new PageInfo<>(list);
     }
 
     @Override

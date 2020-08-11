@@ -47,11 +47,9 @@ public interface TemplateDao {
     /**
      * 获取模板列表
      *
-     * @param limit  偏移量
-     * @param offset 条数
      * @return 模板列表
      */
-    List<TemplateModel> getList(@Param("limit") Integer limit, @Param("offset") Integer offset);
+    List<TemplateModel> getList();
 
     /**
      * 获取所有模板

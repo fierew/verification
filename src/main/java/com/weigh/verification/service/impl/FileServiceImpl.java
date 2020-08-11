@@ -1,5 +1,7 @@
 package com.weigh.verification.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.FileDao;
 import com.weigh.verification.entity.FileEntity;
@@ -99,9 +101,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<FileModel> getList(Integer page, Integer pageSize) {
-        Integer limit = (page - 1) * pageSize;
-        return fileDao.getList(limit, pageSize);
+    public PageInfo<FileModel> getList(Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<FileModel> list = fileDao.getList();
+        return new PageInfo<>(list);
     }
 
     @Override
