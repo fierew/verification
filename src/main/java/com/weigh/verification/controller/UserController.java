@@ -42,7 +42,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getInfo/{id}")
     Result getInfo(@PathVariable Integer id) {
         Result result = new Result();
@@ -54,7 +54,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
         PageInfo<UserModel> userList = userService.getList(tableEntity.getPage(), tableEntity.getPageSize());
@@ -67,7 +67,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("add")
     Result add(UserModel userModel) {
         Integer res = userService.add(userModel);
@@ -84,7 +84,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
     Result edit(@PathVariable Integer id, UserModel userModel) {
         Integer res = userService.edit(id, userModel);
@@ -100,7 +100,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = userService.delete(id);
@@ -116,7 +116,7 @@ public class UserController {
         return result;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "JWT") })
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("modifyState/{id}")
     Result modifyState(@PathVariable Integer id) {
         Integer res = userService.modifyState(id);

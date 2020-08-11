@@ -38,8 +38,6 @@ public interface FileDao {
     /**
      * 获取文件列表
      *
-     * @param limit     页数
-     * @param offset 每页条数
      * @return 文件列表
      */
     List<FileModel> getList();
