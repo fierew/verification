@@ -23,6 +23,7 @@
         select `email`, `nickname`, `state`, `create_time`, `update_time`
         from `user`
         where is_delete = 0
+        order by id desc
     </select>
 
     <update id="edit">

@@ -101,6 +101,11 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public TemplateModel getInfoById(Integer id){
+        return templateDao.getInfo(id);
+    }
+
+    @Override
     public PageInfo<TemplateModel> getList(Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<TemplateModel> list = templateDao.getList();

@@ -45,6 +45,14 @@ public interface TemplateService {
     Integer delete(Integer id);
 
     /**
+     * 根据ID获取模板信息
+     *
+     * @param id 模板ID
+     * @return 模板信息
+     */
+    TemplateModel getInfoById(Integer id);
+
+    /**
      * 获取模板列表
      *
      * @param page     页数

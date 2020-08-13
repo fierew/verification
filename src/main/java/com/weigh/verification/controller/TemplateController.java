@@ -75,6 +75,17 @@ public class TemplateController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
+    @GetMapping("getInfoById/{id}")
+    Result getInfoById(@PathVariable Integer id) {
+        TemplateModel templateInfo = templateService.getInfoById(id);
+        Result result = new Result();
+        result.setData(templateInfo);
+        result.setMsg("success");
+        result.setCode(200);
+        return result;
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
     Result getList(TableEntity tableEntity) {
         PageInfo<TemplateModel> templateList = templateService.getList(tableEntity.getPage(), tableEntity.getPageSize());

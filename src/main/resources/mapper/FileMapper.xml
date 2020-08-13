@@ -20,6 +20,7 @@
         select *
         from `file`
         where is_delete = 0
+        order by id desc
     </select>
 
     <delete id="delete">

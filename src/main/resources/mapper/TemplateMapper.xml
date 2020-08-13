@@ -38,6 +38,7 @@
         select *
         from `template`
         where is_delete = 0
+        order by id desc
     </select>
 
     <select id="getAll" resultType="com.weigh.verification.model.TemplateModel">
