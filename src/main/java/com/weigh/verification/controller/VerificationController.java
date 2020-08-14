@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,7 +117,7 @@ public class VerificationController {
             String verificationName = verificationInfo.getName();
             String fileType = fileInfo.getType();
             response.setContentType("application/octet-stream");
-            response.setHeader("Content-disposition", "attachment;filename=\"" + verificationName + fileType + "\"");
+            response.setHeader("Content-disposition", "attachment;filename=\"" + URLEncoder.encode(verificationName, "UTF-8") + fileType + "\"");
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             // 网络流
             ServletOutputStream out = response.getOutputStream();
