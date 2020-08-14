@@ -116,6 +116,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileModel getInfo(Integer id) {
-        return null;
+        return fileDao.getInfo(id);
     }
 }
