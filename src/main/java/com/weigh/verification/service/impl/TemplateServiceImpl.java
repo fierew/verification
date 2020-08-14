@@ -141,7 +141,7 @@ public class TemplateServiceImpl implements TemplateService {
 
         try {
             List<TemplateParamEntity> results = mapper.readValue(templateModel.getParams(), typeReference);
-            List<String> type = new ArrayList<>(Arrays.asList("number", "text", "string"));
+            List<String> type = new ArrayList<>(Arrays.asList("number", "text", "text_area", "date"));
             List<Byte> isNulls = new ArrayList<Byte>() {{
                 add((byte) 1);
                 add((byte) 0);
