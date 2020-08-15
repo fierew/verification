@@ -5,6 +5,7 @@ import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,6 +24,7 @@ import java.util.Map;
 /**
  * @author xuyang
  */
+@Slf4j
 @Aspect
 @Component
 public class TokenAspect {
@@ -148,5 +150,11 @@ public class TokenAspect {
 
     private void afterPoint(ProceedingJoinPoint joinPoint, Object result) throws Exception {
         //可以存储日志
+        //log.info(result.toString());
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        HttpServletRequest request = attributes.getRequest();
+        log.info(request.getServletPath());
+        System.out.println(result);
     }
 }

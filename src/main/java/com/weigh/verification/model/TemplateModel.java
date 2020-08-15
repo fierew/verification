@@ -14,6 +14,7 @@ public class TemplateModel {
     private Integer fileId;
     private String keys;
     private String params;
+    private Byte state;
     private Byte isDelete;
     private Integer createTime;
     private Integer updateTime;

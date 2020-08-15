@@ -47,6 +47,7 @@ CREATE TABLE `template` (
   `file_id` int NOT NULL DEFAULT '0' COMMENT '文件ID',
   `keys` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模板key',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模板参数',
+  `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1启用，0禁用',
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   `create_time` int NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int NOT NULL DEFAULT '0' COMMENT '更新时间',

@@ -47,9 +47,10 @@ public interface TemplateDao {
     /**
      * 获取模板列表
      *
+     * @param templateModel 模板条件
      * @return 模板列表
      */
-    List<TemplateModel> getList();
+    List<TemplateModel> getList(TemplateModel templateModel);
 
     /**
      * 获取所有模板
@@ -57,4 +58,14 @@ public interface TemplateDao {
      * @return 模板列表
      */
     List<TemplateModel> getAll();
+
+    /**
+     * 修改模板状态
+     *
+     * @param id         模板id
+     * @param state      状态
+     * @param updateTime 修改时间
+     * @return
+     */
+    Integer modifyState(@Param("id") Integer id, @Param("state") Byte state, @Param("updateTime") Integer updateTime);
 }

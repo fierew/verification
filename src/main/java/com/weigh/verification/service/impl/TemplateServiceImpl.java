@@ -87,6 +87,7 @@ public class TemplateServiceImpl implements TemplateService {
         // 验证数据
         List<String> keys = this.verifyTempParam(templateModel);
         if (keys == null) {
+            log.info("验证数据失败！");
             return null;
         }
         templateModel.setKeys(String.join(",", keys));
@@ -101,14 +102,14 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public TemplateModel getInfoById(Integer id){
+    public TemplateModel getInfoById(Integer id) {
         return templateDao.getInfo(id);
     }
 
     @Override
-    public PageInfo<TemplateModel> getList(Integer page, Integer pageSize) {
+    public PageInfo<TemplateModel> getList(Integer page, Integer pageSize, TemplateModel templateModel) {
         PageHelper.startPage(page, pageSize);
-        List<TemplateModel> list = templateDao.getList();
+        List<TemplateModel> list = templateDao.getList(templateModel);
         return new PageInfo<>(list);
     }
 
@@ -117,14 +118,22 @@ public class TemplateServiceImpl implements TemplateService {
         return templateDao.getAll();
     }
 
+    @Override
+    public Integer modifyState(Integer id, Byte state) {
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        return templateDao.modifyState(id, state, time);
+    }
+
     private List<String> verifyTempParam(TemplateModel templateModel) {
         if (templateModel.getFileId() == null) {
+            log.info("文件ID不能是空！");
             return null;
         }
 
         // 根据模板文件id获取文件路径
         FileModel fileInfo = fileDao.getInfo(templateModel.getFileId());
         if (fileInfo == null) {
+            log.info("文件信息不存在");
             return null;
         }
 
@@ -132,6 +141,7 @@ public class TemplateServiceImpl implements TemplateService {
 
         // 解析模板参数
         if (templateModel.getParams() == null) {
+            log.info("文件不存在！");
             return null;
         }
 

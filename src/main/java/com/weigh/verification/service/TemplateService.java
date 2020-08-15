@@ -55,11 +55,12 @@ public interface TemplateService {
     /**
      * 获取模板列表
      *
-     * @param page     页数
-     * @param pageSize 每页的条数
+     * @param page          页数
+     * @param pageSize      每页的条数
+     * @param templateModel 模板条件
      * @return 模板列表
      */
-    PageInfo<TemplateModel> getList(Integer page, Integer pageSize);
+    PageInfo<TemplateModel> getList(Integer page, Integer pageSize, TemplateModel templateModel);
 
     /**
      * 获取全部模板
@@ -67,4 +68,13 @@ public interface TemplateService {
      * @return 模板列表
      */
     List<TemplateModel> getAll();
+
+    /**
+     * 修改模板状态
+     *
+     * @param id    模板id
+     * @param state 状态
+     * @return 结果
+     */
+    Integer modifyState(Integer id, Byte state);
 }

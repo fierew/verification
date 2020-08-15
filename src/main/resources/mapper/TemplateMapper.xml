@@ -37,7 +37,16 @@
     <select id="getList" resultType="com.weigh.verification.model.TemplateModel">
         select *
         from `template`
-        where is_delete = 0
+                where is_delete = 0
+        <if test="name != null and name != ''">
+            AND name like '%' #{name} '%'
+        </if>
+        <if test="describe != null and describe != ''">
+            AND `describe` like '%' #{describe} '%'
+        </if>
+        <if test="state != null and state != ''">
+            AND `state` like #{state}
+        </if>
         order by id desc
     </select>
 
@@ -47,4 +56,11 @@
         where is_delete = 0
         order by id;
     </select>
+
+    <update id="modifyState">
+        update `template`
+        set `state`      = #{state},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
 </mapper>
