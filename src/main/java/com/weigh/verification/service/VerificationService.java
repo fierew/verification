@@ -12,7 +12,7 @@ public interface VerificationService {
     /**
      * 新增鉴定信息
      *
-     * @param userId 用户id
+     * @param userId            用户id
      * @param verificationModel 鉴定信息
      * @return 结果
      */
@@ -38,11 +38,12 @@ public interface VerificationService {
     /**
      * 获取鉴定列表
      *
-     * @param page     页数
-     * @param pageSize 每页条数
+     * @param page              页数
+     * @param pageSize          每页条数
+     * @param verificationModel 鉴定信息
      * @return 鉴定列表
      */
-    Result getList(Integer page, Integer pageSize);
+    Result getList(Integer page, Integer pageSize, VerificationModel verificationModel);
 
     /**
      * 获取鉴定信息

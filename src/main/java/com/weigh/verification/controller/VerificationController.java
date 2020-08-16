@@ -62,8 +62,8 @@ public class VerificationController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("getList")
-    Result getList(TableEntity tableEntity) {
-        return verificationService.getList(tableEntity.getPage(), tableEntity.getPageSize());
+    Result getList(TableEntity tableEntity, VerificationModel verificationModel) {
+        return verificationService.getList(tableEntity.getPage(), tableEntity.getPageSize(), verificationModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})

@@ -21,10 +21,10 @@ public interface VerificationDao {
 
     /**
      * 获取鉴定列表
-     *
-     * @return 用户列表
+     * @param verificationModel 鉴定信息
+     * @return 鉴定列表
      */
-    List<VerificationModel> getList();
+    List<VerificationModel> getList(VerificationModel verificationModel);
 
     /**
      * 修改鉴定信息

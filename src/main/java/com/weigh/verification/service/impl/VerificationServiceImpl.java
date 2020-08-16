@@ -116,11 +116,11 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public Result getList(Integer page, Integer pageSize) {
+    public Result getList(Integer page, Integer pageSize, VerificationModel verificationModel) {
         Result result = new Result();
 
         PageHelper.startPage(page, pageSize);
-        List<VerificationModel> list = verificationDao.getList();
+        List<VerificationModel> list = verificationDao.getList(verificationModel);
         PageInfo<VerificationModel> res = new PageInfo<>(list);
 
         result.setMsg("获取鉴定信息成功");
