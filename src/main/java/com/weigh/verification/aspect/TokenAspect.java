@@ -150,11 +150,11 @@ public class TokenAspect {
 
     private void afterPoint(ProceedingJoinPoint joinPoint, Object result) throws Exception {
         //可以存储日志
-        //log.info(result.toString());
+        // log.info(result.toString());
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         log.info(request.getServletPath());
-        System.out.println(result);
+        // System.out.println(result);
     }
 }
