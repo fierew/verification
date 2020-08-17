@@ -14,7 +14,7 @@
     <select id="getList" resultType="com.weigh.verification.model.VerificationModel">
         select *
         from `verification`
-        where is_delete = 0
+                where is_delete = 0
         <if test="name != null and name != ''">
             AND name like '%' #{name} '%'
         </if>
