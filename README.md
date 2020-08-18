@@ -7,7 +7,7 @@
 启动开发服务,
 
 ```bash
-$ mvn spring-boot:run
+$ mvnw spring-boot:run
 ```
 
 ## 打包
@@ -15,5 +15,13 @@ $ mvn spring-boot:run
 在根目录运行,
 
 ```bash
-$ mvn clean compile package
+$ mvnw clean package
+```
+
+## 运行JAR文件
+
+输入命令
+
+```
+$ java -jar target/verification-0.0.1-SNAPSHOT.jar
 ```
