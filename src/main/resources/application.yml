@@ -1,10 +1,6 @@
 server:
   port: 8080
 spring:
-  mvc:
-    view:
-      prefix: /
-      suffix: .html
   jackson:
     # 设置属性命名策略,对应jackson下PropertyNamingStrategy中的常量值，SNAKE_CASE-返回的json驼峰式转下划线，json body下划线传到后端自动转驼峰式
     property-naming-strategy: SNAKE_CASE
