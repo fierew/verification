@@ -53,7 +53,7 @@ public class TemplateServiceImpl implements TemplateService {
 
         while (m.find()) {
             String key = m.group(1);
-            System.out.println(key);
+            // System.out.println(key);
 
             if (!list.contains(key)) {
                 list.add(m.group(1));

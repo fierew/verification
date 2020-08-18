@@ -76,7 +76,7 @@ public class FileUtil {
 
             FileInputStream fileInputStream = new FileInputStream(dest);
             String hex = DigestUtils.sha256Hex(fileInputStream);
-            System.out.println(hex);
+            // System.out.println(hex);
             // 判断前端的哈希和文件真实哈希是否匹配
             if (!hex.equals(fileEntity.getHash())) {
                 if (!dest.delete()) {

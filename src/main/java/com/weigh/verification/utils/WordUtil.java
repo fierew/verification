@@ -57,20 +57,20 @@ public class WordUtil {
 
             XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
             String text = extractor.getText();
-            System.out.println(text);
+            // System.out.println(text);
             POIXMLProperties.CoreProperties coreProps = extractor.getCoreProperties();
 
             // 分类
-            System.out.println(coreProps.getCategory());
+            // System.out.println(coreProps.getCategory());
 
             // 创建者
-            System.out.println(coreProps.getCreator());
+            // System.out.println(coreProps.getCreator());
 
             // 创建时间
-            System.out.println(coreProps.getCreated());
+            // System.out.println(coreProps.getCreated());
 
-            //标题
-            System.out.println(coreProps.getTitle());
+            // 标题
+            // System.out.println(coreProps.getTitle());
 
             // 关闭输入流
             is.close();

@@ -53,7 +53,7 @@ public class TemplateController {
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
     Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, TemplateModel templateModel) {
-        System.out.println(templateModel);
+        // System.out.println(templateModel);
         Integer res = templateService.edit(id, tokenUserEntity.getUserId(), templateModel);
 
         Result result = new Result();

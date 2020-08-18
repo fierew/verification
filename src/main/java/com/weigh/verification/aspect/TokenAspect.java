@@ -128,7 +128,7 @@ public class TokenAspect {
 
         // 解析token并获取token中的用户信息
         Map<String, Claim> claims = jwtUtil.verity(token);
-        System.out.println(claims);
+        // System.out.println(claims);
         //得到这个方法控制器的所有形参
         Object[] args = joinPoint.getArgs();
 
@@ -136,7 +136,7 @@ public class TokenAspect {
             //如果这个控制器方法中有用户这个形参，说明这个控制器需要用户的信息，那么我就把我这里解析出来的userId 赛进这个形参中，那样在控制器那边就能得到我赛的userId了
             if (argItem instanceof TokenUserEntity) {
                 TokenUserEntity paramVO = (TokenUserEntity) argItem;
-                System.out.println(paramVO);
+                // System.out.println(paramVO);
                 Claim userId = claims.get("userId");
 //                Claim email = claims.get("email");
 //                Claim role = claims.get("role");
