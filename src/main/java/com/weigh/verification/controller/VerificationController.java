@@ -9,6 +9,7 @@ import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.entity.VerificationParamEntity;
 import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
+import com.weigh.verification.model.VerificationLogModel;
 import com.weigh.verification.model.VerificationModel;
 import com.weigh.verification.service.FileService;
 import com.weigh.verification.service.TemplateService;
@@ -70,6 +71,18 @@ public class VerificationController {
     @GetMapping("getInfo/{id}")
     Result getInfo(@PathVariable Integer id) {
         return verificationService.getInfo(id);
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
+    @PostMapping("addLog")
+    Result addLog(TokenUserEntity tokenUserEntity, VerificationLogModel verificationLogModel) {
+        return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogModel);
+    }
+
+    @Operation(security = {@SecurityRequirement(name = "JWT")})
+    @GetMapping("log/{id}")
+    Result getLogList(TableEntity tableEntity, @PathVariable Integer id) {
+        return verificationService.getLogList(tableEntity.getPage(), tableEntity.getPageSize(), id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})

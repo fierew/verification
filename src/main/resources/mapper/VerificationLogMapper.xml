@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weigh.verification.dao.VerificationLogDao">
+    <select id="getLogList" resultType="com.weigh.verification.entity.VerificationLogEntity">
+        select a1.user_id,
+               a1.verification_id,
+               a1.key,
+               a1.form_name,
+               a1.update_value,
+               a1.create_time,
+               a2.email,
+               a2.nickname
+        from verification_log a1
+                     left join `user` a2 on a1.user_id = a2.id
+        where a1.verification_id = #{id}
+    </select>
+
+    <insert id="addLog">
+        INSERT INTO `verification_log` (`user_id`, `verification_id`, `key`, `form_name`, `update_value`, `create_time`,
+                                        `update_time`)
+        VALUES (#{userId}, #{verificationId}, #{key}, #{formName}, #{updateValue}, #{createTime}, #{updateTime})
+    </insert>
+</mapper>

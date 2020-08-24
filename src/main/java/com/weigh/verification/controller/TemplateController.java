@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
@@ -53,7 +52,6 @@ public class TemplateController {
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
     Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, TemplateModel templateModel) {
-        // System.out.println(templateModel);
         Integer res = templateService.edit(id, tokenUserEntity.getUserId(), templateModel);
 
         Result result = new Result();

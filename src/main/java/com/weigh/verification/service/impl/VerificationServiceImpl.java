@@ -7,10 +7,13 @@ import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.TemplateDao;
 import com.weigh.verification.dao.VerificationDao;
+import com.weigh.verification.dao.VerificationLogDao;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TemplateParamEntity;
+import com.weigh.verification.entity.VerificationLogEntity;
 import com.weigh.verification.entity.VerificationParamEntity;
 import com.weigh.verification.model.TemplateModel;
+import com.weigh.verification.model.VerificationLogModel;
 import com.weigh.verification.model.VerificationModel;
 import com.weigh.verification.service.VerificationService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +35,9 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Autowired
     private VerificationDao verificationDao;
+
+    @Autowired
+    private VerificationLogDao verificationLogDao;
 
     @Override
     public Result add(Integer userId, VerificationModel verificationModel) {
@@ -129,17 +135,49 @@ public class VerificationServiceImpl implements VerificationService {
         return result;
     }
 
-    private Result verificationDataCheck(VerificationModel verificationModel) {
+    @Override
+    public Result getLogList(Integer page, Integer pageSize, Integer id) {
         Result result = new Result();
 
-        TemplateModel templateinfo = templateDao.getInfo(verificationModel.getTemplateId());
-        if (templateinfo == null) {
+        PageHelper.startPage(page, pageSize);
+        List<VerificationLogEntity> list = verificationLogDao.getLogList(id);
+        PageInfo<VerificationLogEntity> res = new PageInfo<>(list);
+
+        result.setMsg("获取鉴定信息日志成功");
+        result.setCode(200);
+        result.setData(res);
+        return result;
+    }
+
+    @Override
+    public Result addLog(Integer userId, VerificationLogModel verificationLogModel) {
+        Result result = new Result();
+
+        verificationLogModel.setUserId(userId);
+        Integer res = verificationLogDao.addLog(verificationLogModel);
+
+        if (res != 1) {
+            result.setMsg("新增鉴定信息日志失败");
+            result.setCode(400);
+            return result;
+        }
+
+        result.setMsg("新增鉴定信息日志成功");
+        result.setCode(200);
+        return result;
+    }
+
+    private Result verificationDataCheck(VerificationModel verificationModel) {
+        Result result = new Result();
+        System.out.println(verificationModel);
+        TemplateModel templateInfo = templateDao.getInfo(verificationModel.getTemplateId());
+        if (templateInfo == null) {
             result.setMsg("模板不存在");
             result.setCode(400);
             return result;
         }
 
-        if (templateinfo.getParams() == null) {
+        if (templateInfo.getParams() == null) {
             result.setMsg("模板参数不存在");
             result.setCode(400);
             return result;
@@ -153,7 +191,7 @@ public class VerificationServiceImpl implements VerificationService {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            List<TemplateParamEntity> templateParamResults = mapper.readValue(templateinfo.getParams(), templateParamEntity);
+            List<TemplateParamEntity> templateParamResults = mapper.readValue(templateInfo.getParams(), templateParamEntity);
             List<VerificationParamEntity> verificationParamResults = mapper.readValue(verificationModel.getParams(), verificationParamEntity);
 
             for (TemplateParamEntity templateParam : templateParamResults) {
