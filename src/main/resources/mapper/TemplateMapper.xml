@@ -44,8 +44,8 @@
         <if test="describe != null and describe != ''">
             AND `describe` like '%' #{describe} '%'
         </if>
-        <if test="state != null and state != ''">
-            AND `state` like #{state}
+        <if test="state != null">
+            AND `state` = #{state}
         </if>
         order by id desc
     </select>

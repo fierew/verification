@@ -45,13 +45,13 @@ public class VerificationController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("add")
-    Result add(TokenUserEntity tokenUserEntity, VerificationModel verificationModel) {
+    Result add(TokenUserEntity tokenUserEntity, @RequestBody VerificationModel verificationModel) {
         return verificationService.add(tokenUserEntity.getUserId(), verificationModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
-    Result edit(@PathVariable Integer id, VerificationModel verificationModel) {
+    Result edit(@PathVariable Integer id, @RequestBody VerificationModel verificationModel) {
         return verificationService.edit(id, verificationModel);
     }
 
@@ -75,7 +75,7 @@ public class VerificationController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("addLog")
-    Result addLog(TokenUserEntity tokenUserEntity, VerificationLogModel verificationLogModel) {
+    Result addLog(TokenUserEntity tokenUserEntity, @RequestBody VerificationLogModel verificationLogModel) {
         return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogModel);
     }
 

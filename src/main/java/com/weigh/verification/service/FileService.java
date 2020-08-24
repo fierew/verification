@@ -5,8 +5,6 @@ import com.weigh.verification.entity.FileEntity;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.FileModel;
 
-import java.util.List;
-
 /**
  * @author xuyang
  */

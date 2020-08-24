@@ -24,7 +24,7 @@ public class UserController {
 
     @PassToken
     @PostMapping("login")
-    Result login(UserModel userModel) {
+    Result login(@RequestBody UserModel userModel) {
         Object res = userService.login(userModel);
 
         Result result = new Result();
@@ -67,7 +67,7 @@ public class UserController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("add")
-    Result add(UserModel userModel) {
+    Result add(@RequestBody UserModel userModel) {
         Integer res = userService.add(userModel);
 
         Result result = new Result();
@@ -84,7 +84,7 @@ public class UserController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
-    Result edit(@PathVariable Integer id, UserModel userModel) {
+    Result edit(@PathVariable Integer id, @RequestBody UserModel userModel) {
         Integer res = userService.edit(id, userModel);
         Result result = new Result();
         if (res != 1) {

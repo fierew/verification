@@ -3,8 +3,6 @@ package com.weigh.verification.service;
 import com.github.pagehelper.PageInfo;
 import com.weigh.verification.model.UserModel;
 
-import java.util.List;
-
 /**
  * @author xuyang
  */

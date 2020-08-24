@@ -34,7 +34,7 @@ public class TemplateController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("add")
-    Result add(TokenUserEntity tokenUserEntity, TemplateModel templateModel) {
+    Result add(TokenUserEntity tokenUserEntity, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.add(tokenUserEntity.getUserId(), templateModel);
 
         Result result = new Result();
@@ -51,7 +51,7 @@ public class TemplateController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("edit/{id}")
-    Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, TemplateModel templateModel) {
+    Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.edit(id, tokenUserEntity.getUserId(), templateModel);
 
         Result result = new Result();
@@ -130,7 +130,7 @@ public class TemplateController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("modifyState/{id}")
-    Result modifyState(@PathVariable Integer id, TemplateModel templateModel) {
+    Result modifyState(@PathVariable Integer id, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.modifyState(id, templateModel.getState());
 
         Result result = new Result();

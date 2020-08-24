@@ -1,6 +1,5 @@
 package com.weigh.verification.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
@@ -79,7 +78,6 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public Integer edit(Integer id, Integer userId, TemplateModel templateModel) {
-
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
         templateModel.setUpdateTime(time);
         templateModel.setId(id);

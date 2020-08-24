@@ -169,7 +169,6 @@ public class VerificationServiceImpl implements VerificationService {
 
     private Result verificationDataCheck(VerificationModel verificationModel) {
         Result result = new Result();
-        System.out.println(verificationModel);
         TemplateModel templateInfo = templateDao.getInfo(verificationModel.getTemplateId());
         if (templateInfo == null) {
             result.setMsg("模板不存在");

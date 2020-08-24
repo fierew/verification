@@ -4,8 +4,6 @@ import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.VerificationLogModel;
 import com.weigh.verification.model.VerificationModel;
 
-import java.util.List;
-
 /**
  * @author xuyang
  */
