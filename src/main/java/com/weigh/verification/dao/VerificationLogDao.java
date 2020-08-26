@@ -3,6 +3,7 @@ package com.weigh.verification.dao;
 import com.weigh.verification.entity.VerificationLogEntity;
 import com.weigh.verification.model.VerificationLogModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public interface VerificationLogDao {
     /**
      * 新增鉴定日志信息
      *
-     * @param verificationLogModel 鉴定日志信息
+     * @param verificationLogModels 鉴定日志信息
      * @return 结果
      */
-    Integer addLog(VerificationLogModel verificationLogModel);
+    Integer addLog(@Param("verificationLogModels") List<VerificationLogModel> verificationLogModels);
 }

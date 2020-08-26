@@ -3,13 +3,9 @@ package com.weigh.verification.controller;
 import com.deepoove.poi.XWPFTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.weigh.verification.entity.Result;
-import com.weigh.verification.entity.TableEntity;
-import com.weigh.verification.entity.TokenUserEntity;
-import com.weigh.verification.entity.VerificationParamEntity;
+import com.weigh.verification.entity.*;
 import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
-import com.weigh.verification.model.VerificationLogModel;
 import com.weigh.verification.model.VerificationModel;
 import com.weigh.verification.service.FileService;
 import com.weigh.verification.service.TemplateService;
@@ -75,12 +71,12 @@ public class VerificationController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("addLog")
-    Result addLog(TokenUserEntity tokenUserEntity, @RequestBody VerificationLogModel verificationLogModel) {
-        return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogModel);
+    Result addLog(TokenUserEntity tokenUserEntity, @RequestBody VerificationLogDataEntity verificationLogDataEntity) {
+        return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogDataEntity);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("log/{id}")
+    @GetMapping("getLogList/{id}")
     Result getLogList(TableEntity tableEntity, @PathVariable Integer id) {
         return verificationService.getLogList(tableEntity.getPage(), tableEntity.getPageSize(), id);
     }

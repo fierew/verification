@@ -8,10 +8,7 @@ import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.TemplateDao;
 import com.weigh.verification.dao.VerificationDao;
 import com.weigh.verification.dao.VerificationLogDao;
-import com.weigh.verification.entity.Result;
-import com.weigh.verification.entity.TemplateParamEntity;
-import com.weigh.verification.entity.VerificationLogEntity;
-import com.weigh.verification.entity.VerificationParamEntity;
+import com.weigh.verification.entity.*;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.model.VerificationLogModel;
 import com.weigh.verification.model.VerificationModel;
@@ -143,6 +140,12 @@ public class VerificationServiceImpl implements VerificationService {
         List<VerificationLogEntity> list = verificationLogDao.getLogList(id);
         PageInfo<VerificationLogEntity> res = new PageInfo<>(list);
 
+        Integer index = 0;
+        for (VerificationLogEntity verificationLogEntity:res.getList()){
+            index++;
+            verificationLogEntity.setId(index);
+        }
+
         result.setMsg("获取鉴定信息日志成功");
         result.setCode(200);
         result.setData(res);
@@ -150,11 +153,17 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public Result addLog(Integer userId, VerificationLogModel verificationLogModel) {
+    public Result addLog(Integer userId, VerificationLogDataEntity verificationLogDataEntity) {
         Result result = new Result();
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        List<VerificationLogModel> data = verificationLogDataEntity.getData();
+        for (VerificationLogModel verificationLogModel : data) {
+            verificationLogModel.setUserId(userId);
+            verificationLogModel.setCreateTime(time);
+        }
 
-        verificationLogModel.setUserId(userId);
-        Integer res = verificationLogDao.addLog(verificationLogModel);
+        Integer res = verificationLogDao.addLog(data);
+
 
         if (res != 1) {
             result.setMsg("新增鉴定信息日志失败");

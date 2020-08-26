@@ -1,7 +1,7 @@
 package com.weigh.verification.service;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.VerificationLogModel;
+import com.weigh.verification.entity.VerificationLogDataEntity;
 import com.weigh.verification.model.VerificationModel;
 
 /**
@@ -66,8 +66,8 @@ public interface VerificationService {
      * 新增鉴定日志信息
      *
      * @param userId               用户id
-     * @param verificationLogModel 鉴定日志信息
+     * @param verificationLogDataEntity 鉴定日志信息列表
      * @return 结果
      */
-    Result addLog(Integer userId, VerificationLogModel verificationLogModel);
+    Result addLog(Integer userId, VerificationLogDataEntity verificationLogDataEntity);
 }

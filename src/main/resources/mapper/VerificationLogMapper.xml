@@ -10,6 +10,7 @@
                a1.form_name,
                a1.update_value,
                a1.create_time,
+               a1.update_time,
                a2.email,
                a2.nickname
         from verification_log a1
@@ -20,6 +21,11 @@
     <insert id="addLog">
         INSERT INTO `verification_log` (`user_id`, `verification_id`, `key`, `form_name`, `update_value`, `create_time`,
                                         `update_time`)
-        VALUES (#{userId}, #{verificationId}, #{key}, #{formName}, #{updateValue}, #{createTime}, #{updateTime})
+                VALUES
+        <foreach collection="verificationLogModels" item="verificationLogModel" index="index" separator=",">
+            (#{verificationLogModel.userId}, #{verificationLogModel.verificationId}, #{verificationLogModel.key},
+             #{verificationLogModel.formName}, #{verificationLogModel.updateValue}, #{verificationLogModel.createTime},
+             #{verificationLogModel.updateTime})
+        </foreach>
     </insert>
 </mapper>
