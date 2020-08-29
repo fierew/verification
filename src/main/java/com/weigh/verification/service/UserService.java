@@ -1,6 +1,7 @@
 package com.weigh.verification.service;
 
 import com.github.pagehelper.PageInfo;
+import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.UserModel;
 
 /**
@@ -27,9 +28,10 @@ public interface UserService {
      *
      * @param page     页数
      * @param pageSize 每页条数
+     * @param userModel 条件
      * @return 用户列表
      */
-    PageInfo<UserModel> getList(Integer page, Integer pageSize);
+    PageInfo<UserModel> getList(Integer page, Integer pageSize, UserModel userModel);
 
     /**
      * 新增用户
@@ -37,7 +39,7 @@ public interface UserService {
      * @param userModel 用户对象
      * @return Integer
      */
-    Integer add(UserModel userModel);
+    Result add(UserModel userModel);
 
     /**
      * 编辑用户

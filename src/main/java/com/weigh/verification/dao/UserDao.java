@@ -30,9 +30,10 @@ public interface UserDao {
     /**
      * 获取用户列表
      *
+     * @param userModel 条件
      * @return 用户列表
      */
-    List<UserModel> getList();
+    List<UserModel> getList(UserModel userModel);
 
     /**
      * 新增用户信息

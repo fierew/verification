@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
 import com.weigh.verification.dao.UserDao;
+import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.UserModel;
 import com.weigh.verification.service.UserService;
 import com.weigh.verification.utils.JwtUtil;
@@ -34,19 +35,37 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public Integer add(UserModel userModel) {
+    public Result add(UserModel userModel) {
+        Result result = new Result();
+
+        // 判断邮箱是否存在
+        UserModel userInfo = userDao.getInfo(userModel.getEmail());
+        if(userInfo != null){
+            result.setCode(400);
+            result.setMsg("该账号已存在");
+            return result;
+        }
+
         userModel.setPassword(bCryptPasswordEncoder.encode(userModel.getPassword()));
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
         userModel.setCreateTime(time);
         userModel.setUpdateTime(time);
 
-        return userDao.add(userModel);
+        Integer res = userDao.add(userModel);
+        if(res != 1){
+            result.setCode(400);
+            result.setMsg("新增用户失败");
+        }
+
+        result.setCode(200);
+        result.setMsg("新增用户成功");
+        return result;
     }
 
     @Override
-    public PageInfo<UserModel> getList(Integer page, Integer pageSize) {
+    public PageInfo<UserModel> getList(Integer page, Integer pageSize, UserModel userModel) {
         PageHelper.startPage(page, pageSize);
-        List<UserModel> list = userDao.getList();
+        List<UserModel> list = userDao.getList(userModel);
         return new PageInfo<>(list);
     }
 
