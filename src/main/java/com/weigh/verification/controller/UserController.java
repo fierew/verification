@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -37,7 +37,7 @@ public class UserController {
     WebApplicationContext webApplicationContext;
 
     @PassToken
-    @PostMapping("login")
+    @PostMapping("/login")
     Result login(@RequestBody UserModel userModel) {
         Object res = userService.login(userModel);
 
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getInfo/{id}")
+    @GetMapping("/getInfo/{id}")
     Result getInfo(@PathVariable Integer id) {
         Result result = new Result();
 
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getList")
+    @GetMapping("/getList")
     Result getList(TableEntity tableEntity, UserModel userModel) {
         PageInfo<UserModel> userList = userService.getList(tableEntity.getPage(), tableEntity.getPageSize(), userModel);
 
@@ -80,13 +80,13 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PostMapping("add")
+    @PostMapping("/add")
     Result add(@RequestBody UserModel userModel) {
         return userService.add(userModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PutMapping("edit/{id}")
+    @PutMapping("/edit/{id}")
     Result edit(@PathVariable Integer id, @RequestBody UserModel userModel) {
         Integer res = userService.edit(id, userModel);
         Result result = new Result();
@@ -102,7 +102,7 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = userService.delete(id);
         Result result = new Result();
@@ -118,7 +118,7 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PutMapping("modifyState/{id}")
+    @PutMapping("/modifyState/{id}")
     Result modifyState(@PathVariable Integer id) {
         Integer res = userService.modifyState(id);
         Result result = new Result();
@@ -134,7 +134,7 @@ public class UserController {
     }
 
     @PassToken
-    @GetMapping("getAllUrl")
+    @GetMapping("/getAllUrl")
     public Object getAllUrl() {
         RequestMappingHandlerMapping mapping = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息

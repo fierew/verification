@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("verification")
+@RequestMapping("/verification")
 public class VerificationController {
     @Autowired
     private VerificationService verificationService;
@@ -40,49 +40,49 @@ public class VerificationController {
     private FileService fileService;
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PostMapping("add")
+    @PostMapping("/add")
     Result add(TokenUserEntity tokenUserEntity, @RequestBody VerificationModel verificationModel) {
         return verificationService.add(tokenUserEntity.getUserId(), verificationModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PutMapping("edit/{id}")
+    @PutMapping("/edit/{id}")
     Result edit(@PathVariable Integer id, @RequestBody VerificationModel verificationModel) {
         return verificationService.edit(id, verificationModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         return verificationService.delete(id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getList")
+    @GetMapping("/getList")
     Result getList(TableEntity tableEntity, VerificationModel verificationModel) {
         return verificationService.getList(tableEntity.getPage(), tableEntity.getPageSize(), verificationModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getInfo/{id}")
+    @GetMapping("/getInfo/{id}")
     Result getInfo(@PathVariable Integer id) {
         return verificationService.getInfo(id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PostMapping("addLog")
+    @PostMapping("/addLog")
     Result addLog(TokenUserEntity tokenUserEntity, @RequestBody VerificationLogDataEntity verificationLogDataEntity) {
         return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogDataEntity);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getLogList/{id}")
+    @GetMapping("/getLogList/{id}")
     Result getLogList(TableEntity tableEntity, @PathVariable Integer id) {
         return verificationService.getLogList(tableEntity.getPage(), tableEntity.getPageSize(), id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("downloads/{id}")
+    @GetMapping("/downloads/{id}")
     void downloads(@PathVariable Integer id, HttpServletResponse response) {
         Result result = verificationService.getInfo(id);
         if (result.getCode() != 200) {

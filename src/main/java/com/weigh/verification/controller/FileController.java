@@ -24,19 +24,19 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("file")
+@RequestMapping("/file")
 public class FileController {
     @Autowired
     private FileService fileService;
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @PostMapping("upload")
+    @PostMapping("/upload")
     Result upload(TokenUserEntity tokenUserEntity, FileEntity file) {
         return fileService.upload(tokenUserEntity.getUserId(), file);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("check")
+    @GetMapping("/check")
     Result check(FileModel fileModel) {
         FileModel fileInfo = fileService.check(fileModel.getHash());
 
@@ -54,7 +54,7 @@ public class FileController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("getList")
+    @GetMapping("/getList")
     Result getList(TableEntity tableEntity) {
         PageInfo<FileModel> fileList = fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
         Result result = new Result();
@@ -66,7 +66,7 @@ public class FileController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = fileService.delete(id);
 
@@ -82,7 +82,7 @@ public class FileController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
-    @GetMapping("downloads/{id}")
+    @GetMapping("/downloads/{id}")
     void downloads(@PathVariable Integer id, HttpServletResponse response) {
         // 根据文件ID查文件路径
         FileModel fileInfo = fileService.getInfo(id);

@@ -105,6 +105,8 @@ public class TokenAspect {
         //得到要进入的是哪个controller方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
+        System.out.println(joinPoint.getTarget().getClass().getName());
+        System.out.println(signature.getName());
 
         //检查是否有PassToken注释，有则跳过认证，所以在controller层加了@Passtoken注解，这里就不校验
         if (method.isAnnotationPresent(PassToken.class)) {
