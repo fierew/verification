@@ -65,7 +65,7 @@ public interface TemplateDao {
      * @param id         模板id
      * @param state      状态
      * @param updateTime 修改时间
-     * @return
+     * @return 结果
      */
     Integer modifyState(@Param("id") Integer id, @Param("state") Byte state, @Param("updateTime") Integer updateTime);
 }
