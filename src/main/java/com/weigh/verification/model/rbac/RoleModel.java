@@ -21,7 +21,7 @@ public class RoleModel {
     private Integer dataRange;
 
     @JsonProperty(value = "sort")
-    private Byte sort;
+    private Integer sort;
 
     @JsonProperty(value = "isDelete")
     private Byte isDelete;

@@ -42,7 +42,7 @@ public class UserModel {
     private Byte state;
 
     @JsonProperty(value = "sort")
-    private Byte sort;
+    private Integer sort;
 
     @JsonProperty(value = "isDelete")
     private Byte isDelete;
