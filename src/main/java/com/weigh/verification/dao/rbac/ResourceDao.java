@@ -53,4 +53,10 @@ public interface ResourceDao {
      * @return 结果
      */
     Integer delete(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
+
+    /**
+     * 获取全部数据
+     * @return 全部数据
+     */
+    List<ResourceModel> getAll();
 }

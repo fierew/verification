@@ -48,4 +48,10 @@
             `update_time`=#{updateTime}
         where id = #{id}
     </update>
+
+    <select id="getAll" resultType="com.weigh.verification.model.rbac.ResourceModel">
+        select *
+        from `rbac_resource`
+        where is_delete = 0;
+    </select>
 </mapper>

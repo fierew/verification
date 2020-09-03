@@ -35,7 +35,7 @@ public class ResourceModel {
     private Integer remarks;
 
     @JsonProperty(value = "state")
-    private Integer state;
+    private Byte state;
 
     @JsonProperty(value = "sort")
     private Integer sort;
