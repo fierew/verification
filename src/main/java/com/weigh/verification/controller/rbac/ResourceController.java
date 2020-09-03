@@ -22,31 +22,31 @@ public class ResourceController {
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/add")
-    Result add(ResourceModel resourceModel){
+    Result add(@RequestBody ResourceModel resourceModel) {
         return resourceService.add(resourceModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("/edit/{id}")
-    Result edit(@PathVariable Integer id, ResourceModel resourceModel){
+    Result edit(@PathVariable Integer id, @RequestBody ResourceModel resourceModel) {
         return resourceService.edit(id, resourceModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("/delete/{id}")
-    Result delete(@PathVariable Integer id){
+    Result delete(@PathVariable Integer id) {
         return resourceService.delete(id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("/modifyState/{id}")
-    Result modifyState(@PathVariable Integer id, ResourceModel resourceModel){
+    Result modifyState(@PathVariable Integer id, @RequestBody ResourceModel resourceModel) {
         return resourceService.modifyState(id, resourceModel.getState());
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getList")
-    Result getList(){
-        return resourceService.getList();
+    Result getList() {
+        return resourceService.getAll();
     }
 }

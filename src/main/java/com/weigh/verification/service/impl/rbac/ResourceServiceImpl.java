@@ -107,17 +107,31 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Result getList() throws IllegalAccessException {
-        List<ResourceModel> all = resourceDao.getAll();
-
-        // 将数据解析成tree
-        List<Map<String, Object>> tree = new TreeUtil(Collections.singletonList(all)).buildTree();
-
+    public Result getAll() {
         Result result = new Result();
+
+        List<ResourceModel> all = resourceDao.getAll();
 
         result.setCode(200);
         result.setMsg("success");
-        result.setData(tree);
-        return result;
+
+        if(all == null){
+            result.setData(null);
+            return result;
+        }
+
+        try {
+            // 将数据解析成tree
+            List<Map<String, Object>> tree = new TreeUtil(Collections.singletonList(all)).buildTree();
+
+            result.setData(tree);
+            return result;
+        }catch (Exception e){
+
+            result.setCode(400);
+            result.setMsg("解析树失败！");
+            return result;
+        }
+
     }
 }

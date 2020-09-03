@@ -12,7 +12,7 @@ public interface ResourceService {
      *
      * @return 树
      */
-    Result getList() throws IllegalAccessException;
+    Result getAll();
 
     /**
      * 添加

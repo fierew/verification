@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weigh.verification.dao.rbac.DeptDao">
+    <insert id="add">
+        INSERT INTO `rbac_dept` (`parent_id`, `name`, `remarks`, `sort`, `create_time`, `update_time`)
+        VALUES (#{parentId}, #{name}, #{remarks}, #{sort}, #{createTime}, #{updateTime});
+    </insert>
+
+    <update id="edit">
+        update `rbac_dept`
+        set `parent_id`  = #{parentId},
+            `name`       = #{name},
+            `remarks`    = #{remarks},
+            `sort`       = #{sort},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        update `rbac_dept`
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </delete>
+
+    <select id="getAll" resultType="com.weigh.verification.model.rbac.DeptModel">
+        select *
+        from `rbac_dept`
+        where is_delete = 0;
+    </select>
+</mapper>
