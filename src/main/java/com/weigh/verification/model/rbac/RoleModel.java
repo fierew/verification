@@ -3,6 +3,8 @@ package com.weigh.verification.model.rbac;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author xuyang
  */
@@ -19,6 +21,12 @@ public class RoleModel {
 
     @JsonProperty(value = "dataRange")
     private Integer dataRange;
+
+    @JsonProperty(value = "deptArray")
+    private List<Integer> deptArray;
+
+    @JsonProperty(value = "resourceArray")
+    private List<Integer> resourceArray;
 
     @JsonProperty(value = "sort")
     private Integer sort;
