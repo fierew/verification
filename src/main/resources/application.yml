@@ -78,7 +78,7 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接 默认 8
         min-idle: 0 # 连接池中的最小空闲连接 默认 0
 mybatis:
-  typeAliasesPackage: com.example.demo.model   #配置别名
+  typeAliasesPackage: com.weigh.verification.model   #配置别名
   mapperLocations: classpath:mapper/*.xml
   configuration:
     mapUnderscoreToCamelCase: true
