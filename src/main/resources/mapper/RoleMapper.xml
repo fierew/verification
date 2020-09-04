@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weigh.verification.dao.rbac.RoleDao">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `rbac_role` (`name`, `remarks`, `data_range`, `sort`, `create_time`, `update_time`)
+        VALUES (#{name}, #{remarks}, #{dataRange}, #{sort}, #{createTime}, #{updateTime});
+    </insert>
+
+    <update id="edit">
+        update `rbac_role`
+        set `name`       = #{name},
+            `remarks`    = #{remarks},
+            `data_range` = #{dataRange},
+            `sort`       = #{sort},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        update `rbac_role`
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </delete>
+
+    <select id="getList" resultType="com.weigh.verification.model.rbac.RoleModel">
+        select *
+        from `rbac_role`
+                where is_delete = 0
+        <if test="name != null and name != ''">
+            AND name like '%' #{name} '%'
+        </if>
+        <if test="dataRange != null">
+            AND `data_range` = #{dataRange}
+        </if>
+        order by id desc
+    </select>
+</mapper>

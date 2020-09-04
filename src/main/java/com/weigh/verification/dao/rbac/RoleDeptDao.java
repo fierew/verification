@@ -17,4 +17,12 @@ public interface RoleDeptDao {
      * @return 结果
      */
     Integer addAll(List<RoleDeptModel> roleDeptModels);
+
+    /**
+     * 物理删除
+     *
+     * @param roleId 角色id
+     * @return 结果
+     */
+    Integer delete(Integer roleId);
 }

@@ -22,7 +22,6 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptDao deptDao;

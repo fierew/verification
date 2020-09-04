@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private WordUtil wordUtil;

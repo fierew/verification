@@ -30,10 +30,11 @@ public interface RoleService {
     /**
      * 编辑
      *
+     * @param id id
      * @param roleModel 信息
      * @return 结果
      */
-    Result edit(RoleModel roleModel);
+    Result edit(Integer id, RoleModel roleModel);
 
     /**
      * 删除

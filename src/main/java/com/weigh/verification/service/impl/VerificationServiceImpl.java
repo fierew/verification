@@ -25,7 +25,6 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class VerificationServiceImpl implements VerificationService {
     @Autowired
     private TemplateDao templateDao;

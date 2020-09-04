@@ -22,7 +22,6 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private ResourceDao resourceDao;
