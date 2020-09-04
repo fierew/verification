@@ -1,7 +1,7 @@
-package com.weigh.verification.service.rbac;
+package com.weigh.verification.service;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.ResourceModel;
+import com.weigh.verification.model.ResourceModel;
 
 /**
  * @author xuyang

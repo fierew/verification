@@ -1,13 +1,13 @@
-package com.weigh.verification.service.rbac;
+package com.weigh.verification.service;
 
 import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.UserModel;
+import com.weigh.verification.model.User1Model;
 
 /**
  * @author xuyang
  */
-public interface UserService {
+public interface User1Service {
     /**
      * 获取分页数据
      *
@@ -16,7 +16,7 @@ public interface UserService {
      * @param userModel 条件
      * @return 分页列表
      */
-    PageInfo<UserModel> getList(Integer page, Integer pageSize, UserModel userModel);
+    PageInfo<User1Model> getList(Integer page, Integer pageSize, User1Model userModel);
 
     /**
      * 添加
@@ -24,7 +24,7 @@ public interface UserService {
      * @param userModel 信息
      * @return 结果
      */
-    Result add(UserModel userModel);
+    Result add(User1Model userModel);
 
     /**
      * 编辑
@@ -32,7 +32,7 @@ public interface UserService {
      * @param userModel 信息
      * @return 结果
      */
-    Result edit(UserModel userModel);
+    Result edit(User1Model userModel);
 
     /**
      * 删除

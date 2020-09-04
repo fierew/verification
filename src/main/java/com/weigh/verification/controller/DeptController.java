@@ -1,8 +1,8 @@
-package com.weigh.verification.controller.rbac;
+package com.weigh.verification.controller;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.DeptModel;
-import com.weigh.verification.service.rbac.DeptService;
+import com.weigh.verification.model.DeptModel;
+import com.weigh.verification.service.DeptService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;

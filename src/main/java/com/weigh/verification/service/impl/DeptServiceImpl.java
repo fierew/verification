@@ -1,15 +1,14 @@
-package com.weigh.verification.service.impl.rbac;
+package com.weigh.verification.service.impl;
 
 import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.rbac.DeptDao;
+import com.weigh.verification.dao.DeptDao;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.DeptModel;
-import com.weigh.verification.service.rbac.DeptService;
+import com.weigh.verification.model.DeptModel;
+import com.weigh.verification.service.DeptService;
 import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;

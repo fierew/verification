@@ -1,4 +1,4 @@
-package com.weigh.verification.model.rbac;
+package com.weigh.verification.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author xuyang
  */
 @Data
-public class UserModel {
+public class User1Model {
     @JsonProperty(value = "id")
     private Integer id;
 
@@ -40,9 +40,6 @@ public class UserModel {
 
     @JsonProperty(value = "state")
     private Byte state;
-
-    @JsonProperty(value = "sort")
-    private Integer sort;
 
     @JsonProperty(value = "isDelete")
     private Byte isDelete;

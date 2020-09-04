@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weigh.verification.dao.User1Dao">
+    <select id="getInfoById" resultType="com.weigh.verification.model.User1Model">
+        select *
+        from `rbac_user`
+        where `id` = #{id}
+          and is_delete = 0
+        limit 1;
+    </select>
+
+    <select id="getInfoByEmail" resultType="com.weigh.verification.model.User1Model">
+        select *
+        from `rbac_user`
+        where `email` = #{email}
+          and is_delete = 0
+        limit 1;
+    </select>
+
+    <select id="getInfoByMobile" resultType="com.weigh.verification.model.User1Model">
+        select *
+        from `rbac_user`
+        where `mobile` = #{mobile}
+          and is_delete = 0
+        limit 1;
+    </select>
+
+    <select id="getList" resultType="com.weigh.verification.model.User1Model">
+        select `id`,
+               `email`,
+               `real_name`,
+               `mobile`,
+               `sex`,
+               `age`,
+               `state`,
+               `create_time`,
+               `update_time`
+        from `rbac_user`
+                where is_delete = 0
+        <if test="email != null and email != ''">
+            AND email like '%' #{email} '%'
+        </if>
+        <if test="realName != null and realName != ''">
+            AND `real_name` like '%' #{realName} '%'
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND `mobile` like '%' #{mobile} '%'
+        </if>
+        <if test="state != null">
+            AND `state` = #{state}
+        </if>
+        order by id desc
+    </select>
+
+    <insert id="add">
+        INSERT INTO `rbac_user` (`dept_id`, `role_id`, `password`, `real_name`, `email`, `mobile`, `sex`, `age`,
+                                 `create_time`, `update_time`)
+        VALUES (#{deptId}, #{roleId}, #{password}, #{realName}, #{email}, #{mobile}, #{sex}, #{age}, #{createTime},
+                #{updateTime})
+    </insert>
+
+    <update id="edit">
+        update `rbac_user`
+        set `dept_id`    = #{deptId},
+            `role_id`    = #{roleId},
+            `real_name`  = #{realName},
+            `email`      = #{email},
+            `mobile`     = #{mobile},
+            `sex`        = #{sex},
+            `age`        = #{age},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update `rbac_user`
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="modifyState">
+        update `rbac_user`
+        set `state`      = #{state},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="modifyPassword">
+        update `rbac_user`
+        set `password`   = #{password},
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="incLoginNum">
+        update `rbac_user`
+        set `login_num`  = `login_num` + 1,
+            `update_time`=#{updateTime}
+        where id = #{id}
+    </update>
+</mapper>

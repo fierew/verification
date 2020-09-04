@@ -1,4 +1,4 @@
-package com.weigh.verification.model.rbac;
+package com.weigh.verification.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

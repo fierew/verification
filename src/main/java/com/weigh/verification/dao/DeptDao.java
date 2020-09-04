@@ -1,6 +1,6 @@
-package com.weigh.verification.dao.rbac;
+package com.weigh.verification.dao;
 
-import com.weigh.verification.model.rbac.DeptModel;
+import com.weigh.verification.model.DeptModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

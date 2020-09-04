@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weigh.verification.dao.rbac.RoleResourceDao">
+<mapper namespace="com.weigh.verification.dao.RoleResourceDao">
     <insert id="addAll">
         INSERT INTO `rbac_role_resource` (`role_id`, `resource_id`, `create_time`)
                 VALUES

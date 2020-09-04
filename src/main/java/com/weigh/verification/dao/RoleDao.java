@@ -1,6 +1,6 @@
-package com.weigh.verification.dao.rbac;
+package com.weigh.verification.dao;
 
-import com.weigh.verification.model.rbac.RoleModel;
+import com.weigh.verification.model.RoleModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

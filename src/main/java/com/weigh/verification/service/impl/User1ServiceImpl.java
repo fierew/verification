@@ -1,12 +1,11 @@
-package com.weigh.verification.service.impl.rbac;
+package com.weigh.verification.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.UserModel;
-import com.weigh.verification.service.rbac.UserService;
+import com.weigh.verification.model.User1Model;
+import com.weigh.verification.service.User1Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户管理
@@ -15,19 +14,23 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class User1ServiceImpl implements User1Service {
     @Override
-    public PageInfo<UserModel> getList(Integer page, Integer pageSize, UserModel userModel) {
+    public PageInfo<User1Model> getList(Integer page, Integer pageSize, User1Model userModel) {
         return null;
     }
 
     @Override
-    public Result add(UserModel userModel) {
+    public Result add(User1Model userModel) {
+        // 判断邮箱是否存在
+
+
+        // 判断手机号是否存在
         return null;
     }
 
     @Override
-    public Result edit(UserModel userModel) {
+    public Result edit(User1Model userModel) {
         return null;
     }
 

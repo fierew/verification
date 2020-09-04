@@ -1,9 +1,8 @@
-package com.weigh.verification.service.rbac;
+package com.weigh.verification.service;
 
 import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.RoleModel;
-import com.weigh.verification.model.rbac.UserModel;
+import com.weigh.verification.model.RoleModel;
 
 /**
  * @author xuyang

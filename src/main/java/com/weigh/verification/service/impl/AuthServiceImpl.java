@@ -1,4 +1,4 @@
-package com.weigh.verification.service.impl.rbac;
+package com.weigh.verification.service.impl;
 
 /**
  * 获取权限

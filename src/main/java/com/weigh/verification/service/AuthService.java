@@ -1,4 +1,4 @@
-package com.weigh.verification.service.rbac;
+package com.weigh.verification.service;
 
 /**
  * @author xuyang

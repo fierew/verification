@@ -1,4 +1,4 @@
-package com.weigh.verification.model.rbac;
+package com.weigh.verification.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author xuyang
  */
 @Data
-public class DeptModel {
+public class ResourceModel {
     @JsonProperty(value = "id")
     private Integer id;
 
@@ -19,8 +19,23 @@ public class DeptModel {
     @JsonProperty(value = "name")
     private String name;
 
+    @JsonProperty(value = "icon")
+    private String icon;
+
+    @JsonProperty(value = "type")
+    private String type;
+
+    @JsonProperty(value = "key")
+    private String key;
+
+    @JsonProperty(value = "path")
+    private String path;
+
     @JsonProperty(value = "remarks")
     private Integer remarks;
+
+    @JsonProperty(value = "state")
+    private Byte state;
 
     @JsonProperty(value = "sort")
     private Integer sort;
@@ -34,5 +49,5 @@ public class DeptModel {
     @JsonProperty(value = "updateTime")
     private Integer updateTime;
 
-    private List<DeptModel> children;
+    private List<ResourceModel> children;
 }

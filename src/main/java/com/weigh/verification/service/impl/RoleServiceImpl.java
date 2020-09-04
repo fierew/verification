@@ -1,16 +1,16 @@
-package com.weigh.verification.service.impl.rbac;
+package com.weigh.verification.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.rbac.RoleDao;
-import com.weigh.verification.dao.rbac.RoleDeptDao;
-import com.weigh.verification.dao.rbac.RoleResourceDao;
+import com.weigh.verification.dao.RoleDao;
+import com.weigh.verification.dao.RoleDeptDao;
+import com.weigh.verification.dao.RoleResourceDao;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.rbac.RoleDeptModel;
-import com.weigh.verification.model.rbac.RoleModel;
-import com.weigh.verification.model.rbac.RoleResourceModel;
-import com.weigh.verification.service.rbac.RoleService;
+import com.weigh.verification.model.RoleDeptModel;
+import com.weigh.verification.model.RoleModel;
+import com.weigh.verification.model.RoleResourceModel;
+import com.weigh.verification.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
