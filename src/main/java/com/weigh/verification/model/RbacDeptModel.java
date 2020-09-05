@@ -9,7 +9,7 @@ import java.util.List;
  * @author xuyang
  */
 @Data
-public class DeptModel {
+public class RbacDeptModel {
     @JsonProperty(value = "id")
     private Integer id;
 
@@ -34,5 +34,5 @@ public class DeptModel {
     @JsonProperty(value = "updateTime")
     private Integer updateTime;
 
-    private List<DeptModel> children;
+    private List<RbacDeptModel> children;
 }

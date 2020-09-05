@@ -1,10 +1,10 @@
 package com.weigh.verification.service.impl;
 
 import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.ResourceDao;
+import com.weigh.verification.dao.RbacResourceDao;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.ResourceModel;
-import com.weigh.verification.service.ResourceService;
+import com.weigh.verification.model.RbacResourceModel;
+import com.weigh.verification.service.RbacResourceService;
 import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +21,19 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class ResourceServiceImpl implements ResourceService {
+public class RbacResourceServiceImpl implements RbacResourceService {
     @Autowired
-    private ResourceDao resourceDao;
+    private RbacResourceDao rbacResourceDao;
 
     @Override
-    public Result add(ResourceModel resourceModel) {
+    public Result add(RbacResourceModel rbacResourceModel) {
         Result result = new Result();
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
-        resourceModel.setCreateTime(time);
-        resourceModel.setUpdateTime(time);
+        rbacResourceModel.setCreateTime(time);
+        rbacResourceModel.setUpdateTime(time);
 
-        Integer res = resourceDao.add(resourceModel);
+        Integer res = rbacResourceDao.add(rbacResourceModel);
 
         if (res != 1) {
             result.setCode(400);
@@ -46,14 +46,14 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Result edit(Integer id, ResourceModel resourceModel) {
+    public Result edit(Integer id, RbacResourceModel rbacResourceModel) {
         Result result = new Result();
-        resourceModel.setId(id);
+        rbacResourceModel.setId(id);
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
-        resourceModel.setUpdateTime(time);
+        rbacResourceModel.setUpdateTime(time);
 
-        Integer res = resourceDao.edit(resourceModel);
+        Integer res = rbacResourceDao.edit(rbacResourceModel);
 
         if (res != 1) {
             result.setCode(400);
@@ -72,7 +72,7 @@ public class ResourceServiceImpl implements ResourceService {
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        Integer res = resourceDao.delete(id, time);
+        Integer res = rbacResourceDao.delete(id, time);
 
         if (res != 1) {
             result.setCode(400);
@@ -91,7 +91,7 @@ public class ResourceServiceImpl implements ResourceService {
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        Integer res = resourceDao.modifyState(id, state, time);
+        Integer res = rbacResourceDao.modifyState(id, state, time);
 
         if (res != 1) {
             result.setCode(400);
@@ -108,7 +108,7 @@ public class ResourceServiceImpl implements ResourceService {
     public Result getAll() {
         Result result = new Result();
 
-        List<ResourceModel> all = resourceDao.getAll();
+        List<RbacResourceModel> all = rbacResourceDao.getAll();
 
         result.setCode(200);
         result.setMsg("success");

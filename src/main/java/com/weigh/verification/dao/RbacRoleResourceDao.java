@@ -1,6 +1,6 @@
 package com.weigh.verification.dao;
 
-import com.weigh.verification.model.RoleDeptModel;
+import com.weigh.verification.model.RbacRoleResourceModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,14 +9,14 @@ import java.util.List;
  * @author xuyang
  */
 @Mapper
-public interface RoleDeptDao {
+public interface RbacRoleResourceDao {
     /**
-     * 批量插入
+     * 添加角色资源
      *
-     * @param roleDeptModels 角色机构信息
+     * @param roleResourceModels 角色资源信息
      * @return 结果
      */
-    Integer addAll(List<RoleDeptModel> roleDeptModels);
+    Integer addAll(List<RbacRoleResourceModel> roleResourceModels);
 
     /**
      * 物理删除

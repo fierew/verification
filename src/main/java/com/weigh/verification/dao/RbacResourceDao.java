@@ -1,6 +1,6 @@
 package com.weigh.verification.dao;
 
-import com.weigh.verification.model.ResourceModel;
+import com.weigh.verification.model.RbacResourceModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,14 +10,14 @@ import java.util.List;
  * @author xuyang
  */
 @Mapper
-public interface ResourceDao {
+public interface RbacResourceDao {
     /**
      * 新增资源
      *
      * @param resourceModel 资源信息
      * @return 结果
      */
-    Integer add(ResourceModel resourceModel);
+    Integer add(RbacResourceModel resourceModel);
 
     /**
      * 获取资源列表
@@ -25,7 +25,7 @@ public interface ResourceDao {
      * @param resourceModel 条件
      * @return 资源列表
      */
-    List<ResourceModel> getList(ResourceModel resourceModel);
+    List<RbacResourceModel> getList(RbacResourceModel resourceModel);
 
     /**
      * 编辑资源
@@ -33,7 +33,7 @@ public interface ResourceDao {
      * @param resourceModel 资源信息
      * @return 结果
      */
-    Integer edit(ResourceModel resourceModel);
+    Integer edit(RbacResourceModel resourceModel);
 
     /**
      * 修改资源状态
@@ -58,5 +58,5 @@ public interface ResourceDao {
      * 获取全部数据
      * @return 全部数据
      */
-    List<ResourceModel> getAll();
+    List<RbacResourceModel> getAll();
 }

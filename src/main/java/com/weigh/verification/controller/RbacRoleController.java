@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("rbac/role")
-public class RoleController {
+public class RbacRoleController {
 }

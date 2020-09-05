@@ -1,10 +1,10 @@
 package com.weigh.verification.service.impl;
 
 import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.DeptDao;
+import com.weigh.verification.dao.RbacDeptDao;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.DeptModel;
-import com.weigh.verification.service.DeptService;
+import com.weigh.verification.model.RbacDeptModel;
+import com.weigh.verification.service.RbacDeptService;
 import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +21,19 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class DeptServiceImpl implements DeptService {
+public class RbacDeptServiceImpl implements RbacDeptService {
     @Autowired
-    private DeptDao deptDao;
+    private RbacDeptDao rbacDeptDao;
 
     @Override
-    public Result add(DeptModel deptModel) {
+    public Result add(RbacDeptModel rbacDeptModel) {
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        deptModel.setCreateTime(time);
-        deptModel.setUpdateTime(time);
+        rbacDeptModel.setCreateTime(time);
+        rbacDeptModel.setUpdateTime(time);
 
-        Integer res = deptDao.add(deptModel);
+        Integer res = rbacDeptDao.add(rbacDeptModel);
 
         Result result = new Result();
 
@@ -48,12 +48,12 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public Result edit(Integer id, DeptModel deptModel) {
+    public Result edit(Integer id, RbacDeptModel rbacDeptModel) {
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
-        deptModel.setId(id);
-        deptModel.setUpdateTime(time);
+        rbacDeptModel.setId(id);
+        rbacDeptModel.setUpdateTime(time);
 
-        Integer res = deptDao.edit(deptModel);
+        Integer res = rbacDeptDao.edit(rbacDeptModel);
 
         Result result = new Result();
 
@@ -71,7 +71,7 @@ public class DeptServiceImpl implements DeptService {
     public Result delete(Integer id) {
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        Integer res = deptDao.delete(id, time);
+        Integer res = rbacDeptDao.delete(id, time);
 
         Result result = new Result();
 
@@ -88,7 +88,7 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public Result getAll() {
         Result result = new Result();
-        List<DeptModel> all = deptDao.getAll();
+        List<RbacDeptModel> all = rbacDeptDao.getAll();
 
         result.setCode(200);
         result.setMsg("success");

@@ -2,16 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weigh.verification.dao.RoleResourceDao">
+<mapper namespace="com.weigh.verification.dao.RbacRoleDeptDao">
     <insert id="addAll">
-        INSERT INTO `rbac_role_resource` (`role_id`, `resource_id`, `create_time`)
+        INSERT INTO `rbac_role_dept` (`role_id`, `dept_id`, `create_time`)
                 VALUES
         <foreach collection="list" item="roleResource" separator=",">
-            (#{roleResource.roleId}, #{roleResource.resourceId}, #{roleResource.createTime})
+            (#{roleResource.roleId}, #{roleResource.deptId}, #{roleResource.createTime})
         </foreach>
     </insert>
 
     <delete id="delete">
-        DELETE FROM `rbac_role_resource` WHERE role_id = #{roleId}
+        DELETE
+        FROM `rbac_role_dept`
+        WHERE role_id = #{roleId}
     </delete>
 </mapper>

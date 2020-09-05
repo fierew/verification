@@ -2,8 +2,8 @@ package com.weigh.verification.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.User1Model;
-import com.weigh.verification.service.User1Service;
+import com.weigh.verification.model.RbacUserModel;
+import com.weigh.verification.service.RbacUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class User1ServiceImpl implements User1Service {
+public class RbacUserServiceImpl implements RbacUserService {
     @Override
-    public PageInfo<User1Model> getList(Integer page, Integer pageSize, User1Model userModel) {
+    public PageInfo<RbacUserModel> getList(Integer page, Integer pageSize, RbacUserModel rbacUserModel) {
         return null;
     }
 
     @Override
-    public Result add(User1Model userModel) {
+    public Result add(RbacUserModel rbacUserModel) {
         // 判断邮箱是否存在
 
 
@@ -30,7 +30,7 @@ public class User1ServiceImpl implements User1Service {
     }
 
     @Override
-    public Result edit(User1Model userModel) {
+    public Result edit(RbacUserModel rbacUserModel) {
         return null;
     }
 

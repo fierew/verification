@@ -7,15 +7,15 @@ import lombok.Data;
  * @author xuyang
  */
 @Data
-public class User1Model {
+public class RbacUserModel {
     @JsonProperty(value = "id")
     private Integer id;
 
     @JsonProperty(value = "deptId")
-    private String deptId;
+    private Integer deptId;
 
     @JsonProperty(value = "roleId")
-    private String roleId;
+    private Integer roleId;
 
     @JsonProperty(value = "password")
     private String password;
@@ -30,10 +30,10 @@ public class User1Model {
     private String mobile;
 
     @JsonProperty(value = "sex")
-    private String sex;
+    private Byte sex;
 
     @JsonProperty(value = "age")
-    private String age;
+    private Integer age;
 
     @JsonProperty(value = "loginNum")
     private String loginNum;

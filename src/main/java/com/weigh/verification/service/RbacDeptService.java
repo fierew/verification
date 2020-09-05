@@ -1,28 +1,28 @@
 package com.weigh.verification.service;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.DeptModel;
+import com.weigh.verification.model.RbacDeptModel;
 
 /**
  * @author xuyang
  */
-public interface DeptService {
+public interface RbacDeptService {
     /**
      * 新增机构
      *
-     * @param deptModel 机构信息
+     * @param rbacDeptModel 机构信息
      * @return 结果
      */
-    Result add(DeptModel deptModel);
+    Result add(RbacDeptModel rbacDeptModel);
 
     /**
      * 编辑机构
      *
      * @param id        id
-     * @param deptModel 机构信息
+     * @param rbacDeptModel 机构信息
      * @return 结果
      */
-    Result edit(Integer id, DeptModel deptModel);
+    Result edit(Integer id, RbacDeptModel rbacDeptModel);
 
     /**
      * 删除机构

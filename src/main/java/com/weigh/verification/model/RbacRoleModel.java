@@ -9,33 +9,24 @@ import java.util.List;
  * @author xuyang
  */
 @Data
-public class ResourceModel {
+public class RbacRoleModel {
     @JsonProperty(value = "id")
     private Integer id;
 
-    @JsonProperty(value = "parentId")
-    private Integer parentId;
-
     @JsonProperty(value = "name")
-    private String name;
-
-    @JsonProperty(value = "icon")
-    private String icon;
-
-    @JsonProperty(value = "type")
-    private String type;
-
-    @JsonProperty(value = "key")
-    private String key;
-
-    @JsonProperty(value = "path")
-    private String path;
+    private Integer name;
 
     @JsonProperty(value = "remarks")
     private Integer remarks;
 
-    @JsonProperty(value = "state")
-    private Byte state;
+    @JsonProperty(value = "dataRange")
+    private Integer dataRange;
+
+    @JsonProperty(value = "deptArray")
+    private List<Integer> deptArray;
+
+    @JsonProperty(value = "resourceArray")
+    private List<Integer> resourceArray;
 
     @JsonProperty(value = "sort")
     private Integer sort;
@@ -48,6 +39,4 @@ public class ResourceModel {
 
     @JsonProperty(value = "updateTime")
     private Integer updateTime;
-
-    private List<ResourceModel> children;
 }

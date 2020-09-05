@@ -1,6 +1,6 @@
 package com.weigh.verification.dao;
 
-import com.weigh.verification.model.User1Model;
+import com.weigh.verification.model.RbacUserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,14 +10,14 @@ import java.util.List;
  * @author xuyang
  */
 @Mapper
-public interface User1Dao {
+public interface RbacUserDao {
     /**
      * 根据用户id获取用户
      *
      * @param id 用户id
      * @return 用户信息
      */
-    User1Model getInfoById(Integer id);
+    RbacUserModel getInfoById(Integer id);
 
     /**
      * 根据邮箱获取用户
@@ -25,7 +25,7 @@ public interface User1Dao {
      * @param email 邮箱
      * @return 用户信息
      */
-    User1Model getInfoByEmail(String email);
+    RbacUserModel getInfoByEmail(String email);
 
     /**
      * 根据手机获取用户信息
@@ -33,7 +33,7 @@ public interface User1Dao {
      * @param mobile 手机
      * @return 用户信息
      */
-    User1Model getInfoByMobile(String mobile);
+    RbacUserModel getInfoByMobile(String mobile);
 
     /**
      * 获取用户列表
@@ -41,7 +41,7 @@ public interface User1Dao {
      * @param userModel 条件
      * @return 用户列表
      */
-    List<User1Model> getList(User1Model userModel);
+    List<RbacUserModel> getList(RbacUserModel userModel);
 
     /**
      * 新增用户
@@ -49,7 +49,7 @@ public interface User1Dao {
      * @param userModel 用户信息
      * @return 结果
      */
-    Integer add(User1Model userModel);
+    Integer add(RbacUserModel userModel);
 
     /**
      * 编辑用户
@@ -57,7 +57,7 @@ public interface User1Dao {
      * @param userModel 用户信息
      * @return 结果
      */
-    Integer edit(User1Model userModel);
+    Integer edit(RbacUserModel userModel);
 
     /**
      * 删除用户

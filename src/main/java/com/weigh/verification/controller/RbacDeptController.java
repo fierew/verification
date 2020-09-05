@@ -1,8 +1,8 @@
 package com.weigh.verification.controller;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.DeptModel;
-import com.weigh.verification.service.DeptService;
+import com.weigh.verification.model.RbacDeptModel;
+import com.weigh.verification.service.RbacDeptService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("rbac/dept")
-public class DeptController {
+public class RbacDeptController {
     @Autowired
-    private DeptService deptService;
+    private RbacDeptService rbacDeptService;
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/add")
-    Result add(@RequestBody DeptModel deptModel) {
-        return deptService.add(deptModel);
+    Result add(@RequestBody RbacDeptModel rbacDeptModel) {
+        return rbacDeptService.add(rbacDeptModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/edit/{id}")
-    Result edit(@PathVariable Integer id, @RequestBody DeptModel deptModel) {
-        return deptService.edit(id, deptModel);
+    Result edit(@PathVariable Integer id, @RequestBody RbacDeptModel rbacDeptModel) {
+        return rbacDeptService.edit(id, rbacDeptModel);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
-        return deptService.delete(id);
+        return rbacDeptService.delete(id);
     }
 
     @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/getAll")
     Result getAll() {
-        return deptService.getAll();
+        return rbacDeptService.getAll();
     }
 }

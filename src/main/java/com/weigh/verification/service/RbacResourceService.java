@@ -1,12 +1,12 @@
 package com.weigh.verification.service;
 
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.ResourceModel;
+import com.weigh.verification.model.RbacResourceModel;
 
 /**
  * @author xuyang
  */
-public interface ResourceService {
+public interface RbacResourceService {
     /**
      * 获取树
      *
@@ -17,19 +17,19 @@ public interface ResourceService {
     /**
      * 添加
      *
-     * @param resourceModel 信息
+     * @param rbacResourceModel 信息
      * @return 结果
      */
-    Result add(ResourceModel resourceModel);
+    Result add(RbacResourceModel rbacResourceModel);
 
     /**
      * 编辑
      *
      * @param id            ID
-     * @param resourceModel 信息
+     * @param rbacResourceModel 信息
      * @return 结果
      */
-    Result edit(Integer id, ResourceModel resourceModel);
+    Result edit(Integer id, RbacResourceModel rbacResourceModel);
 
     /**
      * 删除

@@ -1,6 +1,6 @@
 package com.weigh.verification.dao;
 
-import com.weigh.verification.model.DeptModel;
+import com.weigh.verification.model.RbacDeptModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * @author xuyang
  */
-public interface DeptDao {
+public interface RbacDeptDao {
     /**
      * 新增机构
      *
      * @param deptModel 机构信息
      * @return 结果
      */
-    Integer add(DeptModel deptModel);
+    Integer add(RbacDeptModel deptModel);
 
     /**
      * 编辑机构
@@ -23,7 +23,7 @@ public interface DeptDao {
      * @param deptModel 机构信息
      * @return 结果
      */
-    Integer edit(DeptModel deptModel);
+    Integer edit(RbacDeptModel deptModel);
 
     /**
      * 删除机构
@@ -38,5 +38,5 @@ public interface DeptDao {
      *
      * @return 机构信息
      */
-    List<DeptModel> getAll();
+    List<RbacDeptModel> getAll();
 }

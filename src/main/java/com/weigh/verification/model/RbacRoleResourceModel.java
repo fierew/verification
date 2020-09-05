@@ -7,7 +7,7 @@ import lombok.Data;
  * @author xuyang
  */
 @Data
-public class RoleResourceModel {
+public class RbacRoleResourceModel {
 
     @JsonProperty(value = "roleId")
     private Integer roleId;

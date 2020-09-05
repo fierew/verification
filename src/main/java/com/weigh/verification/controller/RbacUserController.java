@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/user")
-public class User1Controller {
+@RequestMapping("rbac/user")
+public class RbacUserController {
 }

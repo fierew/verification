@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weigh.verification.dao.User1Dao">
-    <select id="getInfoById" resultType="com.weigh.verification.model.User1Model">
+<mapper namespace="com.weigh.verification.dao.RbacUserDao">
+    <select id="getInfoById" resultType="com.weigh.verification.model.RbacUserModel">
         select *
         from `rbac_user`
         where `id` = #{id}
@@ -11,7 +11,7 @@
         limit 1;
     </select>
 
-    <select id="getInfoByEmail" resultType="com.weigh.verification.model.User1Model">
+    <select id="getInfoByEmail" resultType="com.weigh.verification.model.RbacUserModel">
         select *
         from `rbac_user`
         where `email` = #{email}
@@ -19,7 +19,7 @@
         limit 1;
     </select>
 
-    <select id="getInfoByMobile" resultType="com.weigh.verification.model.User1Model">
+    <select id="getInfoByMobile" resultType="com.weigh.verification.model.RbacUserModel">
         select *
         from `rbac_user`
         where `mobile` = #{mobile}
@@ -27,7 +27,7 @@
         limit 1;
     </select>
 
-    <select id="getList" resultType="com.weigh.verification.model.User1Model">
+    <select id="getList" resultType="com.weigh.verification.model.RbacUserModel">
         select `id`,
                `email`,
                `real_name`,
