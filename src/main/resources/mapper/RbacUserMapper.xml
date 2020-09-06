@@ -38,7 +38,7 @@
                `create_time`,
                `update_time`
         from `rbac_user`
-                where is_delete = 0
+                where is_delete = 0 and email != 'administrator'
         <if test="email != null and email != ''">
             AND email like '%' #{email} '%'
         </if>

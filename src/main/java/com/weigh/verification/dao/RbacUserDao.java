@@ -38,26 +38,26 @@ public interface RbacUserDao {
     /**
      * 获取用户列表
      *
-     * @param userModel 条件
+     * @param rbacUserModel 条件
      * @return 用户列表
      */
-    List<RbacUserModel> getList(RbacUserModel userModel);
+    List<RbacUserModel> getList(RbacUserModel rbacUserModel);
 
     /**
      * 新增用户
      *
-     * @param userModel 用户信息
+     * @param rbacUserModel 用户信息
      * @return 结果
      */
-    Integer add(RbacUserModel userModel);
+    Integer add(RbacUserModel rbacUserModel);
 
     /**
      * 编辑用户
      *
-     * @param userModel 用户信息
+     * @param rbacUserModel 用户信息
      * @return 结果
      */
-    Integer edit(RbacUserModel userModel);
+    Integer edit(RbacUserModel rbacUserModel);
 
     /**
      * 删除用户
@@ -76,7 +76,7 @@ public interface RbacUserDao {
      * @param updateTime 更新时间
      * @return 结果
      */
-    Integer modifyState(@Param("id") Integer id, @Param("state") Integer state, @Param("updateTime") Integer updateTime);
+    Integer modifyState(@Param("id") Integer id, @Param("state") Byte state, @Param("updateTime") Integer updateTime);
 
     /**
      * 修改密码

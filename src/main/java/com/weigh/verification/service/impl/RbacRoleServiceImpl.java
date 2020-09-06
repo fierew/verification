@@ -37,10 +37,16 @@ public class RbacRoleServiceImpl implements RbacRoleService {
     private RbacRoleDeptDao rbacRoleDeptDao;
 
     @Override
-    public PageInfo<RbacRoleModel> getList(Integer page, Integer pageSize, RbacRoleModel roleModel) {
+    public Result getList(Integer page, Integer pageSize, RbacRoleModel roleModel) {
         PageHelper.startPage(page, pageSize);
         List<RbacRoleModel> list = rbacRoleDao.getList(roleModel);
-        return new PageInfo<>(list);
+
+        Result result = new Result();
+
+        result.setCode(200);
+        result.setData(new PageInfo<>(list));
+        result.setMsg("success");
+        return result;
     }
 
     @Transactional

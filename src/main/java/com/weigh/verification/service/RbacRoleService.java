@@ -1,6 +1,5 @@
 package com.weigh.verification.service;
 
-import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.RbacRoleModel;
 
@@ -16,7 +15,7 @@ public interface RbacRoleService {
      * @param rbacRoleModel 条件
      * @return 分页列表
      */
-    PageInfo<RbacRoleModel> getList(Integer page, Integer pageSize, RbacRoleModel rbacRoleModel);
+    Result getList(Integer page, Integer pageSize, RbacRoleModel rbacRoleModel);
 
     /**
      * 添加

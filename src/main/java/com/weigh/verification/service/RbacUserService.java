@@ -11,12 +11,12 @@ public interface RbacUserService {
     /**
      * 获取分页数据
      *
-     * @param page      页数
-     * @param pageSize  每页多少条数据
+     * @param page          页数
+     * @param pageSize      每页多少条数据
      * @param rbacUserModel 条件
      * @return 分页列表
      */
-    PageInfo<RbacUserModel> getList(Integer page, Integer pageSize, RbacUserModel rbacUserModel);
+    Result getList(Integer page, Integer pageSize, RbacUserModel rbacUserModel);
 
     /**
      * 添加
@@ -29,10 +29,11 @@ public interface RbacUserService {
     /**
      * 编辑
      *
+     * @param id            id
      * @param rbacUserModel 信息
      * @return 结果
      */
-    Result edit(RbacUserModel rbacUserModel);
+    Result edit(Integer id, RbacUserModel rbacUserModel);
 
     /**
      * 删除
@@ -45,8 +46,34 @@ public interface RbacUserService {
     /**
      * 修改状态
      *
-     * @param id id
+     * @param id    id
+     * @param state 状态
      * @return 结果
      */
-    Result modifyState(Integer id);
+    Result modifyState(Integer id, Byte state);
+
+    /**
+     * 修改密码
+     *
+     * @param id       id
+     * @param password 密码
+     * @return 结果
+     */
+    Result modifyPassWord(Integer id, String password);
+
+    /**
+     * 登录
+     *
+     * @param rbacUserModel 用户信息
+     * @return 用户信息
+     */
+    Result login(RbacUserModel rbacUserModel);
+
+    /**
+     * 根据id获取用户信息
+     *
+     * @param id 用户id
+     * @return 用户信息
+     */
+    Result getInfo(Integer id);
 }
