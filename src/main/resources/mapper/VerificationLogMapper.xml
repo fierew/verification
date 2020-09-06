@@ -12,9 +12,9 @@
                a1.create_time,
                a1.update_time,
                a2.email,
-               a2.nickname
+               a2.real_name
         from verification_log a1
-                     left join `user` a2 on a1.user_id = a2.id
+                     left join `rbac_user` a2 on a1.user_id = a2.id
         where a1.verification_id = #{id}
     </select>
 
