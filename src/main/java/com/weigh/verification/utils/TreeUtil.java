@@ -1,6 +1,9 @@
 package com.weigh.verification.utils;
 
-import java.lang.reflect.Field;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,16 +17,24 @@ import java.util.Map;
 public class TreeUtil {
     private final List<Map<String, Object>> treeMap;
 
-    public TreeUtil(List<Object> lists) throws IllegalAccessException {
+    public TreeUtil(List<?> lists) throws Exception {
         List<Map<String, Object>> treeList = new ArrayList<>();
 
         for (Object list : lists) {
             Map<String, Object> map = new HashMap<>();
 
-            Field[] declaredFields = list.getClass().getDeclaredFields();
-            for (Field field : declaredFields) {
-                field.setAccessible(true);
-                map.put(field.getName(), field.get(list));
+            BeanInfo beanInfo = Introspector.getBeanInfo(list.getClass());
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+            for (PropertyDescriptor property : propertyDescriptors) {
+                String key = property.getName();
+
+                if(key.compareToIgnoreCase("class") == 0){
+                    continue;
+                }
+                Method getter = property.getReadMethod();
+                Object value = getter != null ? getter.invoke(list) : null;
+                map.put(key, value);
             }
 
             treeList.add(map);
@@ -56,7 +67,7 @@ public class TreeUtil {
         List<Map<String, Object>> childMenus = new ArrayList<>();
         for (Map<String, Object> treeNode : treeMap) {
 
-            if (treeNode.get("'parentId'").equals(parentNode.get("id"))) {
+            if (treeNode.get("parentId").equals(parentNode.get("id"))) {
                 childMenus.add(buildChildTree(treeNode));
             }
         }

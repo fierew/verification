@@ -120,7 +120,7 @@ public class RbacResourceServiceImpl implements RbacResourceService {
 
         try {
             // 将数据解析成tree
-            List<Map<String, Object>> tree = new TreeUtil(Collections.singletonList(all)).buildTree();
+            List<Map<String, Object>> tree = new TreeUtil(all).buildTree();
 
             result.setData(tree);
             return result;
