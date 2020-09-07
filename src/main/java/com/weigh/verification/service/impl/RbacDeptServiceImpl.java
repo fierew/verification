@@ -100,7 +100,7 @@ public class RbacDeptServiceImpl implements RbacDeptService {
 
         try {
 
-            List<Map<String, Object>> tree = new TreeUtil(Collections.singletonList(all)).buildTree();
+            List<Map<String, Object>> tree = new TreeUtil(all).buildTree();
             result.setData(tree);
             return result;
         } catch (Exception e) {
