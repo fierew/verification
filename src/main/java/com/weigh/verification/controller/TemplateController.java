@@ -8,8 +8,6 @@ import com.weigh.verification.model.FileModel;
 import com.weigh.verification.model.TemplateModel;
 import com.weigh.verification.service.FileService;
 import com.weigh.verification.service.TemplateService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +30,6 @@ public class TemplateController {
     @Autowired
     private FileService fileService;
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/add")
     Result add(TokenUserEntity tokenUserEntity, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.add(tokenUserEntity.getUserId(), templateModel);
@@ -49,7 +46,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("/edit/{id}")
     Result edit(TokenUserEntity tokenUserEntity, @PathVariable Integer id, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.edit(id, tokenUserEntity.getUserId(), templateModel);
@@ -66,7 +62,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = templateService.delete(id);
@@ -82,7 +77,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getInfoById/{id}")
     Result getInfoById(@PathVariable Integer id) {
         TemplateModel templateInfo = templateService.getInfoById(id);
@@ -93,7 +87,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getList")
     Result getList(TableEntity tableEntity, TemplateModel templateModel) {
         PageInfo<TemplateModel> templateList = templateService.getList(tableEntity.getPage(), tableEntity.getPageSize(), templateModel);
@@ -104,7 +97,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getAll")
     Result getAll() {
         List<TemplateModel> template = templateService.getAll();
@@ -115,7 +107,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/analysis")
     Result analysis(@RequestParam(value = "filePath", defaultValue = "") String filePath) {
         List<String> res = templateService.analysis(System.getProperty("user.dir") + "/upload/" + filePath);
@@ -128,7 +119,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("/modifyState/{id}")
     Result modifyState(@PathVariable Integer id, @RequestBody TemplateModel templateModel) {
         Integer res = templateService.modifyState(id, templateModel.getState());
@@ -145,7 +135,6 @@ public class TemplateController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/downloads/{id}")
     void downloads(@PathVariable Integer id, HttpServletResponse response) {
         // 根据模板ID查模板信息

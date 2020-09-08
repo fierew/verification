@@ -10,8 +10,6 @@ import com.weigh.verification.model.VerificationModel;
 import com.weigh.verification.service.FileService;
 import com.weigh.verification.service.TemplateService;
 import com.weigh.verification.service.VerificationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,49 +37,41 @@ public class VerificationController {
     @Autowired
     private FileService fileService;
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/add")
     Result add(TokenUserEntity tokenUserEntity, @RequestBody VerificationModel verificationModel) {
         return verificationService.add(tokenUserEntity.getUserId(), verificationModel);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PutMapping("/edit/{id}")
     Result edit(@PathVariable Integer id, @RequestBody VerificationModel verificationModel) {
         return verificationService.edit(id, verificationModel);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         return verificationService.delete(id);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getList")
     Result getList(TableEntity tableEntity, VerificationModel verificationModel) {
         return verificationService.getList(tableEntity.getPage(), tableEntity.getPageSize(), verificationModel);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getInfo/{id}")
     Result getInfo(@PathVariable Integer id) {
         return verificationService.getInfo(id);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/addLog")
     Result addLog(TokenUserEntity tokenUserEntity, @RequestBody VerificationLogDataEntity verificationLogDataEntity) {
         return verificationService.addLog(tokenUserEntity.getUserId(), verificationLogDataEntity);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getLogList/{id}")
     Result getLogList(TableEntity tableEntity, @PathVariable Integer id) {
         return verificationService.getLogList(tableEntity.getPage(), tableEntity.getPageSize(), id);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/downloads/{id}")
     void downloads(@PathVariable Integer id, HttpServletResponse response) {
         Result result = verificationService.getInfo(id);

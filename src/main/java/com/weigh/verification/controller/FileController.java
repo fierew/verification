@@ -7,17 +7,13 @@ import com.weigh.verification.entity.TableEntity;
 import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.model.FileModel;
 import com.weigh.verification.service.FileService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.List;
 
 /**
  * @author xuyang
@@ -29,13 +25,11 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @PostMapping("/upload")
     Result upload(TokenUserEntity tokenUserEntity, FileEntity file) {
         return fileService.upload(tokenUserEntity.getUserId(), file);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/check")
     Result check(FileModel fileModel) {
         FileModel fileInfo = fileService.check(fileModel.getHash());
@@ -53,7 +47,6 @@ public class FileController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getList")
     Result getList(TableEntity tableEntity) {
         PageInfo<FileModel> fileList = fileService.getList(tableEntity.getPage(), tableEntity.getPageSize());
@@ -65,7 +58,6 @@ public class FileController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         Integer res = fileService.delete(id);
@@ -81,7 +73,6 @@ public class FileController {
         return result;
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/downloads/{id}")
     void downloads(@PathVariable Integer id, HttpServletResponse response) {
         // 根据文件ID查文件路径

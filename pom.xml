@@ -51,13 +51,6 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!-- swagger -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.4.0</version>
-		</dependency>
-
 		<!-- druid连接池 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

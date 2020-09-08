@@ -6,8 +6,6 @@ import com.weigh.verification.entity.TableEntity;
 import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.model.RbacUserModel;
 import com.weigh.verification.service.RbacUserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +26,11 @@ public class RbacUserController {
         return rbacUserService.login(rbacUserModel);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getList")
     Result getList(TableEntity tableEntity, RbacUserModel rbacUserModel) {
         return rbacUserService.getList(tableEntity.getPage(), tableEntity.getPageSize(), rbacUserModel);
     }
 
-    @Operation(security = {@SecurityRequirement(name = "JWT")})
     @GetMapping("/getInfo")
     Result getInfo(TokenUserEntity tokenUserEntity) {
         return rbacUserService.getInfo(tokenUserEntity.getUserId());

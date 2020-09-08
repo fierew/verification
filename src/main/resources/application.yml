@@ -90,17 +90,6 @@ logging:
   config: classpath:config/logback-spring.xml
   file:
     path: ./logger
-  pattern:
-    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
   level:
     root: INFO
     com.weigh.verification.dao: DEBUG
-springdoc:
-  api-docs:
-    groups:
-      enabled: true
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
-    groups-order: DESC
-  version: 3.3
