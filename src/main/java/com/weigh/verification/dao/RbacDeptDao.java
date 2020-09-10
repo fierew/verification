@@ -28,10 +28,20 @@ public interface RbacDeptDao {
     /**
      * 删除机构
      *
-     * @param id 机构id
+     * @param id         机构id
+     * @param updateTime 更新时间
      * @return 结果
      */
     Integer delete(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
+
+    /**
+     * 批量删除机构
+     *
+     * @param ids        机构id
+     * @param updateTime 更新时间
+     * @return 结果
+     */
+    Integer deletes(@Param("ids") List<Integer> ids, @Param("updateTime") Integer updateTime);
 
     /**
      * 获取机构所有信息

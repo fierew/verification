@@ -55,6 +55,15 @@ public interface RbacResourceDao {
     Integer delete(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
 
     /**
+     * 批量删除资源
+     *
+     * @param ids        资源id
+     * @param updateTime 更新时间
+     * @return 结果
+     */
+    Integer deletes(@Param("ids") List<Integer> ids, @Param("updateTime") Integer updateTime);
+
+    /**
      * 获取全部数据
      * @return 全部数据
      */

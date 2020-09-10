@@ -42,6 +42,16 @@
         where id = #{id}
     </update>
 
+    <update id="deletes">
+        update `rbac_resource`
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
+                where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
     <update id="delete">
         update `rbac_resource`
         set `is_delete`  = 1,

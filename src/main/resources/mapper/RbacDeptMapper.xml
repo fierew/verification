@@ -25,6 +25,16 @@
         where id = #{id}
     </delete>
 
+    <delete id="deletes">
+        update `rbac_dept`
+        set `is_delete`  = 1,
+            `update_time`=#{updateTime}
+                where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="getAll" resultType="com.weigh.verification.model.RbacDeptModel">
         select *
         from `rbac_dept`
