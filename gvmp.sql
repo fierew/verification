@@ -117,7 +117,7 @@ CREATE TABLE `rbac_role` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色名称',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
-  `data_range` tinyint NOT NULL DEFAULT '0' COMMENT '数据范围，0:仅查看自己，1：查看部门，2：查看部门及一下，3：自定义',
+  `data_range` tinyint NOT NULL DEFAULT '0' COMMENT '数据范围，0:仅允许查看自己，1：仅允许查看本部门，2：允许查看本部门及下属部门，3：自定义',
   `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
   `is_delete` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除',
   `create_time` int NOT NULL DEFAULT '0' COMMENT '创建时间',
