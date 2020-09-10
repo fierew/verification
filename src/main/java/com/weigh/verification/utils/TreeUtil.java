@@ -71,7 +71,11 @@ public class TreeUtil {
                 childMenus.add(buildChildTree(treeNode));
             }
         }
-        parentNode.put("children", childMenus);
+
+        if(childMenus.size() > 0){
+            parentNode.put("children", childMenus);
+        }
+
         return parentNode;
     }
 
