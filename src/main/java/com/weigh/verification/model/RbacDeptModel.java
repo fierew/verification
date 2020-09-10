@@ -20,7 +20,7 @@ public class RbacDeptModel {
     private String name;
 
     @JsonProperty(value = "remarks")
-    private Integer remarks;
+    private String remarks;
 
     @JsonProperty(value = "sort")
     private Integer sort;

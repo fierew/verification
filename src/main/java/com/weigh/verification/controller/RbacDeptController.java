@@ -22,17 +22,17 @@ public class RbacDeptController {
         return rbacDeptService.add(rbacDeptModel);
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     Result edit(@PathVariable Integer id, @RequestBody RbacDeptModel rbacDeptModel) {
         return rbacDeptService.edit(id, rbacDeptModel);
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     Result delete(@PathVariable Integer id) {
         return rbacDeptService.delete(id);
     }
 
-    @PostMapping("/getAll")
+    @GetMapping("/getAll")
     Result getAll() {
         return rbacDeptService.getAll();
     }
