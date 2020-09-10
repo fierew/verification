@@ -23,7 +23,7 @@ public class RbacResourceModel {
     private String icon;
 
     @JsonProperty(value = "type")
-    private String type;
+    private Integer type;
 
     @JsonProperty(value = "key")
     private String key;
@@ -32,7 +32,7 @@ public class RbacResourceModel {
     private String path;
 
     @JsonProperty(value = "remarks")
-    private Integer remarks;
+    private String remarks;
 
     @JsonProperty(value = "state")
     private Byte state;

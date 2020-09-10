@@ -6,7 +6,7 @@
     <insert id="add">
         INSERT INTO `rbac_resource` (`parent_id`, `name`, `type`, `icon`, `key`, `path`, `remarks`, `state`, `sort`,
                                      `create_time`, `update_time`)
-        VALUES (#{parentId}, #{name}, #{type}, #{icon}, #{key}, #{path}, #{remarks}, #{state}, #{path}, #{createTime},
+        VALUES (#{parentId}, #{name}, #{type}, #{icon}, #{key}, #{path}, #{remarks}, #{state}, #{sort}, #{createTime},
                 #{updateTime});
     </insert>
 
@@ -17,7 +17,7 @@
         <if test="state != null">
             AND `state` = #{state}
         </if>
-        order by id desc
+        order by sort
     </select>
 
     <update id="edit">
