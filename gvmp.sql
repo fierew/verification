@@ -82,6 +82,7 @@ CREATE TABLE `rbac_resource` (
   `icon` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '图标，type等于0时存在',
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标识，type等于1或2时存在',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标识，type等于0时存在',
+  `is_hide` tinyint NOT NULL DEFAULT '0' COMMENT '是否隐藏，0不隐藏，1隐藏，type等于0时有用',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   `state` tinyint NOT NULL DEFAULT '1' COMMENT '状态：1启用，0禁用',
   `sort` int NOT NULL DEFAULT '0' COMMENT '排序',

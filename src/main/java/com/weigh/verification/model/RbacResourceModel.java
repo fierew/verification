@@ -31,6 +31,9 @@ public class RbacResourceModel {
     @JsonProperty(value = "path")
     private String path;
 
+    @JsonProperty(value = "isHide")
+    private Byte isHide;
+
     @JsonProperty(value = "remarks")
     private String remarks;
 

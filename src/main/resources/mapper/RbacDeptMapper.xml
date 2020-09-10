@@ -38,6 +38,7 @@
     <select id="getAll" resultType="com.weigh.verification.model.RbacDeptModel">
         select *
         from `rbac_dept`
-        where is_delete = 0;
+        where is_delete = 0
+        order by sort;
     </select>
 </mapper>
