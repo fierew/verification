@@ -44,9 +44,6 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         PageHelper.startPage(page, pageSize);
         List<RbacRoleModel> list = rbacRoleDao.getList(roleModel);
 
-//        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleId()
-
-
         List<Integer> roleIds = new ArrayList<>();
         for(RbacRoleModel rbacRoleModel : list){
             roleIds.add(rbacRoleModel.getId());
@@ -77,6 +74,17 @@ public class RbacRoleServiceImpl implements RbacRoleService {
 
         result.setCode(200);
         result.setData(new PageInfo<>(list));
+        result.setMsg("success");
+        return result;
+    }
+
+    @Override
+    public Result getAll() {
+        List<RbacRoleModel> list = rbacRoleDao.getAll();
+
+        Result result = new Result();
+        result.setCode(200);
+        result.setData(list);
         result.setMsg("success");
         return result;
     }

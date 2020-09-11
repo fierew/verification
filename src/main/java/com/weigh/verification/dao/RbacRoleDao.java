@@ -43,4 +43,11 @@ public interface RbacRoleDao {
      * @return 角色列表
      */
     List<RbacRoleModel> getList(RbacRoleModel roleModel);
+
+    /**
+     * 查询所有角色
+     *
+     * @return 角色列表
+     */
+    List<RbacRoleModel> getAll();
 }

@@ -37,4 +37,9 @@ public class RbacRoleController {
     Result getList(TableEntity tableEntity, RbacRoleModel rbacRoleModel) {
         return rbacRoleService.getList(tableEntity.getPage(), tableEntity.getPageSize(), rbacRoleModel);
     }
+
+    @GetMapping("/getAll")
+    Result getAll() {
+        return rbacRoleService.getAll();
+    }
 }

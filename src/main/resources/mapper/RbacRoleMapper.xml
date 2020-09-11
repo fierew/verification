@@ -37,4 +37,11 @@
         </if>
         order by id desc
     </select>
+
+    <select id="getAll" resultType="com.weigh.verification.model.RbacRoleModel">
+        select *
+        from `rbac_role`
+        where is_delete = 0
+        order by id desc;
+    </select>
 </mapper>

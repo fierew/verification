@@ -18,6 +18,13 @@ public interface RbacRoleService {
     Result getList(Integer page, Integer pageSize, RbacRoleModel rbacRoleModel);
 
     /**
+     * 获取所有数据
+     *
+     * @return 分页列表
+     */
+    Result getAll();
+
+    /**
      * 添加
      *
      * @param rbacRoleModel 信息
