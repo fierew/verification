@@ -71,18 +71,29 @@ public class RbacDeptServiceImpl implements RbacDeptService {
     public Result delete(Integer id) {
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        Integer res = rbacDeptDao.delete(id, time);
+        List<RbacDeptModel> all = rbacDeptDao.getAll();
 
         Result result = new Result();
 
-        if (res != 1) {
+        if (all == null) {
             result.setCode(400);
-            result.setMsg("删除机构失败");
-        } else {
+            result.setMsg("未找到要删除的数据");
+            return result;
+        }
+
+        try {
+            List<Integer> ids = new TreeUtil(all).buildTreeIds(id);
+            log.info(String.valueOf(ids));
+            rbacDeptDao.deletes(ids, time);
+
             result.setCode(200);
             result.setMsg("删除机构成功");
+            return result;
+        } catch (Exception e) {
+            result.setCode(400);
+            result.setMsg(e.getMessage());
+            return result;
         }
-        return result;
     }
 
     @Override

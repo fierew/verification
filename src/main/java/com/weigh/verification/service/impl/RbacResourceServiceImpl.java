@@ -72,17 +72,27 @@ public class RbacResourceServiceImpl implements RbacResourceService {
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        Integer res = rbacResourceDao.delete(id, time);
+        List<RbacResourceModel> all = rbacResourceDao.getAll();
 
-        if (res != 1) {
+        if (all == null) {
             result.setCode(400);
-            result.setMsg("删除资源失败！");
-        } else {
-            result.setCode(200);
-            result.setMsg("删除资源成功");
+            result.setMsg("未找到要删除的数据");
+            return result;
         }
 
-        return result;
+        try {
+            List<Integer> ids = new TreeUtil(all).buildTreeIds(id);
+
+            rbacResourceDao.deletes(ids, time);
+
+            result.setCode(200);
+            result.setMsg("删除资源成功");
+            return result;
+        } catch (Exception e) {
+            result.setCode(400);
+            result.setMsg(e.getMessage());
+            return result;
+        }
     }
 
     @Override
@@ -113,7 +123,7 @@ public class RbacResourceServiceImpl implements RbacResourceService {
         result.setCode(200);
         result.setMsg("success");
 
-        if(all == null){
+        if (all == null) {
             result.setData(null);
             return result;
         }
@@ -124,7 +134,7 @@ public class RbacResourceServiceImpl implements RbacResourceService {
 
             result.setData(tree);
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
 
             result.setCode(400);
             result.setMsg("解析树失败！");

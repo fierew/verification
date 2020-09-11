@@ -4,10 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 树工具
@@ -16,6 +13,7 @@ import java.util.Map;
  */
 public class TreeUtil {
     private final List<Map<String, Object>> treeMap;
+    private final List<Integer> treeIds = new ArrayList<>();
 
     public TreeUtil(List<?> lists) throws Exception {
         List<Map<String, Object>> treeList = new ArrayList<>();
@@ -50,7 +48,7 @@ public class TreeUtil {
      */
     public List<Map<String, Object>> buildTree() {
         List<Map<String, Object>> treeLists = new ArrayList<>();
-        for (Map<String, Object> treeNode : getRootNode()) {
+        for (Map<String, Object> treeNode : getRootNode(0)) {
             Map<String, Object> childNode = buildChildTree(treeNode);
             treeLists.add(childNode);
         }
@@ -84,13 +82,46 @@ public class TreeUtil {
      *
      * @return
      */
-    private List<Map<String, Object>> getRootNode() {
+    private List<Map<String, Object>> getRootNode(Integer id) {
         List<Map<String, Object>> rootTreeLists = new ArrayList<>();
         for (Map<String, Object> treeNode : treeMap) {
-            if (treeNode.get("parentId").equals(0)) {
+            if (treeNode.get("parentId").equals(id)) {
                 rootTreeLists.add(treeNode);
             }
         }
         return rootTreeLists;
+    }
+
+
+    /**
+     * 建立树形结构
+     *
+     * @return
+     */
+    public List<Integer> buildTreeIds(Integer id) {
+        this.treeIds.add(id);
+
+        for (Map<String, Object> treeNode : getRootNode(id)) {
+            this.treeIds.add((Integer) treeNode.get("id"));
+            buildChildTreeIds(treeNode);
+        }
+
+        LinkedHashSet<Integer> hashSet = new LinkedHashSet<>(this.treeIds);
+        return new ArrayList<>(hashSet);
+    }
+
+    /**
+     * 递归，建立子树形结构
+     *
+     * @param parentNode
+     * @return
+     */
+    private void buildChildTreeIds(Map<String, Object> parentNode) {
+        for (Map<String, Object> treeNode : treeMap) {
+            if (treeNode.get("parentId").equals(parentNode.get("id"))) {
+                this.treeIds.add((Integer) treeNode.get("id"));
+                buildChildTreeIds(treeNode);
+            }
+        }
     }
 }
