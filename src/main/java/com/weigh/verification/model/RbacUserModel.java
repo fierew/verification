@@ -36,7 +36,7 @@ public class RbacUserModel {
     private Integer age;
 
     @JsonProperty(value = "loginNum")
-    private String loginNum;
+    private Integer loginNum;
 
     @JsonProperty(value = "state")
     private Byte state;

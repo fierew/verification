@@ -16,4 +16,19 @@
         FROM `rbac_role_dept`
         WHERE role_id = #{roleId}
     </delete>
+
+    <select id="getInfoByRoleId" resultType="com.weigh.verification.model.RbacRoleDeptModel">
+        SELECT *
+        FROM `rbac_role_dept`
+        WHERE role_id = #{roleId};
+    </select>
+
+    <select id="getInfoByRoleIds" resultType="com.weigh.verification.model.RbacRoleDeptModel">
+        SELECT *
+        FROM `rbac_role_dept`
+                WHERE role_id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

@@ -3,14 +3,11 @@ package com.weigh.verification.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.RbacRoleDao;
-import com.weigh.verification.dao.RbacRoleDeptDao;
-import com.weigh.verification.dao.RbacRoleResourceDao;
+import com.weigh.verification.dao.*;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.RbacRoleDeptModel;
-import com.weigh.verification.model.RbacRoleModel;
-import com.weigh.verification.model.RbacRoleResourceModel;
+import com.weigh.verification.model.*;
 import com.weigh.verification.service.RbacRoleService;
+import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,12 @@ public class RbacRoleServiceImpl implements RbacRoleService {
     private RbacRoleDao rbacRoleDao;
 
     @Autowired
+    private RbacResourceDao rbacResourceDao;
+
+    @Autowired
+    private RbacDeptDao rbacDeptDao;
+
+    @Autowired
     private RbacRoleResourceDao rbacRoleResourceDao;
 
     @Autowired
@@ -40,6 +43,35 @@ public class RbacRoleServiceImpl implements RbacRoleService {
     public Result getList(Integer page, Integer pageSize, RbacRoleModel roleModel) {
         PageHelper.startPage(page, pageSize);
         List<RbacRoleModel> list = rbacRoleDao.getList(roleModel);
+
+//        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleId()
+
+
+        List<Integer> roleIds = new ArrayList<>();
+        for(RbacRoleModel rbacRoleModel : list){
+            roleIds.add(rbacRoleModel.getId());
+        }
+
+        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleIds(roleIds);
+        List<RbacRoleResourceModel> resourceModels = rbacRoleResourceDao.getInfoByRoleIds(roleIds);
+
+        for(RbacRoleModel rbacRoleModel : list){
+            List<Integer> deptArray = new ArrayList<>();
+            for (RbacRoleDeptModel deptModel: deptModels) {
+                if(rbacRoleModel.getId().equals(deptModel.getRoleId())){
+                    deptArray.add(deptModel.getDeptId());
+                }
+            }
+            rbacRoleModel.setDeptArray(deptArray);
+
+            List<Integer> resourceArray = new ArrayList<>();
+            for (RbacRoleResourceModel resourceModel: resourceModels) {
+                if(rbacRoleModel.getId().equals(resourceModel.getRoleId())){
+                    resourceArray.add(resourceModel.getResourceId());
+                }
+            }
+            rbacRoleModel.setResourceArray(resourceArray);
+        }
 
         Result result = new Result();
 
@@ -52,17 +84,9 @@ public class RbacRoleServiceImpl implements RbacRoleService {
     @Transactional
     @Override
     public Result add(RbacRoleModel roleModel) {
-        Result result = new Result();
-        if (roleModel.getResourceArray().size() <= 0) {
-            result.setCode(400);
-            result.setMsg("资源信息不能是空！");
-            return result;
-        }
-
-        if (roleModel.getDataRange() == 3 && roleModel.getDeptArray().size() <= 0) {
-            result.setCode(400);
-            result.setMsg("机构信息不能是空！");
-            return result;
+        Result verifyResult = verifyParameter(roleModel);
+        if (verifyResult.getCode() != 200) {
+            return verifyResult;
         }
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
@@ -77,6 +101,7 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         writeRoleResource(roleId, roleModel.getResourceArray());
         writeRoleDept(roleId, roleModel.getDataRange(), roleModel.getDeptArray());
 
+        Result result = new Result();
         result.setCode(200);
         result.setMsg("新增角色成功");
         return result;
@@ -85,17 +110,9 @@ public class RbacRoleServiceImpl implements RbacRoleService {
     @Transactional
     @Override
     public Result edit(Integer id, RbacRoleModel roleModel) {
-        Result result = new Result();
-        if (roleModel.getResourceArray().size() <= 0) {
-            result.setCode(400);
-            result.setMsg("资源信息不能是空！");
-            return result;
-        }
-
-        if (roleModel.getDataRange() == 3 && roleModel.getDeptArray().size() <= 0) {
-            result.setCode(400);
-            result.setMsg("机构信息不能是空！");
-            return result;
+        Result verifyResult = verifyParameter(roleModel);
+        if (verifyResult.getCode() != 200) {
+            return verifyResult;
         }
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
@@ -113,6 +130,7 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         rbacRoleDeptDao.delete(id);
         writeRoleDept(id, roleModel.getDataRange(), roleModel.getDeptArray());
 
+        Result result = new Result();
         result.setCode(200);
         result.setMsg("编辑角色成功");
         return result;
@@ -133,42 +151,92 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         return result;
     }
 
+    private Result verifyParameter(RbacRoleModel roleModel) {
+        Result result = new Result();
+
+        result.setCode(200);
+        result.setMsg("success");
+
+        if (roleModel.getResourceArray().size() <= 0) {
+            result.setCode(400);
+            result.setMsg("资源信息不能是空！");
+        }
+
+        if (roleModel.getDataRange() == 3 && roleModel.getDeptArray().size() <= 0) {
+            result.setCode(400);
+            result.setMsg("机构信息不能是空！");
+        }
+
+        return result;
+    }
+
     private void writeRoleResource(Integer roleId, List<Integer> roleResourceArray) {
+        if (roleResourceArray.size() <= 0) {
+            return;
+        }
+
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
-        List<RbacRoleResourceModel> roleResourceModels = new ArrayList<>();
-        // 新增资源信息
-        for (Integer resourceId : roleResourceArray) {
-            RbacRoleResourceModel roleResourceModel = new RbacRoleResourceModel();
-            roleResourceModel.setRoleId(roleId);
-            roleResourceModel.setCreateTime(time);
-            roleResourceModel.setResourceId(resourceId);
+        List<RbacResourceModel> all = rbacResourceDao.getAll();
 
-            roleResourceModels.add(roleResourceModel);
+        if (all == null) {
+            return;
+        }
+
+        List<RbacRoleResourceModel> roleResourceModels = new ArrayList<>();
+
+        for (Integer resourceId : roleResourceArray) {
+            try {
+                List<Integer> ids = new TreeUtil(all).buildTreeIds(resourceId);
+
+                for (Integer id : ids) {
+                    RbacRoleResourceModel roleResourceModel = new RbacRoleResourceModel();
+                    roleResourceModel.setRoleId(roleId);
+                    roleResourceModel.setCreateTime(time);
+                    roleResourceModel.setResourceId(id);
+
+                    roleResourceModels.add(roleResourceModel);
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
         }
 
         // 写入角色资源
         rbacRoleResourceDao.addAll(roleResourceModels);
     }
 
-    private void writeRoleDept(Integer roleId, Integer dataRange, List<Integer> roleDeptArray) {
+    private void writeRoleDept(Integer roleId, Byte dataRange, List<Integer> roleDeptArray) {
         if (dataRange == 3 && roleDeptArray.size() > 0) {
             Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+
+            List<RbacDeptModel> all = rbacDeptDao.getAll();
+
+            if (all == null) {
+                return;
+            }
 
             List<RbacRoleDeptModel> roleModels = new ArrayList<>();
 
             for (Integer deptId : roleDeptArray) {
-                RbacRoleDeptModel roleDeptModel = new RbacRoleDeptModel();
-                roleDeptModel.setCreateTime(time);
-                roleDeptModel.setDeptId(deptId);
-                roleDeptModel.setRoleId(roleId);
+                try {
+                    List<Integer> ids = new TreeUtil(all).buildTreeIds(deptId);
 
-                roleModels.add(roleDeptModel);
+                    for (Integer id : ids) {
+                        RbacRoleDeptModel roleDeptModel = new RbacRoleDeptModel();
+                        roleDeptModel.setCreateTime(time);
+                        roleDeptModel.setDeptId(deptId);
+                        roleDeptModel.setRoleId(roleId);
+
+                        roleModels.add(roleDeptModel);
+                    }
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                }
             }
 
             // 写入角色机构
             rbacRoleDeptDao.addAll(roleModels);
         }
-
     }
 }

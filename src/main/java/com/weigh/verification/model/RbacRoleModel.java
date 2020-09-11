@@ -14,13 +14,13 @@ public class RbacRoleModel {
     private Integer id;
 
     @JsonProperty(value = "name")
-    private Integer name;
+    private String name;
 
     @JsonProperty(value = "remarks")
-    private Integer remarks;
+    private String remarks;
 
     @JsonProperty(value = "dataRange")
-    private Integer dataRange;
+    private Byte dataRange;
 
     @JsonProperty(value = "deptArray")
     private List<Integer> deptArray;
