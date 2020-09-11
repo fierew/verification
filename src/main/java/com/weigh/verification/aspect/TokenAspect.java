@@ -102,11 +102,9 @@ public class TokenAspect {
     }
 
     private void beforePoint(ProceedingJoinPoint joinPoint) throws Exception {
-        //得到要进入的是哪个controller方法
+        // 得到要进入的是哪个controller方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        System.out.println(joinPoint.getTarget().getClass().getName());
-        System.out.println(signature.getName());
 
         //检查是否有PassToken注释，有则跳过认证，所以在controller层加了@Passtoken注解，这里就不校验
         if (method.isAnnotationPresent(PassToken.class)) {
@@ -130,8 +128,18 @@ public class TokenAspect {
 
         // 解析token并获取token中的用户信息
         Map<String, Claim> claims = jwtUtil.verity(token);
-        // System.out.println(claims);
-        //得到这个方法控制器的所有形参
+
+        String className = joinPoint.getTarget().getClass().getName().replace("com.weigh.verification.controller.", "");
+        String methodName = signature.getName();
+        String authKey = className + ":" + methodName;
+        System.out.println(authKey);
+        // 判断用户授权，判断用户是否拥有这个接口的权限
+
+
+        // 根据用户数据权限获取数据获取范围，返回取数据的所有用户id
+
+
+        // 得到这个方法控制器的所有形参
         Object[] args = joinPoint.getArgs();
 
         for (Object argItem : args) {
