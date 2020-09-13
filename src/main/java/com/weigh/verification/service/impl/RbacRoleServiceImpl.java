@@ -73,7 +73,7 @@ public class RbacRoleServiceImpl implements RbacRoleService {
 //            rbacRoleModel.setResourceArray(resourceArray);
 //        }
         for (RbacRoleModel rbacRoleModel : list) {
-            String deptIdsText = rbacRoleModel.getDeptIds();\
+            String deptIdsText = rbacRoleModel.getDeptIds();
             List<Integer> deptIds = new ArrayList<>();
             if(!"".equals(deptIdsText)){
                 String[] deptArray = deptIdsText.split(",");
