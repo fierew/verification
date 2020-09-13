@@ -145,8 +145,6 @@ public class VerificationServiceImpl implements VerificationService {
             verificationLogEntity.setId(index);
         }
 
-        System.out.println(res);
-
         result.setMsg("获取鉴定信息日志成功");
         result.setCode(200);
         result.setData(res);
