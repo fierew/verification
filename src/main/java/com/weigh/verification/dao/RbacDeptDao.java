@@ -1,6 +1,7 @@
 package com.weigh.verification.dao;
 
 import com.weigh.verification.model.RbacDeptModel;
+import com.weigh.verification.model.RbacResourceModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -49,4 +50,12 @@ public interface RbacDeptDao {
      * @return 机构信息
      */
     List<RbacDeptModel> getAll();
+
+    /**
+     * 根据多个id获取机构
+     *
+     * @param ids 机构id
+     * @return 结果
+     */
+    List<RbacDeptModel> getAllByIds(@Param("ids") List<Integer> ids);
 }

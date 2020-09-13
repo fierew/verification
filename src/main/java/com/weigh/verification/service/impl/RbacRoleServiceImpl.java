@@ -9,11 +9,14 @@ import com.weigh.verification.model.*;
 import com.weigh.verification.service.RbacRoleService;
 import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -45,30 +48,56 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         List<RbacRoleModel> list = rbacRoleDao.getList(roleModel);
 
         List<Integer> roleIds = new ArrayList<>();
-        for(RbacRoleModel rbacRoleModel : list){
+        for (RbacRoleModel rbacRoleModel : list) {
             roleIds.add(rbacRoleModel.getId());
         }
 
-        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleIds(roleIds);
-        List<RbacRoleResourceModel> resourceModels = rbacRoleResourceDao.getInfoByRoleIds(roleIds);
+//        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleIds(roleIds);
+//        List<RbacRoleResourceModel> resourceModels = rbacRoleResourceDao.getInfoByRoleIds(roleIds);
 
-        for(RbacRoleModel rbacRoleModel : list){
-            List<Integer> deptArray = new ArrayList<>();
-            for (RbacRoleDeptModel deptModel: deptModels) {
-                if(rbacRoleModel.getId().equals(deptModel.getRoleId())){
-                    deptArray.add(deptModel.getDeptId());
+//        for (RbacRoleModel rbacRoleModel : list) {
+//            List<Integer> deptArray = new ArrayList<>();
+//            for (RbacRoleDeptModel deptModel : deptModels) {
+//                if (rbacRoleModel.getId().equals(deptModel.getRoleId())) {
+//                    deptArray.add(deptModel.getDeptId());
+//                }
+//            }
+//            rbacRoleModel.setDeptArray(deptArray);
+//
+//            List<Integer> resourceArray = new ArrayList<>();
+//            for (RbacRoleResourceModel resourceModel : resourceModels) {
+//                if (rbacRoleModel.getId().equals(resourceModel.getRoleId())) {
+//                    resourceArray.add(resourceModel.getResourceId());
+//                }
+//            }
+//            rbacRoleModel.setResourceArray(resourceArray);
+//        }
+        for (RbacRoleModel rbacRoleModel : list) {
+            String deptIdsText = rbacRoleModel.getDeptIds();
+            System.out.println(deptIdsText);
+            List<Integer> deptIds = new ArrayList<>();
+            if(!"".equals(deptIdsText)){
+                String[] deptArray = deptIdsText.split(",");
+                for (String deptId : deptArray) {
+                    deptIds.add(Integer.parseInt(deptId));
                 }
             }
-            rbacRoleModel.setDeptArray(deptArray);
 
-            List<Integer> resourceArray = new ArrayList<>();
-            for (RbacRoleResourceModel resourceModel: resourceModels) {
-                if(rbacRoleModel.getId().equals(resourceModel.getRoleId())){
-                    resourceArray.add(resourceModel.getResourceId());
+            rbacRoleModel.setDeptArray(deptIds);
+
+            String resourceIdsText = rbacRoleModel.getResourceIds();
+            System.out.println(resourceIdsText);
+            List<Integer> resourceIds = new ArrayList<>();
+            if(!"".equals(resourceIdsText)){
+                String[] resourceArray = resourceIdsText.split(",");
+                for (String resourceId : resourceArray) {
+                    resourceIds.add(Integer.parseInt(resourceId));
                 }
             }
-            rbacRoleModel.setResourceArray(resourceArray);
+            rbacRoleModel.setResourceArray(resourceIds);
+
         }
+
 
         Result result = new Result();
 
@@ -101,6 +130,16 @@ public class RbacRoleServiceImpl implements RbacRoleService {
 
         roleModel.setCreateTime(time);
         roleModel.setUpdateTime(time);
+        roleModel.setResourceIds(StringUtils.join(roleModel.getResourceArray(), ","));
+        roleModel.setDeptIds(StringUtils.join(roleModel.getDeptArray(), ","));
+        roleModel.setResourceRootIds(getResourceRootIds(roleModel.getResourceArray()));
+        if (roleModel.getDeptArray().size() > 0) {
+            roleModel.setDeptRootIds(getDeptRootIds(roleModel.getDeptArray()));
+        } else {
+            roleModel.setDeptRootIds("");
+        }
+
+
         // 写入角色信息
         rbacRoleDao.add(roleModel);
 
@@ -127,6 +166,15 @@ public class RbacRoleServiceImpl implements RbacRoleService {
 
         roleModel.setId(id);
         roleModel.setUpdateTime(time);
+        roleModel.setResourceIds(StringUtils.join(roleModel.getResourceArray(), ","));
+        roleModel.setDeptIds(StringUtils.join(roleModel.getDeptArray(), ","));
+        roleModel.setResourceRootIds(getResourceRootIds(roleModel.getResourceArray()));
+        if (roleModel.getDeptArray().size() > 0) {
+            roleModel.setDeptRootIds(getDeptRootIds(roleModel.getDeptArray()));
+        } else {
+            roleModel.setDeptRootIds("");
+        }
+
 
         rbacRoleDao.edit(roleModel);
 
@@ -246,5 +294,27 @@ public class RbacRoleServiceImpl implements RbacRoleService {
             // 写入角色机构
             rbacRoleDeptDao.addAll(roleModels);
         }
+    }
+
+    private String getResourceRootIds(List<Integer> resourceIds) {
+        List<Integer> resourceRootLists = new ArrayList<>();
+        List<RbacResourceModel> rbacResourceModels = rbacResourceDao.getAllByIds(resourceIds);
+
+        for (RbacResourceModel rbacResourceModel : rbacResourceModels) {
+            resourceRootLists.add(rbacResourceModel.getParentId());
+        }
+        LinkedHashSet<Integer> resourceHashSet = new LinkedHashSet<>(resourceRootLists);
+        return StringUtils.join(new ArrayList<>(resourceHashSet), ",");
+    }
+
+    private String getDeptRootIds(List<Integer> deptIds) {
+        List<Integer> deptRootLists = new ArrayList<>();
+        List<RbacDeptModel> rbacDeptModels = rbacDeptDao.getAllByIds(deptIds);
+
+        for (RbacDeptModel rbacDeptModel : rbacDeptModels) {
+            deptRootLists.add(rbacDeptModel.getParentId());
+        }
+        LinkedHashSet<Integer> deptHashSet = new LinkedHashSet<>(deptRootLists);
+        return StringUtils.join(new ArrayList<>(deptHashSet), ",");
     }
 }

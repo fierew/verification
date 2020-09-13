@@ -41,4 +41,14 @@
         where is_delete = 0
         order by sort;
     </select>
+
+    <select id="getAllByIds" resultType="com.weigh.verification.model.RbacDeptModel">
+        select *
+        from `rbac_dept`
+        where is_delete = 0
+        AND id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

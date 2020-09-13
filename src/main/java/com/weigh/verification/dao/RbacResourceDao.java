@@ -72,7 +72,16 @@ public interface RbacResourceDao {
 
     /**
      * 根据多个id获取资源
+     *
      * @param ids 资源id
+     * @return 结果
+     */
+    List<RbacResourceModel> getAllByIds(@Param("ids") List<Integer> ids);
+
+    /**
+     * 根据多个id获取资源
+     *
+     * @param ids   资源id
      * @param state 状态
      * @return 结果
      */

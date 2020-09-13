@@ -46,9 +46,12 @@ public class TreeUtil {
      *
      * @return
      */
-    public List<Map<String, Object>> buildTree() {
+    public List<Map<String, Object>> buildTree(List<Integer> ids) {
         List<Map<String, Object>> treeLists = new ArrayList<>();
-        for (Map<String, Object> treeNode : getRootNode(0)) {
+
+
+
+        for (Map<String, Object> treeNode : getRootNode(ids)) {
             Map<String, Object> childNode = buildChildTree(treeNode);
             treeLists.add(childNode);
         }
@@ -82,10 +85,10 @@ public class TreeUtil {
      *
      * @return
      */
-    private List<Map<String, Object>> getRootNode(Integer id) {
+    private List<Map<String, Object>> getRootNode(List<Integer> ids) {
         List<Map<String, Object>> rootTreeLists = new ArrayList<>();
         for (Map<String, Object> treeNode : treeMap) {
-            if (treeNode.get("parentId").equals(id)) {
+            if (ids.contains(treeNode.get("parentId"))) {
                 rootTreeLists.add(treeNode);
             }
         }
@@ -100,8 +103,9 @@ public class TreeUtil {
      */
     public List<Integer> buildTreeIds(Integer id) {
         this.treeIds.add(id);
-
-        for (Map<String, Object> treeNode : getRootNode(id)) {
+        List<Integer> ids = new ArrayList<>();
+        ids.add(id);
+        for (Map<String, Object> treeNode : getRootNode(ids)) {
             this.treeIds.add((Integer) treeNode.get("id"));
             buildChildTreeIds(treeNode);
         }

@@ -1,10 +1,12 @@
 package com.weigh.verification.service.impl;
 
 import com.weigh.verification.dao.RbacResourceDao;
+import com.weigh.verification.dao.RbacRoleDao;
 import com.weigh.verification.dao.RbacRoleResourceDao;
 import com.weigh.verification.dao.RbacUserDao;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.RbacResourceModel;
+import com.weigh.verification.model.RbacRoleModel;
 import com.weigh.verification.model.RbacRoleResourceModel;
 import com.weigh.verification.model.RbacUserModel;
 import com.weigh.verification.service.RbacAuthService;
@@ -31,6 +33,9 @@ public class RbacAuthServiceImpl implements RbacAuthService {
 
     @Autowired
     private RbacResourceDao rbacResourceDao;
+
+    @Autowired
+    private RbacRoleDao rbacRoleDao;
 
     @Override
     public Result getAuth(Integer id) {
@@ -74,8 +79,21 @@ public class RbacAuthServiceImpl implements RbacAuthService {
         }
 
         Result result = new Result();
+
+        RbacUserModel rbacUserModel = rbacUserDao.getInfoById(id);
+        Integer roleId = rbacUserModel.getRoleId();
+        RbacRoleModel rbacRoleModel = rbacRoleDao.getInfoById(roleId);
         try{
-            List<Map<String, Object>> tree = new TreeUtil(menus).buildTree();
+            String resourceRootIdsText = rbacRoleModel.getResourceRootIds();
+            List<Integer> resourceRootIds = new ArrayList<>();
+            if(!"".equals(resourceRootIdsText)){
+                String[] resourceRootArray = resourceRootIdsText.split(",");
+                for (String resourceRootId : resourceRootArray) {
+                    resourceRootIds.add(Integer.parseInt(resourceRootId));
+                }
+            }
+
+            List<Map<String, Object>> tree = new TreeUtil(menus).buildTree(resourceRootIds);
             result.setCode(200);
             result.setData(tree);
             result.setMsg("success");

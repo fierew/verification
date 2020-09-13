@@ -50,4 +50,12 @@ public interface RbacRoleDao {
      * @return 角色列表
      */
     List<RbacRoleModel> getAll();
+
+    /**
+     * 根据id查角色信息
+     *
+     * @param id 角色id
+     * @return 角色信息
+     */
+    RbacRoleModel getInfoById(@Param("id") Integer id);
 }

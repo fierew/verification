@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -110,8 +110,9 @@ public class RbacDeptServiceImpl implements RbacDeptService {
         }
 
         try {
-
-            List<Map<String, Object>> tree = new TreeUtil(all).buildTree();
+            List<Integer> rootIds = new ArrayList<>();
+            rootIds.add(0);
+            List<Map<String, Object>> tree = new TreeUtil(all).buildTree(rootIds);
             result.setData(tree);
             return result;
         } catch (Exception e) {

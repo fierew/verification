@@ -81,4 +81,14 @@
             AND `state` = #{state}
         </if>
     </select>
+
+    <select id="getAllByIds" resultType="com.weigh.verification.model.RbacResourceModel">
+        select *
+        from `rbac_resource`
+        where is_delete = 0
+        AND id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
