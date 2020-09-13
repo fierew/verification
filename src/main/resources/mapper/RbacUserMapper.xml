@@ -28,30 +28,38 @@
     </select>
 
     <select id="getList" resultType="com.weigh.verification.model.RbacUserModel">
-        select `id`,
-               `email`,
-               `real_name`,
-               `mobile`,
-               `sex`,
-               `age`,
-               `state`,
-               `create_time`,
-               `update_time`
-        from `rbac_user`
-                where is_delete = 0 and email != 'administrator'
+        select a1.`id`,
+               a1.`dept_id`,
+               a2.`name` as dept_name,
+               a1.`role_id`,
+               a3.`name` as role_name,
+               a1.`email`,
+               a1.`real_name`,
+               a1.`mobile`,
+               a1.`sex`,
+               a1.`age`,
+               a1.`login_num`,
+               a1.`state`,
+               a1.`create_time`,
+               a1.`update_time`
+        from `rbac_user` a1
+                     left join `rbac_dept` a2 on a1.dept_id = a2.id
+                     left join rbac_role a3 on a1.role_id = a3.id
+                where a1.is_delete = 0
+                  and a1.email != 'administrator'
         <if test="email != null and email != ''">
-            AND email like '%' #{email} '%'
+            AND a1.`email` like '%' #{email} '%'
         </if>
         <if test="realName != null and realName != ''">
-            AND `real_name` like '%' #{realName} '%'
+            AND a1.`real_name` like '%' #{realName} '%'
         </if>
         <if test="mobile != null and mobile != ''">
-            AND `mobile` like '%' #{mobile} '%'
+            AND a1.`mobile` like '%' #{mobile} '%'
         </if>
         <if test="state != null">
-            AND `state` = #{state}
+            AND a1.`state` = #{state}
         </if>
-        order by id desc
+        order by a1.id desc
     </select>
 
     <insert id="add">
@@ -70,6 +78,7 @@
             `mobile`     = #{mobile},
             `sex`        = #{sex},
             `age`        = #{age},
+            `state`      = #{state},
             `update_time`=#{updateTime}
         where id = #{id}
     </update>

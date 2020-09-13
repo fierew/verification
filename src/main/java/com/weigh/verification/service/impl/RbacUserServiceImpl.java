@@ -109,6 +109,7 @@ public class RbacUserServiceImpl implements RbacUserService {
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
         rbacUserModel.setUpdateTime(time);
+        rbacUserModel.setId(id);
 
         rbacUserDao.edit(rbacUserModel);
 
@@ -171,6 +172,9 @@ public class RbacUserServiceImpl implements RbacUserService {
         }
 
         String token = jwtUtil.sign(rbacUserInfo.getId());
+
+        Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
+        rbacUserDao.incLoginNum(rbacUserInfo.getId(), time);
 
         Map<String, Object> info = new HashMap<>(5);
 

@@ -65,7 +65,16 @@ public interface RbacResourceDao {
 
     /**
      * 获取全部数据
+     *
      * @return 全部数据
      */
     List<RbacResourceModel> getAll();
+
+    /**
+     * 根据多个id获取资源
+     * @param ids 资源id
+     * @param state 状态
+     * @return 结果
+     */
+    List<RbacResourceModel> getInfoByIds(@Param("ids") List<Integer> ids, @Param("state") Byte state);
 }

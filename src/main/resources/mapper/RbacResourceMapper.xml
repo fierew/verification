@@ -68,4 +68,17 @@
         where is_delete = 0
         order by sort;
     </select>
+
+    <select id="getInfoByIds" resultType="com.weigh.verification.model.RbacResourceModel">
+        select *
+        from `rbac_resource`
+                where is_delete = 0
+                  AND id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        <if test="state != null">
+            AND `state` = #{state}
+        </if>
+    </select>
 </mapper>

@@ -14,8 +14,14 @@ public class RbacUserModel {
     @JsonProperty(value = "deptId")
     private Integer deptId;
 
+    @JsonProperty(value = "deptName")
+    private String deptName;
+
     @JsonProperty(value = "roleId")
     private Integer roleId;
+
+    @JsonProperty(value = "roleName")
+    private String roleName;
 
     @JsonProperty(value = "password")
     private String password;
