@@ -4,25 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weigh.verification.dao.RbacRoleDao">
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `rbac_role` (`name`, `remarks`, `data_range`, `dept_root_ids`, `dept_ids`, `resource_root_ids`,
-                                 `resource_root_ids`, `sort`,
+        INSERT INTO `rbac_role` (`name`, `remarks`, `data_range`, `dept_ids`,
+                                 `resource_ids`, `sort`,
                                  `create_time`, `update_time`)
-        VALUES (#{name}, #{remarks}, #{dataRange}, #{deptRootIds}, #{deptIds}, #{resourceRootIds}, #{resourceIds},
-                #{sort}, #{createTime},
-                #{updateTime});
+        VALUES (#{name}, #{remarks}, #{dataRange}, #{deptIds},
+                #{resourceIds}, #{sort},
+                #{createTime}, #{updateTime});
     </insert>
 
     <update id="edit">
         update `rbac_role`
-        set `name`             = #{name},
-            `remarks`          = #{remarks},
-            `data_range`       = #{dataRange},
-            `dept_root_ids`    = #{deptRootIds},
-            `dept_ids`         = #{deptIds},
-            `resource_root_ids`= #{resourceRootIds},
-            `resource_ids`     = #{resourceIds},
-            `sort`             = #{sort},
-            `update_time`      = #{updateTime}
+        set `name`         = #{name},
+            `remarks`      = #{remarks},
+            `data_range`   = #{dataRange},
+            `dept_ids`     = #{deptIds},
+            `resource_ids` = #{resourceIds},
+            `sort`         = #{sort},
+            `update_time`  = #{updateTime}
         where id = #{id}
     </update>
 

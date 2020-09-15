@@ -25,20 +25,20 @@ public class RbacRoleModel {
     @JsonProperty(value = "deptArray")
     private List<Integer> deptArray;
 
+    @JsonProperty(value = "deptParent")
+    private List<Integer> deptParent;
+
     @JsonProperty(value = "deptIds")
     private String deptIds;
-
-    @JsonProperty(value = "deptRootIds")
-    private String deptRootIds;
 
     @JsonProperty(value = "resourceArray")
     private List<Integer> resourceArray;
 
+    @JsonProperty(value = "resourceParent")
+    private List<Integer> resourceParent;
+
     @JsonProperty(value = "resourceIds")
     private String resourceIds;
-
-    @JsonProperty(value = "resourceRootIds")
-    private String resourceRootIds;
 
     @JsonProperty(value = "sort")
     private Integer sort;

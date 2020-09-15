@@ -52,26 +52,6 @@ public class RbacRoleServiceImpl implements RbacRoleService {
             roleIds.add(rbacRoleModel.getId());
         }
 
-//        List<RbacRoleDeptModel> deptModels = rbacRoleDeptDao.getInfoByRoleIds(roleIds);
-//        List<RbacRoleResourceModel> resourceModels = rbacRoleResourceDao.getInfoByRoleIds(roleIds);
-
-//        for (RbacRoleModel rbacRoleModel : list) {
-//            List<Integer> deptArray = new ArrayList<>();
-//            for (RbacRoleDeptModel deptModel : deptModels) {
-//                if (rbacRoleModel.getId().equals(deptModel.getRoleId())) {
-//                    deptArray.add(deptModel.getDeptId());
-//                }
-//            }
-//            rbacRoleModel.setDeptArray(deptArray);
-//
-//            List<Integer> resourceArray = new ArrayList<>();
-//            for (RbacRoleResourceModel resourceModel : resourceModels) {
-//                if (rbacRoleModel.getId().equals(resourceModel.getRoleId())) {
-//                    resourceArray.add(resourceModel.getResourceId());
-//                }
-//            }
-//            rbacRoleModel.setResourceArray(resourceArray);
-//        }
         for (RbacRoleModel rbacRoleModel : list) {
             String deptIdsText = rbacRoleModel.getDeptIds();
             List<Integer> deptIds = new ArrayList<>();
@@ -130,12 +110,6 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         roleModel.setUpdateTime(time);
         roleModel.setResourceIds(StringUtils.join(roleModel.getResourceArray(), ","));
         roleModel.setDeptIds(StringUtils.join(roleModel.getDeptArray(), ","));
-        roleModel.setResourceRootIds(getResourceRootIds(roleModel.getResourceArray()));
-        if (roleModel.getDeptArray().size() > 0) {
-            roleModel.setDeptRootIds(getDeptRootIds(roleModel.getDeptArray()));
-        } else {
-            roleModel.setDeptRootIds("");
-        }
 
 
         // 写入角色信息
@@ -143,8 +117,11 @@ public class RbacRoleServiceImpl implements RbacRoleService {
 
         Integer roleId = roleModel.getId();
 
-        writeRoleResource(roleId, roleModel.getResourceArray());
-        writeRoleDept(roleId, roleModel.getDataRange(), roleModel.getDeptArray());
+        // 获取机构子节点
+        // 合并机构子节点
+
+        writeRoleResource(roleId, roleModel.getResourceArray(),roleModel.getResourceParent());
+        writeRoleDept(roleId, roleModel.getDataRange(), roleModel.getDeptArray(),roleModel.getDeptParent());
 
         Result result = new Result();
         result.setCode(200);
@@ -166,23 +143,17 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         roleModel.setUpdateTime(time);
         roleModel.setResourceIds(StringUtils.join(roleModel.getResourceArray(), ","));
         roleModel.setDeptIds(StringUtils.join(roleModel.getDeptArray(), ","));
-        roleModel.setResourceRootIds(getResourceRootIds(roleModel.getResourceArray()));
-        if (roleModel.getDeptArray().size() > 0) {
-            roleModel.setDeptRootIds(getDeptRootIds(roleModel.getDeptArray()));
-        } else {
-            roleModel.setDeptRootIds("");
-        }
 
 
         rbacRoleDao.edit(roleModel);
 
         // 删除角色资源
         rbacRoleResourceDao.delete(id);
-        writeRoleResource(id, roleModel.getResourceArray());
+        writeRoleResource(id, roleModel.getResourceArray(),roleModel.getResourceParent());
 
         // 删除角色机构
         rbacRoleDeptDao.delete(id);
-        writeRoleDept(id, roleModel.getDataRange(), roleModel.getDeptArray());
+        writeRoleDept(id, roleModel.getDataRange(), roleModel.getDeptArray(),roleModel.getDeptParent());
 
         Result result = new Result();
         result.setCode(200);
@@ -224,7 +195,7 @@ public class RbacRoleServiceImpl implements RbacRoleService {
         return result;
     }
 
-    private void writeRoleResource(Integer roleId, List<Integer> roleResourceArray) {
+    private void writeRoleResource(Integer roleId, List<Integer> roleResourceArray, List<Integer> roleResourceParent) {
         if (roleResourceArray.size() <= 0) {
             return;
         }
@@ -237,30 +208,36 @@ public class RbacRoleServiceImpl implements RbacRoleService {
             return;
         }
 
-        List<RbacRoleResourceModel> roleResourceModels = new ArrayList<>();
+
 
         for (Integer resourceId : roleResourceArray) {
             try {
                 List<Integer> ids = new TreeUtil(all).buildTreeIds(resourceId);
 
-                for (Integer id : ids) {
-                    RbacRoleResourceModel roleResourceModel = new RbacRoleResourceModel();
-                    roleResourceModel.setRoleId(roleId);
-                    roleResourceModel.setCreateTime(time);
-                    roleResourceModel.setResourceId(id);
-
-                    roleResourceModels.add(roleResourceModel);
-                }
+                roleResourceParent.addAll(ids);
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
+        }
+
+        LinkedHashSet<Integer> hashSet = new LinkedHashSet<>(roleResourceParent);
+        List<Integer> resourceParent = new ArrayList<>(hashSet);
+
+        List<RbacRoleResourceModel> roleResourceModels = new ArrayList<>();
+        for (Integer parentId : resourceParent) {
+            RbacRoleResourceModel roleResourceModel = new RbacRoleResourceModel();
+            roleResourceModel.setRoleId(roleId);
+            roleResourceModel.setCreateTime(time);
+            roleResourceModel.setResourceId(parentId);
+
+            roleResourceModels.add(roleResourceModel);
         }
 
         // 写入角色资源
         rbacRoleResourceDao.addAll(roleResourceModels);
     }
 
-    private void writeRoleDept(Integer roleId, Byte dataRange, List<Integer> roleDeptArray) {
+    private void writeRoleDept(Integer roleId, Byte dataRange, List<Integer> roleDeptArray, List<Integer> roleDeptParent) {
         if (dataRange == 3 && roleDeptArray.size() > 0) {
             Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
 
@@ -270,49 +247,31 @@ public class RbacRoleServiceImpl implements RbacRoleService {
                 return;
             }
 
-            List<RbacRoleDeptModel> roleModels = new ArrayList<>();
 
             for (Integer deptId : roleDeptArray) {
                 try {
                     List<Integer> ids = new TreeUtil(all).buildTreeIds(deptId);
-
-                    for (Integer id : ids) {
-                        RbacRoleDeptModel roleDeptModel = new RbacRoleDeptModel();
-                        roleDeptModel.setCreateTime(time);
-                        roleDeptModel.setDeptId(deptId);
-                        roleDeptModel.setRoleId(roleId);
-
-                        roleModels.add(roleDeptModel);
-                    }
+                    roleDeptParent.addAll(ids);
                 } catch (Exception e) {
                     log.error(e.getMessage());
                 }
             }
 
+            LinkedHashSet<Integer> hashSet = new LinkedHashSet<>(roleDeptParent);
+            List<Integer> deptParent = new ArrayList<>(hashSet);
+
+            List<RbacRoleDeptModel> roleModels = new ArrayList<>();
+            for (Integer parentId : deptParent) {
+                RbacRoleDeptModel roleDeptModel = new RbacRoleDeptModel();
+                roleDeptModel.setCreateTime(time);
+                roleDeptModel.setDeptId(parentId);
+                roleDeptModel.setRoleId(roleId);
+
+                roleModels.add(roleDeptModel);
+            }
+
             // 写入角色机构
             rbacRoleDeptDao.addAll(roleModels);
         }
-    }
-
-    private String getResourceRootIds(List<Integer> resourceIds) {
-        List<Integer> resourceRootLists = new ArrayList<>();
-        List<RbacResourceModel> rbacResourceModels = rbacResourceDao.getAllByIds(resourceIds);
-
-        for (RbacResourceModel rbacResourceModel : rbacResourceModels) {
-            resourceRootLists.add(rbacResourceModel.getParentId());
-        }
-        LinkedHashSet<Integer> resourceHashSet = new LinkedHashSet<>(resourceRootLists);
-        return StringUtils.join(new ArrayList<>(resourceHashSet), ",");
-    }
-
-    private String getDeptRootIds(List<Integer> deptIds) {
-        List<Integer> deptRootLists = new ArrayList<>();
-        List<RbacDeptModel> rbacDeptModels = rbacDeptDao.getAllByIds(deptIds);
-
-        for (RbacDeptModel rbacDeptModel : rbacDeptModels) {
-            deptRootLists.add(rbacDeptModel.getParentId());
-        }
-        LinkedHashSet<Integer> deptHashSet = new LinkedHashSet<>(deptRootLists);
-        return StringUtils.join(new ArrayList<>(deptHashSet), ",");
     }
 }

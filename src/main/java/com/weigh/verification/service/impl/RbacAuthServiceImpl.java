@@ -80,27 +80,8 @@ public class RbacAuthServiceImpl implements RbacAuthService {
 
         Result result = new Result();
 
-        List<Integer> resourceRootIds = new ArrayList<>();
-
-        RbacUserModel rbacUserModel = rbacUserDao.getInfoById(id);
-
-        if("administrator".equals(rbacUserModel.getEmail())){
-            resourceRootIds.add(0);
-        }else{
-            Integer roleId = rbacUserModel.getRoleId();
-            RbacRoleModel rbacRoleModel = rbacRoleDao.getInfoById(roleId);
-
-            String resourceRootIdsText = rbacRoleModel.getResourceRootIds();
-            if(!"".equals(resourceRootIdsText)){
-                String[] resourceRootArray = resourceRootIdsText.split(",");
-                for (String resourceRootId : resourceRootArray) {
-                    resourceRootIds.add(Integer.parseInt(resourceRootId));
-                }
-            }
-        }
-
         try{
-            List<Map<String, Object>> tree = new TreeUtil(menus).buildTree(resourceRootIds);
+            List<Map<String, Object>> tree = new TreeUtil(menus).buildTree();
             result.setCode(200);
             result.setData(tree);
             result.setMsg("success");
