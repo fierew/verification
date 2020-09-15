@@ -1,6 +1,5 @@
 package com.weigh.verification.service;
 
-import com.github.pagehelper.PageInfo;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.model.RbacUserModel;
 

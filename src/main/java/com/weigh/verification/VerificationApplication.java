@@ -1,15 +1,11 @@
 package com.weigh.verification;
 
-import com.power.common.util.DateTimeUtil;
-import com.weigh.verification.dao.RbacUserDao;
-import com.weigh.verification.model.RbacUserModel;
 import com.weigh.verification.service.InitService;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

@@ -15,7 +15,6 @@ import com.weigh.verification.utils.WordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +50,6 @@ public class TemplateServiceImpl implements TemplateService {
 
         while (m.find()) {
             String key = m.group(1);
-            // System.out.println(key);
 
             if (!list.contains(key)) {
                 list.add(m.group(1));

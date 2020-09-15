@@ -34,9 +34,6 @@ public class RbacAuthServiceImpl implements RbacAuthService {
     @Autowired
     private RbacResourceDao rbacResourceDao;
 
-    @Autowired
-    private RbacRoleDao rbacRoleDao;
-
     @Override
     public Result getAuth(Integer id) {
         Result res = getUserAuth(id);
