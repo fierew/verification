@@ -1,5 +1,6 @@
 package com.weigh.verification.controller;
 
+import com.weigh.verification.annotation.PassAuth;
 import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TableEntity;
@@ -31,6 +32,7 @@ public class RbacUserController {
         return rbacUserService.getList(tableEntity.getPage(), tableEntity.getPageSize(), rbacUserModel);
     }
 
+    @PassAuth
     @GetMapping("/getInfo")
     Result getInfo(TokenUserEntity tokenUserEntity) {
         return rbacUserService.getInfo(tokenUserEntity.getUserId());

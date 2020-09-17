@@ -1,5 +1,6 @@
 package com.weigh.verification.controller;
 
+import com.weigh.verification.annotation.PassAuth;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TokenUserEntity;
 import com.weigh.verification.service.RbacAuthService;
@@ -19,11 +20,13 @@ public class RbacAuthController {
     @Autowired
     private RbacAuthService rbacAuthService;
 
+    @PassAuth
     @GetMapping("/getAll")
     Result getAuth(TokenUserEntity tokenUserEntity) {
         return rbacAuthService.getAuth(tokenUserEntity.getUserId());
     }
 
+    @PassAuth
     @GetMapping("/getMenu")
     Result getMenu(TokenUserEntity tokenUserEntity) {
         return rbacAuthService.getMenu(tokenUserEntity.getUserId());

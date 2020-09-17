@@ -171,7 +171,7 @@ public class RbacUserServiceImpl implements RbacUserService {
             return result;
         }
 
-        String token = jwtUtil.sign(rbacUserInfo.getId());
+        String token = jwtUtil.sign(rbacUserInfo.getId(), rbacUserInfo.getEmail());
 
         Integer time = (int) Math.floor(DateTimeUtil.getNowTime() / 1000);
         rbacUserDao.incLoginNum(rbacUserInfo.getId(), time);

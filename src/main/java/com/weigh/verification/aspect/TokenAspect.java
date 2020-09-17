@@ -1,9 +1,11 @@
 package com.weigh.verification.aspect;
 
 import com.auth0.jwt.interfaces.Claim;
+import com.weigh.verification.annotation.PassAuth;
 import com.weigh.verification.annotation.PassToken;
 import com.weigh.verification.entity.Result;
 import com.weigh.verification.entity.TokenUserEntity;
+import com.weigh.verification.service.RbacAuthService;
 import com.weigh.verification.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +33,9 @@ import java.util.Map;
 public class TokenAspect {
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    RbacAuthService rbacAuthService;
 
     /**
      * 定义切入点，切入点为com.example.demo.aop.AopController中的所有函数
@@ -92,10 +98,18 @@ public class TokenAspect {
             assert attributes != null;
             HttpServletResponse response = attributes.getResponse();
             assert response != null;
-            response.setStatus(Integer.parseInt(e.getMessage()));
 
             Result errorResult = new Result();
-            errorResult.setCode(Integer.parseInt(e.getMessage()));
+
+
+            if (e.getMessage() != null) {
+                response.setStatus(Integer.parseInt(e.getMessage()));
+                errorResult.setCode(Integer.parseInt(e.getMessage()));
+            } else {
+                response.setStatus(400);
+                errorResult.setCode(400);
+            }
+
             errorResult.setMsg("系统异常");
             return errorResult;
         }
@@ -106,7 +120,7 @@ public class TokenAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
-        //检查是否有PassToken注释，有则跳过认证，所以在controller层加了@Passtoken注解，这里就不校验
+        //检查是否有PassToken注释，有则跳过认证，所以在controller层加了@PassToken注解，这里就不校验
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
             if (passToken.required()) {
@@ -129,14 +143,44 @@ public class TokenAspect {
         // 解析token并获取token中的用户信息
         Map<String, Claim> claims = jwtUtil.verity(token);
 
-        String className = joinPoint.getTarget().getClass().getName().replace("com.weigh.verification.controller.", "");
-        String methodName = signature.getName();
-        String authKey = className + ":" + methodName;
-        System.out.println(authKey);
-        // 判断用户授权，判断用户是否拥有这个接口的权限
+
+        //检查是否有PassAuth注释，有则跳过认证，所以在controller层加了@PassAuth注解，这里就不校验
+        boolean isAdmin = false;
+        if(claims.get("email") != null){
+            isAdmin = "administrator".equals(claims.get("email").asString()) ? true : false;
+        }
+
+        if (!isAdmin) {
+            PassAuth passAuth = method.getAnnotation(PassAuth.class);
+
+            boolean isPassAuth = false;
+            boolean isPassAuthRequired = false;
+            if(passAuth != null){
+                isPassAuth = true;
+
+                isPassAuthRequired = passAuth.required();
+            }
+
+            if (!isPassAuth || !isPassAuthRequired) {
+                String className = joinPoint.getTarget().getClass().getName().replace("com.weigh.verification.controller.", "");
+                String methodName = signature.getName();
+                String authKey = className + ":" + methodName;
+                System.out.println(authKey);
+
+                // 判断用户授权，判断用户是否拥有这个接口的权限
+                Result res = rbacAuthService.getApiAuth(claims.get("userId").asInt());
+
+                List<String> apiAuth = (List<String>) res.getData();
+                System.out.println(apiAuth);
+                if (!apiAuth.contains(authKey)) {
+                    throw new RuntimeException("403");
+                }
+
+                // 根据用户数据权限获取数据获取范围，返回取数据的所有用户id
 
 
-        // 根据用户数据权限获取数据获取范围，返回取数据的所有用户id
+            }
+        }
 
 
         // 得到这个方法控制器的所有形参
@@ -148,11 +192,11 @@ public class TokenAspect {
                 TokenUserEntity paramVO = (TokenUserEntity) argItem;
                 // System.out.println(paramVO);
                 Claim userId = claims.get("userId");
-//                Claim email = claims.get("email");
+                Claim email = claims.get("email");
 //                Claim role = claims.get("role");
 
-                paramVO.setUserId(userId.asInt());
-//                paramVO.setEmail(email.asString());
+                paramVO.setUserId(userId == null ? 0 : userId.asInt());
+                paramVO.setEmail(email == null ? "" : email.asString());
 //                paramVO.setRole(role.asString());
             }
         }

@@ -35,6 +35,29 @@ public class RbacAuthServiceImpl implements RbacAuthService {
     private RbacResourceDao rbacResourceDao;
 
     @Override
+    public Result getApiAuth(Integer id) {
+        Result res = getUserAuth(id);
+        if(res.getCode() != 200){
+            return res;
+        }
+
+        List<String> access = new ArrayList<>();
+        List<RbacResourceModel> rbacResourceInfos = (List<RbacResourceModel>) res.getData();
+        for (RbacResourceModel rbacResourceMenuInfo : rbacResourceInfos) {
+            if (rbacResourceMenuInfo.getType() == 2) {
+                String[] keys = rbacResourceMenuInfo.getKey().split(",");
+                access.addAll(Arrays.asList(keys));
+            }
+        }
+
+        Result result = new Result();
+        result.setCode(200);
+        result.setData(access);
+        result.setMsg("success");
+        return result;
+    }
+
+    @Override
     public Result getAuth(Integer id) {
         Result res = getUserAuth(id);
         if(res.getCode() != 200){
