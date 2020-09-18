@@ -1,6 +1,10 @@
 server:
   port: 8080
 spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
   servlet:
     multipart:
       enabled: true #是否启用http上传处理
