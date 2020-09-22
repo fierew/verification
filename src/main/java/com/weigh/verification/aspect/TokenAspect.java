@@ -137,7 +137,7 @@ public class TokenAspect {
 
         // 执行认证
         if (token == null) {
-            throw new RuntimeException("403");
+            throw new RuntimeException("401");
         }
 
         // 解析token并获取token中的用户信息
