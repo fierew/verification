@@ -1,14 +1,8 @@
 package com.weigh.verification.service.impl;
 
-import com.weigh.verification.dao.RbacResourceDao;
-import com.weigh.verification.dao.RbacRoleDao;
-import com.weigh.verification.dao.RbacRoleResourceDao;
-import com.weigh.verification.dao.RbacUserDao;
+import com.weigh.verification.dao.*;
 import com.weigh.verification.entity.Result;
-import com.weigh.verification.model.RbacResourceModel;
-import com.weigh.verification.model.RbacRoleModel;
-import com.weigh.verification.model.RbacRoleResourceModel;
-import com.weigh.verification.model.RbacUserModel;
+import com.weigh.verification.model.*;
 import com.weigh.verification.service.RbacAuthService;
 import com.weigh.verification.utils.TreeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +27,9 @@ public class RbacAuthServiceImpl implements RbacAuthService {
 
     @Autowired
     private RbacResourceDao rbacResourceDao;
+
+    @Autowired
+    private RbacDeptDao rbacDeptDao;
 
     @Override
     public Result getApiAuth(Integer id) {
@@ -158,5 +155,70 @@ public class RbacAuthServiceImpl implements RbacAuthService {
         result.setData(rbacResourceInfos);
         result.setMsg("success");
         return result;
+    }
+
+    private Result getUserIdsToUserIdOnType(Integer userId, Byte dataRange, String deptIdArray)
+    {
+        List<Integer> userIds = new ArrayList<>();
+        Result result = new Result();
+
+        // 根据用户id获取部门id
+        RbacUserModel rbacUserModel = rbacUserDao.getInfoById(userId);
+        Integer deptId = rbacUserModel.getDeptId();
+
+        switch (dataRange){
+            case 1:
+                // 1：仅允许查看本部门
+                // 根据部门id获取所有用户id
+                List<RbacUserModel> rbacUserList = rbacUserDao.getIdsByDeptId(deptId);
+                for (RbacUserModel rbacUser: rbacUserList) {
+                    userIds.add(rbacUser.getId());
+                }
+                return result;
+            case 2:
+                // 2：允许查看本部门及下属部门
+                List<RbacDeptModel> all = rbacDeptDao.getAll();
+
+                result.setCode(200);
+                result.setMsg("success");
+
+                if (all == null) {
+                    result.setData(null);
+                    return result;
+                }
+
+                try {
+                    List<Integer> deptIds = new TreeUtil(all).buildTreeIds(deptId);
+                    List<RbacUserModel> rbacUserLists = rbacUserDao.getIdsByDeptIds(deptIds);
+                    for (RbacUserModel rbacUser: rbacUserLists) {
+                        userIds.add(rbacUser.getId());
+                    }
+                    result.setData(userIds);
+                    result.setCode(200);
+                    result.setMsg("success");
+                } catch (Exception e) {
+                    result.setCode(400);
+                    result.setMsg("解析树失败");
+                }
+                return result;
+            case 3:
+                // 3：自定义
+                List<RbacDeptModel> all1 = rbacDeptDao.getAll();
+
+                result.setCode(200);
+                result.setMsg("success");
+
+                if (all1 == null) {
+                    result.setData(null);
+                    return result;
+                }
+
+                return result;
+            default:
+                // 0:仅允许查看自己
+                userIds.add(userId);
+                result.setData(userIds);
+                return result;
+        }
     }
 }

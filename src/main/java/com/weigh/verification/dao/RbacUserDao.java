@@ -96,4 +96,20 @@ public interface RbacUserDao {
      * @return 结果
      */
     Integer incLoginNum(@Param("id") Integer id, @Param("updateTime") Integer updateTime);
+
+    /**
+     * 根据机构Id获取用户id
+     *
+     * @param deptId 机构id
+     * @return 用户列表
+     */
+    List<RbacUserModel> getIdsByDeptId(Integer deptId);
+
+    /**
+     * 根据机构Ids获取用户id
+     *
+     * @param deptIds 机构ids
+     * @return 用户列表
+     */
+    List<RbacUserModel> getIdsByDeptIds(@Param("deptIds") List<Integer> deptIds);
 }

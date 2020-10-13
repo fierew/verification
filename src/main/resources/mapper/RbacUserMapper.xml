@@ -110,4 +110,21 @@
             `update_time`=#{updateTime}
         where id = #{id}
     </update>
+
+    <select id="getIdsByDeptId" resultType="com.weigh.verification.model.RbacUserModel">
+        select id
+        from `rbac_user`
+        where `dept_id` = #{deptId}
+          and is_delete = 0;
+    </select>
+
+    <select id="getIdsByDeptIds" resultType="com.weigh.verification.model.RbacUserModel">
+        select id
+        from `rbac_user`
+                where is_delete = 0
+                  and `dept_id` in
+        <foreach collection="deptIds" item="deptId" index="index" open="(" close=")" separator=",">
+            #{deptId}
+        </foreach>;
+    </select>
 </mapper>
